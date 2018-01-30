@@ -22,7 +22,7 @@ persona<!DOCTYPE html>
 				<li>Needs: Greg needs something to do in downtown ABQ as he is visiting for work. He enjoys exploring and has an appreciation for modern art and street art.</li>
 			</ul>
 			<h3>User Story</h3>
-			<p>As a one-time user of the site, Greg wants to quickly access the street art database and use the map function to explore downtown. </p>
+			<p>As a one-time user of the site, Greg wants to quickly access the street art database and use the map function to explore downtown.</p>
 
 	</body>
 </html>
