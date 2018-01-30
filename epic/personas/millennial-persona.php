@@ -14,7 +14,8 @@
 				social media apps</p>
 			<p>Community organizer at a local nonprofit</p>
 			<p>Tara is planning a Saturday afternoon with friends. They are going to walk around downtown ABQ and locate
-				nearby sculptures and murals to use in their selfies for Instagram and Tinder. They also plan to stop for
+				nearby sculptures and murals to use in their selfies for Instagram and Tinder. Tara will be using her iPhone
+				7 to navigate downtown art and take photos. They also plan to stop for
 				food and drinks at a bar or restaurant.</p>
 		</body>
 	</html>
