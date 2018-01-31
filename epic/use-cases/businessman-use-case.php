@@ -10,7 +10,10 @@
 	<h2>Interaction Flow:</h2>
 	<ol>
 		<li>User loads the site with map and database on their smartphone</li>
-		<li></li>
+		<li>Website returns map with all available installations</li>
+		<li>User searches for murals in his area</li>
+		<li>Database returns the murals in is area</li>
+		<li>User follows app map to the said murals</li>
 	</ol>
 </body>
 

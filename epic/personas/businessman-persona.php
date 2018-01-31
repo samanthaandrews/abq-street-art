@@ -19,7 +19,7 @@ persona<!DOCTYPE html>
 						<li>Most likely will only interact with site on his phone</li>
 					</ul>
 				<li>Backstory: Greg spends a lot of time travelling around the country doing marketing and outreach for his company, Austin Global Enterprise. He enjoys getting to know new cities via art, bars, and overall vibe. On his first visit to Albuquerque he was very disappointed by the apparent lack of atmosphere in the downtown area. </li>
-				<li>Needs: Greg needs something to do in downtown ABQ as he is visiting for work. He enjoys exploring and has an appreciation for modern art and street art.</li>
+				<li>Needs: Greg needs something to do in downtown ABQ as he is visiting for work. He enjoys exploring and has an appreciation for modern art and street art. Greg needs this site as a datable for the interesting art that can be found around Albuquerque.</li>
 			</ul>
 			<h3>User Story</h3>
 			<p>As a one-time user of the site, Greg wants to quickly access the street art database and use the map function to explore downtown.</p>
