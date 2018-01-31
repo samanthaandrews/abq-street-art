@@ -1,4 +1,4 @@
-persona<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
@@ -7,6 +7,7 @@ persona<!DOCTYPE html>
 	<body>
 		<div class="persona">
 			<h1>Persona:  </h1>
+			<img src="https://previews.123rf.com/images/maridav/maridav1404/maridav140400425/27940374-man-on-smartphone-young-business-man-talking-on-smart-phone-casual-urban-professional-businessman-us.jpg" alt="young tourist" width="300px"/>
 			<ul>
 				<li>Name: Greg McClusky</li>
 				<li>Gender: Male</li>
