@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mom Use Case</title>
+    <title>Local Artist Use Case and Interaction Flow<</title>
 </head>
 <body>
 <h1>Local Artist Use Case and Interaction Flow</h1>
