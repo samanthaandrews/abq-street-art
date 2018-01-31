@@ -5,6 +5,6 @@
     <title>Mom Use Case</title>
 </head>
 <body>
-<h1>The Mom</h1>
+<h1>Local Artist Use Case and Interaction Flow</h1>
 </body>
 </html>
