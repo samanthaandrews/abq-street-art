@@ -7,22 +7,22 @@ DROP TABLE IF EXISTS comment;
 
 CREATE TABLE art (
   artId BINARY(16) NOT NULL,
-  artArtist
-  artAddress
-  artYear
-  artTitle
-  artLocation
-  artX
-  artY
-  artType
-  artImageUrl
-  artJpgUrl
+  artArtist,
+  artAddress,
+  artYear,
+  artTitle,
+  artLocation,
+  artX,
+  artY,
+  artType,
+  artImageUrl,
+  artJpgUrl,
   PRIMARY KEY(artId)
 );
 
 CREATE TABLE profile (
   profileId BINARY(16) NOT NULL,
-  profileActivationToken
+  profileActivationToken,
   profileEmail VARCHAR(128) NOT NULL,
   profileHash CHAR(128) NOT NULL,
   profileFullName VARCHAR(32) NOT NULL,
@@ -34,20 +34,19 @@ CREATE TABLE profile (
 CREATE TABLE bookmark(
   bookmarkArtId BINARY(16) NOT NULL,
   bookmarkProfileId BINARY(16) NOT NULL,
-  INDEX(clapArticleId),
-  INDEX(clapProfileId),
-  FOREIGN KEY(clapArticleId) REFERENCES article(articleId),
-  FOREIGN KEY(clapProfileId) REFERENCES profile(profileId),
-  PRIMARY KEY(clapId)
+  INDEX(bookmarkArtId),
+  INDEX(bookmarkProfileId),
+  FOREIGN KEY(bookmarkArtId) REFERENCES art(artId),
+  FOREIGN KEY(bookmarkProfileId) REFERENCES profile(profileId),
+  PRIMARY KEY(bookmarkArtId, bookmarkProfileId)
 );
 
 CREATE TABLE comment(
-  clapId BINARY(16) NOT NULL,
-  clapArticleId BINARY(16) NOT NULL,
-  clapProfileId BINARY(16) NOT NULL,
-  INDEX(clapArticleId),
-  INDEX(clapProfileId),
-  FOREIGN KEY(clapArticleId) REFERENCES article(articleId),
-  FOREIGN KEY(clapProfileId) REFERENCES profile(profileId),
-  PRIMARY KEY(clapId)
+  commentArtId BINARY(16) NOT NULL,
+  commentProfileId BINARY(16) NOT NULL,
+  INDEX(commentArtId),
+  INDEX(commentProfileId),
+  FOREIGN KEY(commentArtId) REFERENCES art(artId),
+  FOREIGN KEY(commentProfileId) REFERENCES profile(profileId),
+  PRIMARY KEY(commentArtId, commentProfileId)
 );
