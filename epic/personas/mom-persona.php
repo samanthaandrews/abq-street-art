@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Mom Persona</title>
+		<title>Artist Persona</title>
 	</head>
 	<body>
-		<h1>Persona: Mom</h1>
+		<h1>Persona: Artist</h1>
 			<p>Name: Margaret, goes by Maggie</p>
 			<p>Age: 36</p>
 			<p>Languages: English</p>
