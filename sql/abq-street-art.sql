@@ -42,11 +42,14 @@ CREATE TABLE bookmark(
 );
 
 CREATE TABLE comment(
+  commentId BINARY(16) NOT NULL,
   commentArtId BINARY(16) NOT NULL,
   commentProfileId BINARY(16) NOT NULL,
+  commentContent VARCHAR(65535) NOT NULL,
+  commentDateTime DATETIME NOT NULL,
   INDEX(commentArtId),
   INDEX(commentProfileId),
   FOREIGN KEY(commentArtId) REFERENCES art(artId),
   FOREIGN KEY(commentProfileId) REFERENCES profile(profileId),
-  PRIMARY KEY(commentArtId, commentProfileId)
+  PRIMARY KEY(commentId)
 );
