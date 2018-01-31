@@ -11,7 +11,7 @@ persona<!DOCTYPE html>
 				<li>Name: Greg McClusky</li>
 				<li>Gender: Male</li>
 				<li>Age: 34</li>
-				<li>Location: Greg is from Austin, TX and is in Albuquerque for a tech conference. THi is his second time to Albuquerque.</li>
+				<li>Location: Greg is from Austin, TX and is in Albuquerque for a tech conference. This is his second time to Albuquerque.</li>
 				<li>Technology:</li>
 					<ul>
 						<li>Greg uses a MacBook Air and a Google Pixel 2</li>
