@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>ABQ Street Art Young Tourist Use Case</title>
+		<title>Young Tourist Use Case and Interaction Flow</title>
 	</head>
 <body>
 	<h2>Young Tourist Use Case and Interaction Flow</h2>
