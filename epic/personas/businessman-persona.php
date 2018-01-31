@@ -2,16 +2,16 @@ persona<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Businessman Persona</title>
+		<title>Casual User</title>
 	</head>
 	<body>
 		<div class="persona">
-			<h1>Persona: Young professional visiting Albquerque</h1>
+			<h1>Persona:  </h1>
 			<ul>
 				<li>Name: Greg McClusky</li>
 				<li>Gender: Male</li>
-				<li>Age: 34</li>
-				<li>Location: Greg is from Austin, TX and is in Albuquerque for a tech conference. This is his second time to Albuquerque.</li>
+				<li>Age: 29</li>
+				<li>Location: Greg is from Austin, TX and is in Albuquerque for a tech conference. This is his second time to Albuquerque and is looking for some new, interesting things to do.</li>
 				<li>Technology:</li>
 					<ul>
 						<li>Greg uses a MacBook Air and a Google Pixel 2</li>
@@ -22,7 +22,6 @@ persona<!DOCTYPE html>
 				<li>Needs: Greg needs something to do in downtown ABQ as he is visiting for work. He enjoys exploring and has an appreciation for modern art and street art. Greg needs this site as a datable for the interesting art that can be found around Albuquerque.</li>
 			</ul>
 			<h3>User Story</h3>
-			<p>As a one-time user of the site, Greg wants to quickly access the street art database and use the map function to explore downtown.</p>
-
+			<p>As a one-time user of the site, Greg wants to quickly access the street art database and use the map function to and predetermined routes to explore downtown.</p>
 	</body>
 </html>
