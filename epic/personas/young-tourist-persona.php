@@ -6,8 +6,8 @@
 	</head>
 	<body>
 		<div class="persona">
-			<h1>Persona:  </h1>
-			<img src="https://previews.123rf.com/images/maridav/maridav1404/maridav140400425/27940374-man-on-smartphone-young-business-man-talking-on-smart-phone-casual-urban-professional-businessman-us.jpg" alt="young tourist" width="300px"/>
+			<h1>Young Tourist Persona:</h1>
+			<img src="https://previews.123rf.com/images/maridav/maridav1404/maridav140400425/27940374-man-on-smartphone-young-business-man-talking-on-smart-phone-casual-urban-professional-businessman-us.jpg" alt="Young Tourist" width="300px"/>
 			<ul>
 				<li>Name: Greg McClusky</li>
 				<li>Gender: Male</li>
