@@ -11,14 +11,14 @@
 		<h3>Key Features:</h3>
 		<ul>
 			<li>Mobile-first web application used by prolific and novice art enthusiasts </li>
-			<li>Base interface features a map of public art locations marked with pins</li>
+			<li>Base interface features a map of public art locations in Albuquerque marked with pins</li>
 			<li>Pins are clickable and provide more information: photo, artist, date created, etc.</li>
-			<li>Users are able to bookmark/favorite pieces of art</li>
-			<li>Users are able to "opt-in" to receive notifications when they are nearby to art that they have expressed bookmarked/favorited</li>
+			<li>Users can view art pieces by category type, i.e. murals or public art; this will be a main menu item</li>
+			<li>Users are able to log in and bookmark/favorite pieces of art</li>
 		</ul>
 			<h3>Stretch Goal:</h3>
 		<ul>
-			<li>We are hoping to include 1-2 predetermined/suggested routes that users can utilize (but not create themselves)</li>
+			<li>We are hoping to include 1-2 predetermined/suggested routes in Downtown Albuquerque that users can utilize (but not create themselves)</li>
 		</ul>
 	</body>
 </html>
