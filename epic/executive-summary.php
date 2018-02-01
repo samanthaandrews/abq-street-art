@@ -20,8 +20,6 @@
 			<li>Users are able to "opt-in" to receive notifications when they are nearby to art that they have expressed bookmarked/favorited</li>
 			<li>We are hoping to include 1-2 predetermined/suggested routes that users can utilize (but not create themselves)</li>
 		</ul>
-		<br>
 		<h3>System Goals:</h3>
-
 	</body>
 </html>
