@@ -31,8 +31,8 @@
     </ul>
     <h3>Bookmark</h3>
     <ul>
-        <li>artId</li>
-        <li>profileId</li>
+        <li>bookmarkArtId</li>
+        <li>bookmardProfileId</li>
     </ul>
     <h3>Comment</h3>
     <ul>
