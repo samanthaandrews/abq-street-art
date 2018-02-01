@@ -7,7 +7,7 @@
 <body>
 	<h1>Local Artist Use Case and Interaction Flow</h1>
 	<h2>Use Case:</h2>
-		<p>As a reoccurring user, Maggie wants to login to the system, create bookmarked art sites, and utilize the "suggested" routes functionality.</p>
+		<p>As a recurring user, Maggie wants to login to the system, create bookmarked art sites, and utilize the "suggested" routes functionality.</p>
 		<h2>Interaction Flow:</h2>
 		<ol>
 			<li>User loads the site on her mobile device</li>
