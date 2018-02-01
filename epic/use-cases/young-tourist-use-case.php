@@ -10,14 +10,12 @@
 	<h2>Interaction Flow:</h2>
 	<ol>
 		<li>User loads the site</li>
-		<li>Website asks to allow notifications and access his location</li>
-		<li>User clicks "No"</li>
-		<li>Website displays map with option to check out recommended routes</li>
-		<li>User looks at recommended routes</li>
-		<li>Website displays the various options</li>
-		<li>User chooses route of his liking</li>
-		<li>Website loads his choice</li>
-		<li>User goes on art tour! </li>
+		<li>Website displays the map of Albuquerque with all of the art locations</li>
+		<li>User adjusts the map to show only Murals</li>
+		<li>Website updates map to only display the location pins for the murals in the database</li>
+		<li>User clicks on a specific pin on map</li>
+		<li>Website displays card with information about the piece of art</li>
+		<li>User navigates their way to various murals in the downtown area</li>
 	</ol>
 </body>
 
