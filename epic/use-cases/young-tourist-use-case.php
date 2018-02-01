@@ -16,7 +16,7 @@
 		<li>Website updates map to only display the location pins for the murals in the database</li>
 		<li>User clicks on a specific pin on map</li>
 		<li>Website displays card with information about the piece of art</li>
-		<li>User navigates their way to various murals in the downtown area</li>
+		<li>User navigates their way to various murals in the Downtown area</li>
 	</ol>
 </body>
 
