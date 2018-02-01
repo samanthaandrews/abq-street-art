@@ -14,7 +14,7 @@
 				<p>Location: Lives in Austin, Texas </p>
 				<p>Technology Proficiency: High. Greg uses a MacBook Air and always has his Google Pixel 2 on him to respond to work and personal communication.</p>
 			<h1>User Story:</h1>
-				<p>Greg spends a lot of time traveling around the country doing marketing and outreach for his company, Austin Global Enterprise. He is visiting Albuquerque for a tech conference. He enjoys getting to know new cities via art, bars, and overall vibe. Greg is staying Downtown and is looking for something to do between work commitments at the Convention Center. As a one-time user of the site, Greg wants to access the map on his phone to walk and explore nearby public art.
+				<p>Greg spends a lot of time traveling around the country doing marketing and outreach for his company, Austin Global Enterprise. He is visiting Albuquerque for a tech conference. He enjoys getting to know new cities via art, bars, and overall vibe. Greg is staying Downtown and is looking for something to do between work commitments at the Convention Center.
 			</p>
 		<br>
 	</body>
