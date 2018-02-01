@@ -6,9 +6,9 @@
 	</head>
 <body>
 	<h1>Young Tourist Use Case and Interaction Flow</h1>
-	<h2>Use Case:</h2>
+	<h2>User Story:</h2>
 	<p>As a one-time user of the site, Greg wants to access the map on his phone to walk and explore nearby public art.</p>
-	<h2>Interaction Flow:</h2>
+	<h2>Use Case and Interaction Flow:</h2>
 	<ol>
 		<li>User loads the site</li>
 		<li>Website displays the map of Albuquerque with all of the art locations</li>
