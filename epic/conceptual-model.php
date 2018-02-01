@@ -8,22 +8,21 @@
 		<h1>ABQ Art Walk Conceptual Model</h1>
 		<h3>Art</h3>
 		<ul>
-			<li>artId</li>
-			<li>(the database has objectId and artCode, should these be included?)</li>
+			<li>artId *primary key(the database has objectId and artCode, should these be included?)</li>
+            <li>artAddress</li>
 			<li>artArtist</li>
-			<li>artAddress</li>
-			<li>artYear</li>
-			<li>artTitle</li>
-			<li>artLocation</li>
+            <li>artImageUrl</li>
+            <li>artJpgUrl</li>
+            <li>artLocation</li>
+            <li>artTitle</li>
+            <li>artType</li>
 			<li>artX</li>
 			<li>artY</li>
-			<li>artType</li>
-			<li>artImageUrl</li>
-			<li>artJpgUrl</li>
+            <li>artYear</li>
 		</ul>
 		<h3>Profile</h3>
 		<ul>
-			<li>profileId</li>
+			<li>profileId *primary key</li>
 			<li>profileActivationToken (possibly not required)</li>
 			<li>profileEmail</li>
 			<li>profileFullName</li>
@@ -32,14 +31,14 @@
 		</ul>
 		<h3>Bookmark</h3>
 		<ul>
-			<li>bookmarkArtId</li>
-			<li>bookmardProfileId</li>
+			<li>bookmarkArtId *foreign key</li>
+			<li>bookmardProfileId *foreign key</li>
 		</ul>
 		<h3>Comment</h3>
 		<ul>
-			<li>commentId (is this a try hard?)</li>
-			<li>commentArtId</li>
-			<li>commentProfileId</li>
+			<li>commentId *primary key(i think this is a try hard?)</li>
+			<li>commentArtId *foreign key</li>
+			<li>commentProfileId *foreign key</li>
 			<li>commentContent</li>
 			<li>commentDate</li>
 		</ul>
