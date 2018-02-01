@@ -20,10 +20,10 @@
 <!--			<li>Website displays preferred route</li>-->
 			<li>User bookmarks interesting sites to visit in the future</li>
 			<li>Website saves bookmarks under user's login</li>
-            <li>User clicks on a location she has already visited.</li>
-            <li>Website shows her the information about the location.</li>
-            <li>User clicks comment box, types her thoughts, and clicks post.</li>
-            <li>Website saves her comment in the database and displays it in the comments section.</li>
+            <li>User clicks on a location she has already visited</li>
+            <li>Website shows her the information about the location</li>
+            <li>User clicks comment box, types her thoughts, and clicks post</li>
+            <li>Website saves her comment in the database and displays it in the comments section</li>
 			<li>User prompts the system to log out</li>
 			<li>Website securely logs user out </li>
 			<li>User returns to interface again in future</li>
