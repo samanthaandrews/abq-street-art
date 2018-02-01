@@ -8,11 +8,10 @@
 		<h1>ABQ Art Walk Conceptual Model</h1>
 		<h3>Art</h3>
 		<ul>
-			<li>artId *primary key(the database has objectId and artCode, should these be included?)</li>
+			<li>artId *primary key</li>
             <li>artAddress</li>
 			<li>artArtist</li>
-            <li>artImageUrl</li>
-            <li>artJpgUrl</li>
+            <li>artImageUrl (we will be using the "jpg url"/static image data for this)</li>
             <li>artLocation</li>
             <li>artTitle</li>
             <li>artType</li>
@@ -23,11 +22,11 @@
 		<h3>Profile</h3>
 		<ul>
 			<li>profileId *primary key</li>
-			<li>profileActivationToken (possibly not required)</li>
+			<li>profileActivationToken</li>
 			<li>profileEmail</li>
 			<li>profileFullName</li>
-			<li>profileHash (possibly not required)</li>
-			<li>profileSalt (possibly not required)</li>
+			<li>profileHash</li>
+			<li>profileSalt</li>
 		</ul>
 		<h3>Bookmark</h3>
 		<ul>
@@ -36,11 +35,11 @@
 		</ul>
 		<h3>Comment</h3>
 		<ul>
-			<li>commentId *primary key(i think this is a try hard?)</li>
+			<li>commentId *primary key</li>
 			<li>commentArtId *foreign key</li>
 			<li>commentProfileId *foreign key</li>
 			<li>commentContent</li>
-			<li>commentDate</li>
+			<li>commentDateTime</li>
 		</ul>
 	</body>
 </html>
