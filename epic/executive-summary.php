@@ -16,7 +16,7 @@
 			<li>Users are able to bookmark/favorite pieces of art</li>
 			<li>Users are able to "opt-in" to receive notifications when they are nearby to art that they have expressed bookmarked/favorited</li>
 		</ul>
-			<h4>Stretch Goal:</h4>
+			<h3>Stretch Goal:</h3>
 		<ul>
 			<li>We are hoping to include 1-2 predetermined/suggested routes that users can utilize (but not create themselves)</li>
 		</ul>
