@@ -24,14 +24,14 @@
 			<li>profileId *primary key</li>
 			<li>profileActivationToken</li>
 			<li>profileEmail</li>
-			<li>profileFullName</li>
+			<li>profileUserName</li>
 			<li>profileHash</li>
 			<li>profileSalt</li>
 		</ul>
 		<h3>Bookmark</h3>
 		<ul>
 			<li>bookmarkArtId *foreign key</li>
-			<li>bookmardProfileId *foreign key</li>
+			<li>bookmarkProfileId *foreign key</li>
 		</ul>
 		<h3>Comment</h3>
 		<ul>
