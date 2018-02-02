@@ -26,7 +26,6 @@
             <li>Website saves her comment in the database and displays it in the comments section</li>
 			<li>User prompts the system to log out</li>
 			<li>Website securely logs user out </li>
-			<li>User returns to interface again in future</li>
 		</ol>
 	</body>
 </html>
