@@ -18,7 +18,7 @@ CREATE TABLE art (
   artLong DECIMAL(9,6) NOT NULL,
   artTitle VARCHAR(200),
   artType VARCHAR(200),
-  artYear DATE(4),
+  artYear YEAR,
   PRIMARY KEY(artId)
 );
 
@@ -31,12 +31,14 @@ CREATE TABLE profile (
   profileSalt CHAR(64) NOT NULL,
   profileUserName VARCHAR(32) NOT NULL,
   UNIQUE(profileEmail),
+  UNIQUE (profileUserName),
   PRIMARY KEY(profileId)
 );
 
-CREATE TABLE bookmark(
+CREATE TABLE bookmark (
   bookmarkArtId BINARY(16) NOT NULL,
   bookmarkProfileId BINARY(16) NOT NULL,
+  -- we index the foreign keys because they increase performance for static entities in the database
   INDEX(bookmarkArtId),
   INDEX(bookmarkProfileId),
   FOREIGN KEY(bookmarkArtId) REFERENCES art(artId),
