@@ -24,9 +24,9 @@
 			<li>profileId *primary key</li>
 			<li>profileActivationToken</li>
 			<li>profileEmail</li>
-			<li>profileUserName</li>
 			<li>profileHash</li>
 			<li>profileSalt</li>
+			<li>profileUserName</li>
 		</ul>
 		<h3>Bookmark</h3>
 		<ul>
