@@ -1,22 +1,24 @@
-ALTER DATABASE mschmitt5 CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+ALTER DATABASE ngustafson CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS art;
 DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS bookmark;
 DROP TABLE IF EXISTS comment;
 
+
+-- create the art entity
 CREATE TABLE art (
+  -- artId is the primary key
   artId BINARY(16) NOT NULL,
-  artArtist,
-  artAddress,
-  artYear,
-  artTitle,
-  artLocation,
-  artX,
-  artY,
-  artType,
-  artImageUrl,
-  artJpgUrl,
+  artAddress VARCHAR(200) NOT NULL,
+  artArtist VARCHAR(200) NOT NULL,
+  artImageUrl VARCHAR(200) NOT NULL,
+  artLat DECIMAL(9,6) NOT NULL,
+  artLocation VARCHAR(200),
+  artLong VARCHAR(9,6) NOT NULL ,
+  artTitle VARCHAR(200),
+  artType VARCHAR(200),
+  artyear CHAR(4),
   PRIMARY KEY(artId)
 );
 
