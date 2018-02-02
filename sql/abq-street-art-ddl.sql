@@ -11,24 +11,25 @@ CREATE TABLE art (
   -- artId is the primary key
   artId BINARY(16) NOT NULL,
   artAddress VARCHAR(200) NOT NULL,
-  artArtist VARCHAR(200) NOT NULL,
-  artImageUrl VARCHAR(200) NOT NULL,
+  artArtist VARCHAR(200),
+  artImageUrl VARCHAR(200),
   artLat DECIMAL(9,6) NOT NULL,
   artLocation VARCHAR(200),
-  artLong VARCHAR(9,6) NOT NULL ,
+  artLong DECIMAL(9,6) NOT NULL,
   artTitle VARCHAR(200),
   artType VARCHAR(200),
-  artyear CHAR(4),
+  artYear DATE(4),
   PRIMARY KEY(artId)
 );
 
 CREATE TABLE profile (
+  -- profileId is the primary key
   profileId BINARY(16) NOT NULL,
-  profileActivationToken,
-  profileEmail VARCHAR(128) NOT NULL,
+  profileActivationToken CHAR(32) NOT NULL,
+  profileEmail VARCHAR(200) NOT NULL,
   profileHash CHAR(128) NOT NULL,
-  profileFullName VARCHAR(32) NOT NULL,
   profileSalt CHAR(64) NOT NULL,
+  profileUserName VARCHAR(32) NOT NULL,
   UNIQUE(profileEmail),
   PRIMARY KEY(profileId)
 );
