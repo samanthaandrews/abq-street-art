@@ -13,12 +13,12 @@ CREATE TABLE art (
   artAddress VARCHAR(200) NOT NULL,
   artArtist VARCHAR(200),
   artImageUrl VARCHAR(200),
-  artLat DECIMAL(9,6) NOT NULL,
+  artLat DECIMAL(12,9) NOT NULL,
   artLocation VARCHAR(200),
-  artLong DECIMAL(9,6) NOT NULL,
+  artLong DECIMAL(12,9) NOT NULL,
   artTitle VARCHAR(200),
   artType VARCHAR(200),
-  artYear YEAR,
+  artYear SMALLINT UNSIGNED,
   PRIMARY KEY(artId)
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE profile (
   -- profileId is the primary key
   profileId BINARY(16) NOT NULL,
   profileActivationToken CHAR(32) NOT NULL,
-  profileEmail VARCHAR(200) NOT NULL,
+  profileEmail VARCHAR(128) NOT NULL,
   profileHash CHAR(128) NOT NULL,
   profileSalt CHAR(64) NOT NULL,
   profileUserName VARCHAR(32) NOT NULL,
@@ -50,8 +50,8 @@ CREATE TABLE comment (
   commentId BINARY(16) NOT NULL,
   commentArtId BINARY(16) NOT NULL,
   commentProfileId BINARY(16) NOT NULL,
-  commentContent VARCHAR(65535) NOT NULL,
-  commentDateTime DATETIME NOT NULL,
+  commentContent VARCHAR(4096) NOT NULL,
+  commentDateTime DATETIME(6) NOT NULL,
   INDEX(commentArtId),
   INDEX(commentProfileId),
   FOREIGN KEY(commentArtId) REFERENCES art(artId),
