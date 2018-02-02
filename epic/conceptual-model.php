@@ -9,15 +9,15 @@
 		<h3>Art</h3>
 		<ul>
 			<li>artId *primary key</li>
-            <li>artAddress</li>
+			<li>artAddress</li>
 			<li>artArtist</li>
-            <li>artImageUrl (we will be using the "jpg url"/static image data for this)</li>
-            <li>artLocation</li>
-            <li>artTitle</li>
-            <li>artType</li>
-			<li>artX</li>
-			<li>artY</li>
-            <li>artYear</li>
+			<li>artImageUrl (we will be using the "jpg url"/static image data for this)</li>
+			<li>artLocation</li>
+			<li>artTitle</li>
+			<li>artType</li>
+			<li>artLat</li>
+			<li>artLong</li>
+			<li>artYear</li>
 		</ul>
 		<h3>Profile</h3>
 		<ul>
