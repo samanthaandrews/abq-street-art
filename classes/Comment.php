@@ -282,6 +282,47 @@ class Comment implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets the Comment by commentId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $commentId comment id to search for
+	 * @return Comment|null Comment found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getCommentByCommentId(\PDO $pdo, $commentId) : ?Comment {
+		// sanitize the commentId before searching
+		try {
+			$commentId = self::validateUuid($commentId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//create query template
+		$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment WHERE commentId = :commentId";
+		$statement = $pdo->prepare($query);
+
+		//bind the comment id to the place holder in the template
+		$parameters = ["commentId" => $commentId->getBytes()];
+		$statement->execute($parameters);
+
+		//grab the comment from mySQL
+		try {
+			$comment = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($comment);
+	}
+
+
 }
 
 
