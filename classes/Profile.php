@@ -216,3 +216,58 @@ class Profile implements \JsonSerializable {
         }
         $this->profileSalt = $newProfileSalt;
     }
+
+    /**
+     * accessor method for profile user name
+     *
+     * @return string value of profile user name
+     **/
+    public function getProfileUserName(): string {
+        return ($this->profileUserName);
+    }
+
+    /**
+     * mutator method for profile user name
+     *
+     * @param string $newProfileUserName new value of profile user name
+     * @throws \InvalidArgumentException if $newProfileUserName is not a string or is insecure
+     * @throws \TypeError if $newProfileUserName is not a string
+     * @throws \RangeException if $newProfileUserName is > 32 characters
+     **/
+    public function setProfileUserName(string $newProfileUserName): void {
+        $newProfileUserName = trim($newProfileUserName);
+        $newProfileUserName = filter_var($newProfileUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+        if (empty($newProfileUserName) === true) {
+            throw(new \InvalidArgumentException("profile user name is empty or insecure"));
+        }
+
+        if (strlen($newProfileUserName) > 32) {
+            throw(new \RangeException("profile user name is too large"));
+        }
+        $this->profileUserName = $newProfileUserName;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     *formats the state variables for JSON serialization
+     *
+     * @return array resulting state variables to serialize
+     **/
+    public function jsonSerialize()
+    {
+        $fields = get_object_vars($this);
+        $fields["profileId"] = $this->profileId->toString();
+        unset($fields["profileHash"]);
+        unset($fields["profileSalt"]);
+        return ($fields);
+    }
