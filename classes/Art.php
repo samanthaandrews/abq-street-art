@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  *
- *
+ * This is the Art class
  *
  * @author Samantha Andrews <samantharaeandrews@gmail.com>
  * @version
