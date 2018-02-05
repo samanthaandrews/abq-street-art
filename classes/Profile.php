@@ -292,8 +292,43 @@ class Profile implements \JsonSerializable {
         $statement->execute($parameters);
     }
 
+    /**
+     * deletes this profile in mySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     *
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
+    public function delete(\PDO $pdo) : void {
+
+        //create query template
+        $query = "DELETE FROM profile WHERE profileId = :profileId";
+        $statement = $pdo->prepare($query);
+
+        //bind the member variables to the place holder in the template
+        $parameters = ["profileId" => $this->profileId->getBytes()];
+        $statement->execute($parameters);
+    }
 
 
+    /**
+     * updates this profile in mySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     *
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
+    public function update(\PDO $pdo) : void {
+
+        //create query template
+        $query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt, profileUserName = :profileUserName WHERE profileId = :profileId";
+        $statement = $pdo->prepare($query);
+
+        $parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt,  "profileUserName" => $this->profileUserName];
+        $statement->execute($parameters);
+    }
 
 
 
