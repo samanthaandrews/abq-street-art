@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\ABQ-STREET-ART;
+namespace Edu\Cnm\AbqStreetArt;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
@@ -9,9 +9,8 @@ use Ramsey\Uuid\Uuid;
 /**
  * This is the cross section for the Comment class of ABQ Street Art
  *
- * The Comment class of ABQ Street Art FINISH THIS DOC BLOCK
+ * The Comment class of ABQ Street Art
  *
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
  * @author Nathaniel Gustafson <natjgus@gmail.com>
  * @version 3.0.0
  **/
@@ -32,6 +31,7 @@ class Comment implements \JsonSerializable  {
 	 * id for the Profile that made the comment; this is a foreign key
 	 * @var Uuid $ProfileArtId
 	 **/
+	/**
 }
 
 
