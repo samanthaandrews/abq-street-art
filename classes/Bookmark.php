@@ -109,7 +109,6 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 		$this->bookmarkProfileId = $uuid;
 	}
 
-
 /**
  * inserts this Bookmark class into mySQL
  *
@@ -117,6 +116,16 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
  **/
+public function insert (\PDO $pdo) : void {
+
+	// create query template
+	$query = "INSERT INTO bookmark(bookmarkArtId, bookmarkProfileId) VALUES(:bookmarkArtId, :bookmarkProfileId)";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the place holders in the template
+	$parameters = ["bookmarkArtId" => $this->bookmarkArtId-getBytes(), "bookmarkProfileId" => $this->bookmarkProfileId-getBytes()];
+	$statement->execute($parameters);
+}
 
 /**
  * deletes this Bookmark class from mySQL
