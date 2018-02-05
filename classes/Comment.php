@@ -102,3 +102,58 @@ public function setCommentId($newCommentId) : void {
 	//convert and store the comment id
 	$this->commentId = $uuid;
 }
+
+/**
+ * accessor method for comment art id
+ *
+ * @return Uuid value of comment art id
+ **/
+public function getCommentArtId() : Uuid{
+	return($this->CommentArtId);
+}
+
+/**
+ * mutator method for comment art id
+ *
+ * @param string | Uuid $newCommentArtId new value of comment art id
+ * @throws \RangeException if $newCommentArtId is not positive
+ * @throws \TypeError if $newCommentArtId is not an integer
+ **/
+public function setCommentArtId( $newCommentArtId) : void {
+	try {
+		$uuid = self::validateUuid($newCommentArtId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+
+	// convert and store the profile id
+	$this->CommentArtId = $uuid;
+}
+/**
+ * accessor method for comment profile id
+ *
+ * @return Uuid value of comment profile id
+ **/
+public function getCommentProfileId() : Uuid{
+	return($this->CommentProfileId);
+}
+
+/**
+ * mutator method for comment profile id
+ *
+ * @param string | Uuid $newCommentProfileId new value of tweet profile id
+ * @throws \RangeException if $newCommentProfileId is not positive
+ * @throws \TypeError if $newCommentProfileId is not an integer
+ **/
+public function setCommentProfileId( $newCommentProfileId) : void {
+	try {
+		$uuid = self::validateUuid($newCommentProfileId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+
+	// convert and store the profile id
+	$this->CommentProfileId = $uuid;
+}
