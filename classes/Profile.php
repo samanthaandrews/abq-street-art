@@ -63,10 +63,35 @@ class Profile implements \JsonSerializable {
      **/
     private $profileUserName;
 
-/**
- * constructor will go here
- **/
-
+    /**
+     * constructor for this profile
+     *
+     * @param string|Uuid $newProfileId
+     * @param string $newProfileActivationToken
+     * @param string $newProfileEmail
+     * @param string $newProfileHash
+     * @param string $newProfileSalt
+     * @param string $newProfileUserName
+     *
+     * @throws \InvalidArgumentException if data types are not valid or are insecure
+     * @throws \RangeException if data values are out of bounds
+     * @throws \Exception if some other exception occurs
+     * @throws \TypeError if a data type violates a data hint
+     **/
+    public function __construct($newProfileId, string $newProfileActivationToken, string $newProfileEmail, string $newProfileHash, string $newProfileSalt, string $newProfileUserName) {
+        try {
+            $this->setProfileId($newProfileId);
+            $this->setProfileUserName($newProfileActivationToken);
+            $this->setProfileEmail($newProfileEmail);
+            $this->setProfileHash($newProfileHash);
+            $this->setProfileSalt($newProfileSalt);
+            $this->setProfileUserName($newProfileUserName);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            //to determine what exception type was thrown
+            $exceptionType = get_class($exception);
+            throw (new $exceptionType($exception->getMessage(), 0, $exception));
+        }
+    }
 
     /**
      * accessor method for profile ID
