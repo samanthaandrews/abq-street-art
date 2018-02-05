@@ -93,6 +93,12 @@ public function getCommentId() : Uuid {
  **/
 public function setCommentId($newCommentId) : void {
 	try {
-		$
+		$uuid = self::validateUuid($newCommentId);
+	} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
+
+	//convert and store the comment id
+	$this->commentId = $uuid;
 }
