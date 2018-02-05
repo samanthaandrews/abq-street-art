@@ -92,6 +92,34 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 	$this->bookmarkArtId = $uuid;
 }
 
+	/**
+	 * accessor method for bookmarkProfileId
+	 *
+	 * @return Uuid value of profileId
+	 **/
+	public function getProfileId() : Uuid {
+		return($this->profileId);
+	}
+
+	/**
+	 * mutator method for bookmarkProfileId
+	 *
+	 * @param Uuid|string $newBookmarkProfileId for new value of bookmarkProfileId
+	 * @throws \RangeException if $newBookmarkProfileId is not positive
+	 * @throws \TypeError if $newBookmarkProfileId is not a Uuid or string
+	 **/
+	public function setBookmarkProfileId ( $newBookmarkProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newBookmarkProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the bookmarkProfileId
+		$this->bookmarkProfileId = $uuid;
+	}
+
 
 
 
