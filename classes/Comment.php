@@ -45,3 +45,30 @@ class Comment implements \JsonSerializable  {
 	private $commentDateTime;
 }
 
+/**
+ * constructor for this Comment
+ *
+ * @param string|Uuid $newCommentId id of this Comment or null if a new Comment
+ * @param string|Uuid $newCommentArtId id of the Art piece the comment was made on
+ * @param string|Uuid $newCommentProfileId id of the Profile that made the Comment
+ * @param string $newCommentContent string containing actual Comment data
+ * @param \DateTime|string|null $newCommentDateTime date and time when Comment was sent or null if set to current date and time
+ * @throws \InvalidArgumentException if data types are not valid
+ * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+ * @throws \TypeError if data types violate type hints
+ * @throws \Exception if some other exception occurs
+ * @Documentation https://php.net/manual/en/language.oop5.decon.php
+ **/
+public function __construct($newTweetId, $newTweetProfileId, string $newTweetContent, $newTweetDate = null) {
+	try {
+		$this->setTweetId($newTweetId);
+		$this->setTweetProfileId($newTweetProfileId);
+		$this->setTweetContent($newTweetContent);
+		$this->setTweetDate($newTweetDate);
+	}
+		//determine what exception type was thrown
+	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+}
