@@ -11,6 +11,7 @@ use Ramsey\Uuid\Uuid;
  * This is the cross section for the Bookmark class of ABQ Street Art capstone project.
  *
  * @author Erin Scott <erinleeannscott@gmail.com>
+ * @author Dylan McDonald <dmcdonald21@cnm.edu>
  *
  * @version 1.0
  **/
@@ -79,7 +80,17 @@ class Bookmark implements \JsonSerialable {
 	 * @throws \RangeException if $newBookmarkArtId is not positive
 	 * @throws \TypeError if $newBookmarkArtId is not a Uuid or string
 	 **/
-public function setBookmarkArtId ($new)
+public function setBookmarkArtId ( $newBookmarkArtId) : void {
+	try {
+		$uuid = self::validateUuid($newBookmarkArtId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+
+	// convert and store the bookmarkArtId
+	$this->bookmarkArtId = $uuid;
+}
 
 
 
