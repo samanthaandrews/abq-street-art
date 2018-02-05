@@ -206,7 +206,7 @@ public function getCommentDateTime() : \DateTime {
  * mutator method for the comment date time
  *
  * @param \DateTime|string|null $newCommentDateTime comment date as a DateTime object or string (or null to load the current time)
- * @throws \InvalidArgumentException if $newCommentDateTime is not a valid ob
- */
-
-}
+ * @throws \InvalidArgumentException if $newCommentDateTime is not a valid object or string
+ * @throws \RangeException if $newCommentDateTime is a date that does not exist
+ **/
+public function setCommentDateTime($
