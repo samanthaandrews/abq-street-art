@@ -59,12 +59,13 @@ class Comment implements \JsonSerializable  {
  * @throws \Exception if some other exception occurs
  * @Documentation https://php.net/manual/en/language.oop5.decon.php
  **/
-public function __construct($newTweetId, $newTweetProfileId, string $newTweetContent, $newTweetDate = null) {
+public function __construct($newCommentId, $newCommentArtId, $newCommentProfileId, string $newCommentContent, $newCommentDateTime = null) {
 	try {
-		$this->setTweetId($newTweetId);
-		$this->setTweetProfileId($newTweetProfileId);
-		$this->setTweetContent($newTweetContent);
-		$this->setTweetDate($newTweetDate);
+		$this->setCommentId($newCommentId);
+		$this->setCommentArtId($newCommentArtId);
+		$this->setCommentProfileId($newCommentProfileId);
+		$this->setCommentContent($newCommentContent);
+		$this->setCommentDateTime($newCommentDateTime);
 	}
 		//determine what exception type was thrown
 	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
