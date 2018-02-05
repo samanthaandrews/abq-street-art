@@ -66,6 +66,45 @@ class Art implements \JsonSerializable {
 	 **/
 	private $artYear;
 
+	/**
+	 * constructor for this Art
+	 *
+	 * @param string|Uuid $newArtId id of this Art or null if a new Art
+	 * @param string $newArtAddress
+	 * @param string $newArtArtist
+	 * @param string $newArtImageUrl
+	 * @param string $newArtLat
+	 * @param string $newArtLocation
+	 * @param string $newArtLong
+	 * @param string $newArtTitle
+	 * @param string $newArtType
+	 * @param string $newArtYear
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newArtId, $newArtAddress, $newArtArtist, $newArtImageUrl, $newArtLat, $newArtLocation, $newArtLong, $newArtTitle, $newArtType, $newArtYear = null) {
+		try {
+			$this->setArtId($newArtId);
+			$this->setArtAddress($newArtAddress);
+			$this->setArtArtist($newArtArtist);
+			$this->setArtImageUrl($newArtImageUrl);
+			$this->setArtLat($newArtLat);
+			$this->setArtLocation($newArtLocation);
+			$this->setArtLong($newArtLong);
+			$this->setArtTitle($newArtTitle);
+			$this->setArtType($newArtType;
+			$this->setArtYear($newArtYear);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
 /**
  * accessor method for art id
  *
@@ -401,6 +440,294 @@ public function setArtId( $newArtId) : void {
 		// store the art year
 		$this->artYear = $newArtYear;
 	}
+
+
+	/**
+	 * inserts this Art into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+
+		// create query template
+		$query = "INSERT INTO art(artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear) VALUES(:artId, :artArtist, :artImageUrl, :artLat, :artLocation, :artLong, :artTitle, :artType, :artYear)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["artId" => $this->artId->getBytes(), "artAddress" => $this->artAddress, "artArtist" => $this->artArtist, "artImageUrl" => $this->artImageUrl, "artLat" => $this->artLat, "artLocation" => $this->artLocation, "artLong" => $this->artLong, "artTitle" => $this->artTitle, "artType" => $this->artType, "artYear" => $this->artYear];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * deletes this Art from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM art WHERE artId = :artId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["artId" => $this->artId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this Art in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE art SET artAddress = :artAddress, artArtist = :artArtist, artImageUrl = :artImageUrl, artLat = :artLat, artLocation = :artLocation, artLong = :artLong, artTitle = :artTitle, artType = :artType, artYear = :artYear WHERE artId = :artId";
+		$statement = $pdo->prepare($query);
+
+
+		$parameters = ["artId" => $this->artId->getBytes(), "artAddress" => $this->artAddress, "artArtist" => $this->artArtist, "artImageUrl" => $this->artImageUrl, "artLat" => $this->artLat, "artLocation" => $this->artLocation, "artLong" => $this->artLong, "artTitle" => $this->artTitle, "artType" => $this->artType, "artYear" => $this->artYear];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * gets the Art by artId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $artId art id to search for
+	 * @return Art|null Art found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getArtByArtId(\PDO $pdo, $artId) : ?Art {
+		// sanitize the artId before searching
+		try {
+			$artId = self::validateUuid($artId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artId = :artId";
+		$statement = $pdo->prepare($query);
+
+		// bind the art id to the place holder in the template
+		$parameters = ["artId" => $artId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the art from mySQL
+		try {
+			$art = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($art);
+	}
+
+	/**
+	 * gets the Art by artist
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $artArtist art content to search for
+	 * @return \SplFixedArray SplFixedArray of pieces of art found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArtByArtArtist(\PDO $pdo, string $artArtist) : \SplFixedArray {
+		// sanitize the description before searching
+		$artArtist = trim($artArtist);
+		$artArtist = filter_var($artArtist, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($artArtist) === true) {
+			throw(new \PDOException("artist is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$artArtist = str_replace("_", "\\_", str_replace("%", "\\%", $artArtist));
+
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artArtist LIKE :artArtist";
+		$statement = $pdo->prepare($query);
+
+		// bind the artist to the place holder in the template
+		$artArtist = "%$artArtist%";
+		$parameters = ["artArtist" => $artArtist];
+		$statement->execute($parameters);
+
+		// build an array of pieces of art
+		$arts = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+				$arts[$arts->key()] = $art;
+				$arts->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($arts);
+	}
+
+	/**
+	 * gets the Art by location
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $artLocation art location to search for
+	 * @return \SplFixedArray SplFixedArray of pieces of art found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArtByArtLocation(\PDO $pdo, string $artLocation) : \SplFixedArray {
+		// sanitize the description before searching
+		$artLocation = trim($artLocation);
+		$artLocation = filter_var($artLocation, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($artLocation) === true) {
+			throw(new \PDOException("art location is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$artLocation = str_replace("_", "\\_", str_replace("%", "\\%", $artLocation));
+
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artLocation LIKE :artLocation";
+		$statement = $pdo->prepare($query);
+
+		// bind the art location to the place holder in the template
+		$artLocation = "%$artLocation%";
+		$parameters = ["artLocation" => $artLocation];
+		$statement->execute($parameters);
+
+		// build an array of art
+		$arts = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+				$arts[$arts->key()] = $art;
+				$arts->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($arts);
+	}
+
+	/**
+	 * gets the Art by type
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $artType art type to search for
+	 * @return \SplFixedArray SplFixedArray of pieces of art found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArtByArtType(\PDO $pdo, string $artType) : \SplFixedArray {
+		// sanitize the description before searching
+		$artType = trim($artType);
+		$artType = filter_var($artType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($artType) === true) {
+			throw(new \PDOException("art type is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$artType = str_replace("_", "\\_", str_replace("%", "\\%", $artType));
+
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artType LIKE :artType";
+		$statement = $pdo->prepare($query);
+
+		// bind the art type to the place holder in the template
+		$artType = "%$artType%";
+		$parameters = ["artType" => $artType];
+		$statement->execute($parameters);
+
+		// build an array of art
+		$arts = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+				$arts[$arts->key()] = $art;
+				$arts->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($arts);
+	}
+
+	/**
+	 * gets the Art by year
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $artYear art year to search for
+	 * @return \SplFixedArray SplFixedArray of pieces of art found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getArtByArtYear(\PDO $pdo, int $artYear) : \SplFixedArray {
+		// sanitize the description before searching
+		$artYear = trim($artYear);
+		$artYear = filter_var($artYear, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($artYear) === true) {
+			throw(new \PDOException("art year is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$artYear = str_replace("_", "\\_", str_replace("%", "\\%", $artYear));
+
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artYear LIKE :artYear";
+		$statement = $pdo->prepare($query);
+
+		// bind the art year to the place holder in the template
+		$artYear = "%$artYear%";
+		$parameters = ["artYear" => $artYear];
+		$statement->execute($parameters);
+
+		// build an array of art
+		$arts = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+				$arts[$arts->key()] = $art;
+				$arts->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($arts);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["artId"] = $this->artId->toString();
+
+		return($fields);
+	}
+
 }
-
-
