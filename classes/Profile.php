@@ -95,3 +95,37 @@ class Profile implements \JsonSerializable {
          **/
         $this->profileId = $uuid;
     }
+
+
+    /**
+     * accessor method for profile activation token
+     * @return string value of profile ID
+     **/
+    public function getProfileActivationToken(): string {
+        return $this->profileActivationToken;
+    }
+
+    /**
+     * mutator method for profile activation token
+     *
+     * @param string $newProfileActivationToken new value of profile activation token
+     *
+     * @throws \InvalidArgumentException if $newProfileActivationToken is invalid or insecure
+     * @throws \RangeException if $newProfileActivationToken is > 32 characters
+     * @throws \TypeError if $newProfileActivationToken is not a string
+     **/
+    public function setProfileActivationToken (?string $newProfileActivationToken) : void {
+        if($newProfileActivationToken === null){
+            $this->profileActivationToken = null;
+            return;
+        }
+        $newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+        if(ctype_xdigit($newProfileActivationToken) === false) {
+            throw(new\RangeException("profile activation is not valid"));
+        }
+        //make sure activation token is only 32 characters
+        if(strlen($newProfileActivationToken) !== 32) {
+            throw(new\RangeException("user activation token has to be 32 characters"));
+        }
+        $this->profileActivationToken = $newProfileActivationToken;
+    }
