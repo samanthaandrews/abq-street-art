@@ -129,3 +129,33 @@ class Profile implements \JsonSerializable {
         }
         $this->profileActivationToken = $newProfileActivationToken;
     }
+
+    /**
+     *accessor method for profile email
+     * @return string value of profile email
+     **/
+    public function getProfileEmail(): string {
+        return ($this->profileEmail);
+    }
+
+    /**
+     * mutator method for profile email
+     *
+     * @param string $newProfileEmail new value of profile email
+     * @throws \RangeException if $newProfileEmail is > 120 characters
+     * @throws \TypeError if $newProfileEmail is not a string
+     * @throws \InvalidArgumentException if $newProfileEmail is invalid or insecure
+     **/
+    public function setProfileEmail($newProfileEmail): void {
+        $newProfileEmail = trim($newProfileEmail);
+        $newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL);
+        if (empty($newProfileEmail) === true) {
+            throw(new \InvalidArgumentException("profile email is empty or insecure"));
+        }
+        if (strlen($newProfileEmail) > 128) {
+            throw(new \RangeException("profile email is too large"));
+        }
+        $this->profileEmail = $newProfileEmail;
+    }
+
+
