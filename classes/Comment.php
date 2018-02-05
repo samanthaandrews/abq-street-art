@@ -261,3 +261,25 @@ public function delete(\PDO $pdo) : void {
 	$parameters = ["commentId" => $this->commentId->getBytes()];
 	$statement->execute($parameters);
 }
+
+
+
+}}
+
+
+/**
+ * formats the state variables for JSON serialization
+ *
+ * @return array resulting state variables to serialize
+ **/
+public function jsonSerialize() : array {
+	$fields = get_object_vars($this);
+
+	$fields["commentId"] = $this->commentId->toString();
+	$fields["commentArtId"] = $this->commentArtId->toString();
+	$fields["commentProfileId"] = $this->commentProfileId->toString();
+
+	//format the date so that the front end can consume it
+	$fields["commentDateTime"] = round(floatval($this->commentDateTime->format("U.u")) * 1000);
+	return($fields);
+}
