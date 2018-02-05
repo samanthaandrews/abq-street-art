@@ -331,6 +331,48 @@ class Profile implements \JsonSerializable {
     }
 
 
+    /**
+     * gets profile by profileId
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param Uuid|string $profileId profile ID to search for
+     *
+     * @return Profile|null profile found or null if not found
+     *
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when a variable is not the correct data type
+     **/
+    public static function getProfileByProfileId(\PDO $pdo, $profileId) : ?Profile {
+
+        //sanitize the profileId before searching
+        try {
+            $profileId = self::validateUuid($profileId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            throw (new \PDOException($exception->getMessage(), 0, $exception));
+        }
+
+        //create query template
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile WHERE profileId = :profileId";
+        $statement = $pdo->prepare($query);
+
+        //bind the profile id to the place holder in the template
+        $parameters = ["profileId" => $profileId->getBytes()];
+        $statement->execute($parameters);
+
+        //grab the profile from mySQL
+        try {
+            $profile = null;
+            $statement->setFetchMode(\PDO::FETCH_ASSOC);
+            $row = $statement->fetch();
+            if ($row !== false) {
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+            }
+        } catch (\Exception $exception) {
+            //if the row couldn't be converted, rethrow it
+            throw (new \PDOException($exception->getMessage(), 0, $exception));
+        }
+        return($profile);
+    }
 
 
 
