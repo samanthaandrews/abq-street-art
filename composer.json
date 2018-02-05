@@ -1,0 +1,5 @@
+{
+  "require": {
+    "ramsey/uuid": "@stable"
+  }
+}
