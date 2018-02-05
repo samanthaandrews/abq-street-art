@@ -145,4 +145,16 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
  * @throws \TypeError if $pdo is not a PDO connection object
  **/
 
+/**
+ * formats the state variables for JSON serialization
+ *
+ * @return array resulting state variables to serialize
+ **/
+public function jsonSerialize() : array {
+	$fields = get_object_vars($this);
+
+	$fields["bookmarkArtId"] = $this->bookmarkArtId->toString();
+	$fields["bookmarkProfileId"] = $this->bookmarkProfileId->toString();
+}
+
 }
