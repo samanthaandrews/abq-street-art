@@ -35,7 +35,7 @@ class Bookmark implements \JsonSerialable {
 	 * Erin still needs to write this as of 2/5
 	 **/
 
-//	Including the example below from class materials; Erin will clean up upon writing constructor method
+//	Including the example below from class materials: https://bootcamp-coders.cnm.edu/class-materials/object-oriented/object-oriented-php.php. Erin will clean up upon writing constructor method
 
 //	/**
 //	 * constructor for this Tweet
@@ -121,8 +121,28 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 	}
 
 
+/**
+ * inserts this Bookmark class into mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
 
+/**
+ * deletes this Bookmark class from mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
 
-
+/**
+ * updates this Bookmark class in mySQL
+ *
+ *  @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
 
 }
