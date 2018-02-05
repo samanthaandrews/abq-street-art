@@ -193,3 +193,20 @@ public function setCommentContent() : string {
 		$this->commentContent = $newCommentContent;
 	}
 }
+
+/**
+ * accessor method for comment date time
+ *
+ * @return \DateTime value of comment date
+ **/
+public function getCommentDateTime() : \DateTime {
+	return($this->commentDateTime);
+	}
+/**
+ * mutator method for the comment date time
+ *
+ * @param \DateTime|string|null $newCommentDateTime comment date as a DateTime object or string (or null to load the current time)
+ * @throws \InvalidArgumentException if $newCommentDateTime is not a valid ob
+ */
+
+}
