@@ -30,17 +30,18 @@ class Comment implements \JsonSerializable  {
 	private $commentArtId;
 	/**
 	 * id for the Profile that made the comment; this is a foreign key
-	 * @var Uuid $ProfileArtId
+	 * @var Uuid $commentProfileId
 	 **/
+	private $commentProfileId;
 	/**
+	 * content of the Comment
+	 * @var string $commentContent
+	 **/
+	private $commentContent;
+	/**
+	 * date and time this Comment was posted, in a PHP DateTime object
+	 * @var \DateTime $commentDateTime
+	 **/
+	private $commentDateTime;
 }
 
-
-<h3>Comment</h3>
-		<ul>
-			<li>commentId *primary key</li>
-			<li>commentArtId *foreign key</li>
-			<li>commentProfileId *foreign key</li>
-			<li>commentContent</li>
-			<li>commentDateTime</li>
-		</ul>
