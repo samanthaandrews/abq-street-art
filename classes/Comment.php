@@ -210,3 +210,26 @@ public function getCommentDateTime() : \DateTime {
  * @throws \RangeException if $newCommentDateTime is a date that does not exist
  **/
 public function setCommentDateTime($
+/**
+ * mutator method for tweet date
+ *
+ * @param \DateTime|string|null $newTweetDate tweet date as a DateTime object or string (or null to load the current time)
+ * @throws \InvalidArgumentException if $newTweetDate is not a valid object or string
+ * @throws \RangeException if $newTweetDate is a date that does not exist
+ **/
+public function setCommentDateTime($newCommentDateTime = null) : void {
+	// base case: if the date is null, use the current date and time
+	if($newCommentDateTime === null) {
+		$this->commentDateTime = new \DateTime();
+		return;
+	}
+
+	// store the comment date using the ValidateDate trait
+	try {
+		$newCommentDateTime = self::validateDateTime($newCommentDateTime);
+	} catch(\InvalidArgumentException | \RangeException $exception) {
+		$exceptionType = get_class($exception);
+		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+	$this->commentDateTime = $newCommentDateTime;
+}
