@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
  * @version 3.0.0
  **/
 
-class Comment implements \JsonSerializable  {
+class Comment implements \JsonSerializable {
 	use ValidateDate;
 	use ValidateUuid;
 	/**
@@ -44,7 +44,7 @@ class Comment implements \JsonSerializable  {
 	 * @var \DateTime $commentDateTime
 	 **/
 	private $commentDateTime;
-}
+
 
 /**
  * constructor for this Comment
@@ -176,7 +176,6 @@ public function getCommentContent() : string {
  * @throws \TypeError if $newCommentContent is not a string
  **/
 public function setCommentContent() : string {
-	try {
 		// verify the comment content is secure
 		$newCommentContent = trim($newCommentContent);
 		$newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -192,7 +191,7 @@ public function setCommentContent() : string {
 		// store the comment content
 		$this->commentContent = $newCommentContent;
 	}
-}
+
 
 /**
  * accessor method for comment date time
@@ -224,4 +223,41 @@ public function setCommentDateTime($newCommentDateTime = null) : void {
 		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
 	$this->commentDateTime = $newCommentDateTime;
+}
+
+/**
+ * inserts this Comment into mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function insert(\PDO $pdo) : void {
+
+	// create query template
+	$query = "INSERT INTO comment(commentId, commentArtId, commentProfileId, commentContent, commentDateTime) VALUES(:commentId, :commentArtId,:commentProfileId, :commentContent, :contentDateTime)";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the place holders in the template
+	$formattedDate = $this->commentDateTime>format("Y-m-d H:i:s.u");
+	$parameters = ["commentId" => $this->commentId->getBytes(), "commentArtId" => $this->commentArtId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
+	$statement->execute($parameters);
+}
+
+/**
+ * deletes this Comment from mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function delete(\PDO $pdo) : void {
+
+	// create query template
+	$query = "DELETE FROM comment WHERE commentId = :commentId";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the place holder in the template
+	$parameters = ["commentId" => $this->commentId->getBytes()];
+	$statement->execute($parameters);
 }
