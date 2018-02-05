@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
  **/
 
 class Comment implements \JsonSerializable  {
+	use ValidateDate;
 	use ValidateUuid;
 	/**
 	 * id for this Comment; this is the primary key
@@ -71,5 +72,27 @@ public function __construct($newCommentId, $newCommentArtId, $newCommentProfileI
 	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
 		throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	}
+}
+
+/**
+ * accessor method for comment id
+ *
+ * @return Uuid value of comment id
+ **/
+public function getCommentId() : Uuid {
+	return($this->commentId);
+}
+
+/**
+ * mutator method for the comment id
+ *
+ * @param Uuid | string $newCommentId new value of comment id
+ * @throws \RangeException if $newCommentId is not positive
+ * @throws \TypeError if $newCommentId is not a uuid or string
+ **/
+public function setCommentId($newCommentId) : void {
+	try {
+		$
 	}
 }
