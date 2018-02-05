@@ -63,3 +63,35 @@ class Profile implements \JsonSerializable {
      **/
     private $profileUserName;
 
+/**
+ * constructor will go here
+ **/
+
+
+    /**
+     * accessor method for profile ID
+     * @return Uuid value of profile ID
+     **/
+    public function getProfileId(): Uuid {
+        return $this->profileId;
+    }
+
+    /**
+     * mutator method for profile ID
+     *
+     * @param Uuid|string $newProfileId new value of profile ID
+     * @throws \RangeException if $newProfileId is not positive
+     * @throws \TypeError if $newProfileId is not a uuid or string
+     **/
+    public function setProfileId($newProfileId): void {
+        try {
+            $uuid = self::validateUuid($newProfileId);
+        } catch (\InvalidArgumentException | \ RangeException | \Exception | \TypeError $exception) {
+            $exceptionType = get_class($exception);
+            throw(new $exceptionType($exception->getMessage(), 0, $exception));
+        }
+        /**
+         * convert and store the profile ID
+         **/
+        $this->profileId = $uuid;
+    }
