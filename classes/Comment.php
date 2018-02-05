@@ -10,7 +10,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * This is the cross section for the Comment class of ABQ Street Art
  *
- * The Comment class of ABQ Street Art
+ * The Comment class of ABQ Street Art webpage
  *
  * @author Nathaniel Gustafson <natjgus@gmail.com>
  * @version 3.0.0
