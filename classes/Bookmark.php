@@ -32,37 +32,26 @@ class Bookmark implements \JsonSerialable {
 	/**
 	 * constructor for this Bookmark
 	 *
-	 * Erin still needs to write this as of 2/5
+	 * @param string|Uuid $newBookmarkArtId id of this Bookmark or null if a new Bookmark
+	 * @param string|Uuid $newBookmarkProfileId id of this Bookmark or null if a new Bookmark
+	 *
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-
-//	Including the example below from class materials: https://bootcamp-coders.cnm.edu/class-materials/object-oriented/object-oriented-php.php. Erin will clean up upon writing constructor method
-
-//	/**
-//	 * constructor for this Tweet
-//	 *
-//	 * @param string|Uuid $newTweetId id of this Tweet or null if a new Tweet
-//	 * @param string|Uuid $newTweetProfileId id of the Profile that sent this Tweet
-//	 * @param string $newTweetContent string containing actual tweet data
-//	 * @param \DateTime|string|null $newTweetDate date and time Tweet was sent or null if set to current date and time
-//	 * @throws \InvalidArgumentException if data types are not valid
-//	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
-//	 * @throws \TypeError if data types violate type hints
-//	 * @throws \Exception if some other exception occurs
-//	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
-//	 **/
-//	public function __construct($newTweetId, $newTweetProfileId, string $newTweetContent, $newTweetDate = null) {
-//		try {
-//			$this->setTweetId($newTweetId);
-//			$this->setTweetProfileId($newTweetProfileId);
-//			$this->setTweetContent($newTweetContent);
-//			$this->setTweetDate($newTweetDate);
-//		}
-//			//determine what exception type was thrown
-//		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-//			$exceptionType = get_class($exception);
-//			throw(new $exceptionType($exception->getMessage(), 0, $exception));
-//		}
-//	}
+	public function __construct ($newBookmarkArtId, $newBookmarkProfileId) {
+		try {
+			$this->setBookmarkArtId($newBookmarkArtId);
+			$this->setBookmarkProfileId($newBookmarkProfileId);
+		}
+		//determines what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor method for bookmarkArtId
