@@ -78,7 +78,7 @@ public function getArtId() : Uuid {
 /**
  * mutator method for art id
  *
- * @param Uuid/string $newArtId new value of art id
+ * @param Uuid|string $newArtId new value of art id
  * @throws \RangeException if $newArtId is not positive
  * @throws \TypeError if $newArtId is not a uuid or string
  **/
@@ -174,6 +174,7 @@ public function setArtId( $newArtId) : void {
 	/**
 	 * mutator method for art image url
 	 *
+	 *
 	 * @param string $newArtImageUrl new value of art artist
 	 * @throws \InvalidArgumentException if $newArtImageUrl is not a string or insecure
 	 * @throws \RangeException if $newArtImageUrl is > 200 characters
@@ -182,7 +183,7 @@ public function setArtId( $newArtId) : void {
 	public function setArtImageUrl(string $newArtImageUrl) : void {
 		// verify the url is secure
 		$newArtImageUrl = trim($newArtImageUrl);
-		$newArtImageUrl = filter_var($newArtImageUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newArtImageUrl = filter_var($newArtImageUrl, FILTER_SANITIZE_URL);
 		if(empty($newArtImageUrl) === true) {
 			throw(new \InvalidArgumentException("image url is empty or insecure"));
 		}
@@ -198,6 +199,7 @@ public function setArtId( $newArtId) : void {
 
 	/** accessor method for art latitude
 	 *
+	 *
 	 * @return float value of art latitude
 	 **/
 	public function getArtLat() : float {
@@ -207,17 +209,35 @@ public function setArtId( $newArtId) : void {
 	/** mutator method for art latitude
 	 *
 	 * @param float $newArtLat new value of art latitude
-	 * @throws \InvalidArgumentException if $newArtLat is not a string or insecure
-	 * @
+	 * @throws \InvalidArgumentException if $newArtLat is not a float or insecure
+	 * @throws \RangeException if $newArtLat is not within -90 to 90
+	 * @throws \TypeError if $newArtLat is not a float
 	 **/
 
+	public function setArtLat(float $newArtLat) : void {
+	// verify the art latitude is secure
+		$newArtLat = trim($newArtLat);
+		$newArtLat = filter_var($newArtLat, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION, FILTER_FLAG_ALLOW_THOUSAND, FILTER_FLAG_ALLOW_SCIENTIFIC);
+		if(empty($newArtLat) === true) {
+		throw(new\InvalidArgumentException("art latitude is empty or insecure"));
+		}
+	// verify the latitude exists on earth
+	if(floatval($newArtLat) > 90) {
+		throw(new \RangeException("art latitude is not between -90 and 90"));
+	}
+	if (floatval($newArtLat) < -90) {
+		throw(new \RangeException("art latitude is not between -90 and 90"));)
+	}
+		// store the latitude
+		$this->artLat = $newArtLat;
+}
 
 	/**
 	 * accessor method for art location
 	 *
 	 * @return string value of art location
 	 **/
-	public function getArtLocation() :string {
+	public function getArtLocation() : string {
 		return($this->artLocation);
 	}
 
@@ -244,6 +264,41 @@ public function setArtId( $newArtId) : void {
 
 		// store the artist
 		$this->artLocation = $newArtLocation;
+	}
+
+	/** accessor method for art longitude
+	 *
+	 *
+	 * @return float value of art longitude
+	 **/
+	public function getArtLong() : float {
+		return($this->artLong);
+	}
+
+	/** mutator method for art longitude
+	 *
+	 * @param float $newArtLong new value of art longitude
+	 * @throws \InvalidArgumentException if $newArtLong is not a float or insecure
+	 * @throws \RangeException if $newArtLong is not within -180 to 180
+	 * @throws \TypeError if $newArtLong is not a float
+	 **/
+
+	public function setArtLong(float $newArtLong) : void {
+		// verify the art longitude is secure
+		$newArtLat = trim($newArtLong);
+		$newArtLat = filter_var($newArtLong, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION, FILTER_FLAG_ALLOW_THOUSAND, FILTER_FLAG_ALLOW_SCIENTIFIC);
+		if(empty($newArtLong) === true) {
+			throw(new\InvalidArgumentException("art longitude is empty or insecure"));
+		}
+		// verify the latitude exists on earth
+		if(floatval($newArtLong) > 180) {
+			throw(new \RangeException("art longitude is not between -180 and 180"));
+		}
+		if (floatval($newArtLong) < -180) {
+			throw(new \RangeException("art longitude is not between -180 and 180"));)
+		}
+		// store the latitude
+		$this->artLong = $newArtLong;
 	}
 
 	/**
@@ -313,4 +368,38 @@ public function setArtId( $newArtId) : void {
 		// store the art type
 		$this->artType = $newArtType;
 	}
+
+	/**
+	 * accessor method for art year
+	 *
+	 * @return integer value of art year
+	 **/
+	public function getArtYear() : int {
+		return($this->artYear);
+	}
+
+	/** mutator method for art year
+	 *
+	 * @param int $newArtYear new value of art year
+	 * @throws \InvalidArgumentException if $newArtYear is not an integer or insecure
+	 * @throws \RangeException if $newArtYear is below 0
+	 * @throws \TypeError if $newArtYear is not an integer
+	 **/
+	public function setArtYear(int $newArtYear) : void {
+		// verify the art year is secure
+		$newArtYear = trim($newArtYear);
+		$newArtYear = filter_var($newArtYear, FILTER_SANITIZE_NUMBER_INT);
+		if(empty($newArtYear) === true) {
+			throw(new \InvalidArgumentException("art year is empty or insecure"));
+		}
+
+		// verify the art year will fit in the database
+		if(intval($newArtType) < 1000) {
+			throw(new \RangeException("art year before 1000"));
+		}
+
+		// store the art year
+		$this->artYear = $newArtYear;
+	}
+}
 
