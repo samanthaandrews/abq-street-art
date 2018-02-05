@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\ABQ-STREET-ART;
+namespace Edu\Cnm\AbqStreetArt;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
@@ -7,13 +7,11 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 
 /**
- * Small Cross Section of a Twitter like Message
  *
- * This Tweet can be considered a small example of what services like Twitter store when messages are sent and
- * received using Twitter. This can easily be extended to emulate more features of Twitter.
  *
- * @author Dylan McDonald <dmcdonald21@cnm.edu>
- * @version 3.0.0
+ *
+ * @author Samantha Andrews <samantharaeandrews@gmail.com>
+ * @version
  **/
 class Art implements \JsonSerializable {
 	use ValidateUuid;
@@ -101,7 +99,7 @@ public function setArtId( $newArtId) : void {
 	 *
 	 * @return string value of art address
 	 **/
-	public function getArtAddress() :string {
+	public function getArtAddress() : string {
 		return($this->artAddress);
 	}
 
@@ -169,7 +167,7 @@ public function setArtId( $newArtId) : void {
 	 *
 	 * @return string value of art image url
 	 **/
-	public function getArtImageUrl() :string {
+	public function getArtImageUrl() : string {
 		return($this->artImageUrl);
 	}
 
@@ -197,6 +195,22 @@ public function setArtId( $newArtId) : void {
 		// store the image url
 		$this->artImageUrl = $newArtImageUrl;
 	}
+
+	/** accessor method for art latitude
+	 *
+	 * @return float value of art latitude
+	 **/
+	public function getArtLat() : float {
+		return($this->artLat);
+	}
+
+	/** mutator method for art latitude
+	 *
+	 * @param float $newArtLat new value of art latitude
+	 * @throws \InvalidArgumentException if $newArtLat is not a string or insecure
+	 * @
+	 **/
+
 
 	/**
 	 * accessor method for art location
@@ -237,7 +251,7 @@ public function setArtId( $newArtId) : void {
 	 *
 	 * @return string value of art title
 	 **/
-	public function getArtTitle() :string {
+	public function getArtTitle() : string {
 		return($this->artTitle);
 	}
 
@@ -271,7 +285,7 @@ public function setArtId( $newArtId) : void {
 	 *
 	 * @return string value of art type
 	 **/
-	public function getArtType() :string {
+	public function getArtType() : string {
 		return($this->artType);
 	}
 
@@ -285,7 +299,7 @@ public function setArtId( $newArtId) : void {
 	 **/
 	public function setArtType(string $newArtType) : void {
 		// verify the art type is secure
-		$newArtType = trim($newArtTitle);
+		$newArtType = trim($newArtType);
 		$newArtType = filter_var($newArtType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newArtType) === true) {
 			throw(new \InvalidArgumentException("art type is empty or insecure"));
