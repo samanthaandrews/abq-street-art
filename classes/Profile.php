@@ -9,9 +9,9 @@
 namespace Edu\Cnm\AbqStreetArt;
 
 require_once ("autoload.php");
-require_once (dirname(__DIR__) . "classes/autoload.php");
+require_once (dirname(__DIR__) . "vendor/autoload.php");
 
-use function Couchbase\passthruEncoder;
+
 use Edu\Cnm\AbqStreetArt\ValidateUuid;
 use Ramsey\Uuid\Uuid;
 
