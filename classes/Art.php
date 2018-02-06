@@ -70,22 +70,22 @@ class Art implements \JsonSerializable {
 	 * constructor for this Art
 	 *
 	 * @param string|Uuid $newArtId id of this Art or null if a new Art
-	 * @param string $newArtAddress
-	 * @param string $newArtArtist
-	 * @param string $newArtImageUrl
-	 * @param string $newArtLat
-	 * @param string $newArtLocation
-	 * @param string $newArtLong
-	 * @param string $newArtTitle
-	 * @param string $newArtType
-	 * @param string $newArtYear
+	 * @param string $newArtAddress address of this Art
+	 * @param string $newArtArtist artist of this Art
+	 * @param string $newArtImageUrl image url of this Art
+	 * @param string $newArtLat latitude value of this art
+	 * @param string $newArtLocation location of this art
+	 * @param string $newArtLong longitude value of this art
+	 * @param string $newArtTitle title of this art
+	 * @param string $newArtType type of this art
+	 * @param string $newArtYear year this art was made
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newArtId, $newArtAddress, $newArtArtist, $newArtImageUrl, $newArtLat, $newArtLocation, $newArtLong, $newArtTitle, $newArtType, $newArtYear = null) {
+	public function __construct($newArtId, string $newArtAddress, string $newArtArtist, string $newArtImageUrl, float $newArtLat, string $newArtLocation, float $newArtLong, string $newArtTitle, string $newArtType, int $newArtYear) {
 		try {
 			$this->setArtId($newArtId);
 			$this->setArtAddress($newArtAddress);
@@ -95,7 +95,7 @@ class Art implements \JsonSerializable {
 			$this->setArtLocation($newArtLocation);
 			$this->setArtLong($newArtLong);
 			$this->setArtTitle($newArtTitle);
-			$this->setArtType($newArtType;
+			$this->setArtType($newArtType);
 			$this->setArtYear($newArtYear);
 		}
 			//determine what exception type was thrown
