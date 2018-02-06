@@ -13,7 +13,6 @@ use Ramsey\Uuid\Uuid;
  * The Comment class of ABQ Street Art webpage
  *
  * @author Nathaniel Gustafson <natjgus@gmail.com>
- * @version 3.0.0
  **/
 
 class Comment implements \JsonSerializable {
@@ -367,11 +366,37 @@ class Comment implements \JsonSerializable {
 			}
 		}
 		return($comments);
-
 	}
 
+/**
+ *get all Comments
+ *
+ * @param \PDO $pdo PDO connection object
+ * @return \SplFixedArray SplFixedArray of Comments found or null if not found
+ * @throws \PDOException when mySQL related error occurs
+ * @throws \TypeError when variables are not the correct data type
+ **/
+public static function getAllComments(\PDO $pdo) : \SplFixedArray {
+	//create query template
+	$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment";
+	$statement->execute();
 
+	//build an array comments
+	$comments = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+			$comments[$comments->key()] = $comment;
+			$comments->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return ($comments);
 }
+
 
 
 
