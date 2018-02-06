@@ -248,7 +248,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$bookmark = new Bookmark($row[\"bookmarkArtId\"], $row[\"bookmarkProfileId\"]);
+				$bookmark = new Bookmark($row["bookmarkArtId"], $row["bookmarkProfileId"]);
 				$bookmarks[$bookmarks->key()] = $bookmark;
 				$bookmarks->next();
 			} catch(\Exception $exception) {
