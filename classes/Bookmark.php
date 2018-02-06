@@ -131,41 +131,45 @@ public function insert (\PDO $pdo) : void {
  * deletes this Bookmark from mySQL
  *
  * @param \PDO $pdo PDO connection object
+ *
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
+ *
+ * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
  **/
-
-// Not sure if I need to include a "delete" for both bookmarkArtId and bookmarkProfileId?? -Erin 2/6
 
 public function delete(\PDO $pdo) : void {
 
 	// create query template
-	$query = "DELETE FROM bookmark WHERE bookmarkArtId = :bookmarkArtId";
+	$query = "DELETE FROM bookmark WHERE bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
 	$statement = $pdo->prepare($query);
 
 	// bind the member variables to the place holder in the template
-	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes()];
+	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkProfileId->getBytes()];
 	$statement->execute($parameters);
 }
 
-/**
- * updates this Bookmark in mySQL
- *
- *  @param \PDO $pdo PDO connection object
- * @throws \PDOException when mySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- **/
+// can I update foreign keys?? Doesn't seem like I have any attributes to include/change. Dylan did not include an "update" in his GitHub for the "like" class. Commenting all of the "update" PDO out for now. -Erin 2/6
 
-// can I update foreign keys?? Doesn't seem like I have any attributes to include/change.
-
-public function update(\PDO $pdo) : void {
-
-	// creates query template
-	$query = "UPDATE bookmark SET bookmarkArtId = :bookmarkArtId, bookmarkProfileId = :bookmarkProfileId WHERE bookmarkArtId = :bookmarkArtId";
-
-	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkArtId->getBytes()];
-	$statement->execute($parameters);
-}
+///**
+// * updates this Bookmark in mySQL
+// *
+// * @param \PDO $pdo PDO connection object
+// *
+// * @throws \PDOException when mySQL related errors occur
+// * @throws \TypeError if $pdo is not a PDO connection object
+// *
+// * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
+// **/
+//
+//public function update(\PDO $pdo) : void {
+//
+//	// creates query template
+//	$query = "UPDATE bookmark SET bookmarkArtId = :bookmarkArtId, bookmarkProfileId = :bookmarkProfileId WHERE bookmarkArtId = :bookmarkArtId";
+//
+//	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkArtId->getBytes()];
+//	$statement->execute($parameters);
+//}
 
 /**
  * gets the Bookmark by bookmarkArtId
