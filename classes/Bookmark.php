@@ -167,6 +167,60 @@ public function update(\PDO $pdo) : void {
 	$statement->execute($parameters);
 }
 
+/**
+ * gets the Bookmark by bookmarkArtId
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param Uuid|string $bookmarkArtId art id of this bookmark to search for
+ *
+ * @return Bookmark|null Bookmark found or null if not found
+ *
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
+ **/
+
+public static function getBookmarkByBookmarkArtId(\PDO $pdo, $bookmarkArtId) : ?Bookmark {
+
+	// sanitize the bookmarkArtId before searching
+	try {
+		$bookmarkArtId = self::validateUuid($bookmarkArtId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+
+	// Did I use artId correctly below? -Erin 2/6
+	// create query template
+	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM bookmark where artId = :artId";
+	$statement = $pdo->prepare($query);
+
+	// bind the bookmarkArtId to the placeholder in the template
+	$parameters = ["bookmarkArtId" => $bookmarkArtId->getBytes()];
+	$statement->execute($parameters);
+
+	// grab the bookmark from MySQL
+	try {
+		$bookmark = null;
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		$row = $statement->fetch();
+		if($row !== false) {
+			$bookmark = new Bookmark($row["bookmarkArtId"], $row["bookmarkProfileId"]);
+		}
+	} catch(\Exception $exception) {
+		// if the row couldn't be converted, rethrow it
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+	return($bookmark);
+}
+
+/**
+ * gets the Bookmark by bookmarkProfileId
+ **/
+
+/**
+ * gets all Bookmarks
+ *
+ * needed? -Erin 2/6
+ */
 
 
 /**
