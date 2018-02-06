@@ -123,7 +123,7 @@ public function insert (\PDO $pdo) : void {
 	$statement = $pdo->prepare($query);
 
 	// bind the member variables to the place holders in the template
-	$parameters = ["bookmarkArtId" => $this->bookmarkArtId-getBytes(), "bookmarkProfileId" => $this->bookmarkProfileId-getBytes()];
+	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkProfileId->getBytes()];
 	$statement->execute($parameters);
 }
 
