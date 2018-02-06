@@ -182,6 +182,8 @@ public function delete(\PDO $pdo) : void {
  *
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError when a variable are not the correct data type
+ *
+ * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
  **/
 
 public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo, string $bookmarkArtId, string $bookmarkProfileId) : ?Bookmark {
@@ -217,7 +219,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 }
 
 /**
- * gets the Bookmark by profile id
+ * gets the Bookmark by art id
  *
  * @param \PDO $pdo PDO connection object
  * @param string $bookmarkArtId art id of this bookmark to search for
@@ -226,6 +228,8 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
  *
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError when a variable are not the correct data type
+ *
+ * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
  **/
 
 	public static function getBookmarkByBookmarkArtId(\PDO $pdo, string $bookmarkArtId) : \SPLFixedArray {
@@ -259,10 +263,56 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		return($bookmarks);
 
 /**
- * gets all Bookmarks
+ * gets the Bookmark by profile id
  *
- * needed? -Erin 2/6
- */
+ * @param \PDO $pdo PDO connection object
+ * @param string $bookmarkProfileId profile id of this bookmark to search for
+ *
+ * @return \SplFixedArray SplFixedArray of Bookmarks found or null if not found
+ *
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
+ *
+ * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
+ **/
+
+	public static function getBookmarkByBookmarkProfileId(\PDO $pdo, string $bookmarkProfileId) : \SPLFixedArray {
+		try {
+			$bookmarkProfileId = self::validateUuid($bookmarkProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkProfileId = :bookmarkProfileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the placeholders in the template
+		$parameters = ["bookmarkProfileId" => $bookmarkProfileId->getBytes()];
+		$statement->execute($parameters);
+
+		// build an array of bookmarks
+		$bookmarks = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$bookmark = new Bookmark($row["bookmarkArtId"], $row["bookmarkProfileId"]);
+				$bookmarks[$bookmarks->key()] = $bookmark;
+				$bookmarks->next();
+			} catch(\Exception $exception) {
+
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($bookmarks);
+
+///**
+// * gets all Bookmarks
+// *
+// * needed? Leaving out for now, as it's not included in Dylan's example -Erin 2/6
+// * https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
+// */
 
 
 /**
