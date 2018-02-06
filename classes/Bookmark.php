@@ -110,7 +110,7 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 	}
 
 /**
- * inserts this Bookmark class into mySQL
+ * inserts this Bookmark into mySQL
  *
  * @param \PDO $pdo PDO connection object
  * @throws \PDOException when mySQL related errors occur
@@ -128,20 +128,46 @@ public function insert (\PDO $pdo) : void {
 }
 
 /**
- * deletes this Bookmark class from mySQL
+ * deletes this Bookmark from mySQL
  *
  * @param \PDO $pdo PDO connection object
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
  **/
 
+// Not sure if I need to include a "delete" for both bookmarkArtId and bookmarkProfileId?? -Erin 2/6
+
+public function delete(\PDO $pdo) : void {
+
+	// create query template
+	$query = "DELETE FROM bookmark WHERE bookmarkArtId = :bookmarkArtId";
+	$statement = $pdo->prepare($query);
+
+	// bind the member variables to the place holder in the template
+	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes()];
+	$statement->execute($parameters);
+}
+
 /**
- * updates this Bookmark class in mySQL
+ * updates this Bookmark in mySQL
  *
  *  @param \PDO $pdo PDO connection object
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not a PDO connection object
  **/
+
+// can I update foreign keys?? Doesn't seem like I have any attributes to include/change.
+
+public function update(\PDO $pdo) : void {
+
+	// creates query template
+	$query = "UPDATE bookmark SET bookmarkArtId = :bookmarkArtId, bookmarkProfileId = :bookmarkProfileId WHERE bookmarkArtId = :bookmarkArtId";
+
+	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkArtId->getBytes()];
+	$statement->execute($parameters);
+}
+
+
 
 /**
  * formats the state variables for JSON serialization
