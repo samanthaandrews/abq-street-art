@@ -172,10 +172,11 @@ public function delete(\PDO $pdo) : void {
 //}
 
 /**
- * gets the Bookmark by bookmarkArtId
+ * gets the Bookmark by art id and profile id
  *
  * @param \PDO $pdo PDO connection object
- * @param Uuid|string $bookmarkArtId art id of this bookmark to search for
+ * @param string $bookmarkArtId art id of this bookmark to search for
+ * @param string $bookmarkProfileId profile id of this bookmark to search for
  *
  * @return Bookmark|null Bookmark found or null if not found
  *
@@ -183,7 +184,7 @@ public function delete(\PDO $pdo) : void {
  * @throws \TypeError when a variable are not the correct data type
  **/
 
-public static function getBookmarkByBookmarkArtId(\PDO $pdo, $bookmarkArtId) : ?Bookmark {
+public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo, string $bookmarkArtId, string $bookmarkProfileId) : ?Bookmark {
 
 	// sanitize the bookmarkArtId before searching
 	try {
@@ -192,13 +193,12 @@ public static function getBookmarkByBookmarkArtId(\PDO $pdo, $bookmarkArtId) : ?
 		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
 
-	// Did I use artId correctly below? -Erin 2/6
 	// create query template
-	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM bookmark where artId = :artId";
+	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' where bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
 	$statement = $pdo->prepare($query);
 
-	// bind the bookmarkArtId to the placeholder in the template
-	$parameters = ["bookmarkArtId" => $bookmarkArtId->getBytes()];
+	// bind the art id and the profile id to the placeholder in the template
+	$parameters = ["bookmarkArtId" => $bookmarkArtId->getBytes(), "bookmarkProfileId" => $bookmarkProfileId->getBytes()];
 	$statement->execute($parameters);
 
 	// grab the bookmark from MySQL
