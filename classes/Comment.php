@@ -141,7 +141,7 @@ class Comment implements \JsonSerializable {
 	/**
 	 * mutator method for comment profile id
 	 *
-	 * @param string | Uuid $newCommentProfileId new value of tweet profile id
+	 * @param string | Uuid $newCommentProfileId new value of comment profile id
 	 * @throws \RangeException if $newCommentProfileId is not positive
 	 * @throws \TypeError if $newCommentProfileId is not an integer
 	 **/
@@ -179,7 +179,7 @@ class Comment implements \JsonSerializable {
 		$newCommentContent = trim($newCommentContent);
 		$newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newCommentContent) === true) {
-			throw(new \InvalidArgumentException("tweet content is empty or insecure"));
+			throw(new \InvalidArgumentException("comment content is empty or insecure"));
 		}
 
 		// verify the comment content will fit in the database
