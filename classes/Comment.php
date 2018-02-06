@@ -325,7 +325,7 @@ class Comment implements \JsonSerializable {
 	 * gets the Comment by commentArtId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $commentId comment id to search for
+	 * @param Uuid|string $commentArtId comment art id to search for
 	 * @return Comment|null Comment found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
@@ -344,6 +344,46 @@ class Comment implements \JsonSerializable {
 
 		//bind the comment id to the place holder in the template
 		$parameters = ["commentArtId" => $commentArtId->getBytes()];
+		$statement->execute($parameters);
+
+		//grab the comment from mySQL
+		try {
+			$comment = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($comment);
+	}
+
+	/**
+	 * gets the Comment by commentProfileId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $commentProfileId comment profile id to search for
+	 * @return Comment|null Comment found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getCommentByCommentProfileId(\PDO $pdo, $commentProfileId) : ?Comment {
+		// sanitize the commentProfileId before searching
+		try {
+			$commentProfileId = self::validateUuid($commentProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//create query template
+		$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment WHERE commentProfileId = :commentProfileId";
+		$statement = $pdo->prepare($query);
+
+		//bind the comment id to the place holder in the template
+		$parameters = ["commentProfileId" => $commentProfileId->getBytes()];
 		$statement->execute($parameters);
 
 		//grab the comment from mySQL

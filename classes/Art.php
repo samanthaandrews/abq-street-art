@@ -265,7 +265,7 @@ public function setArtId( $newArtId) : void {
 		throw(new \RangeException("art latitude is not between -90 and 90"));
 	}
 	if (floatval($newArtLat) < -90) {
-		throw(new \RangeException("art latitude is not between -90 and 90"));)
+		throw(new \RangeException("art latitude is not between -90 and 90"));
 	}
 		// store the latitude
 		$this->artLat = $newArtLat;
@@ -334,7 +334,7 @@ public function setArtId( $newArtId) : void {
 			throw(new \RangeException("art longitude is not between -180 and 180"));
 		}
 		if (floatval($newArtLong) < -180) {
-			throw(new \RangeException("art longitude is not between -180 and 180"));)
+			throw(new \RangeException("art longitude is not between -180 and 180"));
 		}
 		// store the latitude
 		$this->artLong = $newArtLong;
@@ -433,7 +433,7 @@ public function setArtId( $newArtId) : void {
 		}
 
 		// verify the art year will fit in the database
-		if(intval($newArtType) < 1000) {
+		if(intval($newArtYear) < 1000) {
 			throw(new \RangeException("art year before 1000"));
 		}
 
