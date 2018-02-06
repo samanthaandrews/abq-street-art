@@ -194,7 +194,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 	}
 
 	// create query template
-	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' where bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
+	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
 	$statement = $pdo->prepare($query);
 
 	// bind the art id and the profile id to the placeholder in the template
@@ -217,8 +217,46 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 }
 
 /**
- * gets the Bookmark by bookmarkProfileId
+ * gets the Bookmark by profile id
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param string $bookmarkArtId art id of this bookmark to search for
+ *
+ * @return \SplFixedArray SplFixedArray of Bookmarks found or null if not found
+ *
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
  **/
+
+	public static function getBookmarkByBookmarkArtId(\PDO $pdo, string $bookmarkArtId) : \SPLFixedArray {
+		try {
+			$bookmarkArtId = self::validateUuid($bookmarkArtId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId;
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the placeholders in the template
+		$parameters = ["bookmarkArtId" => $bookmarkArtId->getBytes()];
+		$statement->execute($parameters);
+
+		// build an array of bookmarks
+		$bookmarks = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$bookmark = new Bookmark($row[\"bookmarkArtId\"], $row[\"bookmarkProfileId\"]);
+				$bookmarks[$bookmarks->key()] = $bookmark;
+				$bookmarks->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($bookmarks);
 
 /**
  * gets all Bookmarks
