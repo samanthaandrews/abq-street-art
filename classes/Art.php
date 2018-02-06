@@ -724,9 +724,7 @@ public function setArtId( $newArtId) : void {
 	 **/
 	public function jsonSerialize() : array {
 		$fields = get_object_vars($this);
-
 		$fields["artId"] = $this->artId->toString();
-
 		return($fields);
 	}
 
