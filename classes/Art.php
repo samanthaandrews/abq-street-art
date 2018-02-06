@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 
 /**
  *
- * This is the Art class
+ * This is the Art class where one will find data about each piece of art such as address, artist, image url, latitude and longitude, location, title, type, and year.
  *
  * @author Samantha Andrews <samantharaeandrews@gmail.com>
  * @version
