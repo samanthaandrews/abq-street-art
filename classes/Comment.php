@@ -322,6 +322,54 @@ class Comment implements \JsonSerializable {
 		return($comment);
 	}
 
+	/**
+	 * get the Comment by by content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $commentContent comment content to search for
+	 * @return \SplFixedArray of Comments found
+	 * @throws \PDOException when mySQL related error occurs
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+
+	public static function getCommentByCommentContent(\PDO $pdo, string $commentContent) : \SplFixedArray {
+		//sanitize the search description before running
+		$commentContent = trim($commentContent);
+		$commentContent = filter_var($commentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($commentContent) === true) {
+			throw(new \PDOException("comment content is invalid"));
+		}
+
+		// escape any mySQL wildcards
+		$commentContent = str_replace("_", "\\_", str_replace("%", "\\%", $commentContent));
+
+		// create query template
+		$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment WHERE commentContent LIKE :commentContent";
+		$statement = $pdo->prepare($query);
+
+		//bind the comment content to the place holder in the template
+		//the '%" on the $commentContent denotes a wild card... telling the program to search the entire $commentContent
+		$commentContent = "%$commentContent%";
+		$parameters = ["commentContent" => $commentContent];
+		$statement->execute($parameters);
+
+		//build an array for comments with the searched content
+		$comments = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+				$comments[$comment->key()] = $comment;
+				$comments->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($comments);
+
+	}
+
 
 }
 
