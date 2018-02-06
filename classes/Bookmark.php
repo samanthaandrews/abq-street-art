@@ -236,7 +236,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		}
 
 		// create query template
-		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId;
+		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
