@@ -1,5 +1,15 @@
 {
   "require": {
-    "ramsey/uuid": "@stable"
+    "apigen/apigen": "dev-master",
+    "phpdocumentor/reflection-docblock": "@stable",
+    "phpunit/dbunit": "@stable",
+    "phpunit/phpunit": "@stable",
+    "ramsey/uuid": "@stable",
+    "roave/better-reflection": "dev-master#a402048"
+  },
+
+  "scripts": {
+    "apigen": "./vendor/bin/apigen generate ./php/classes/*.php --destination doc",
+    "phpunit": "./vendor/bin/phpunit -c ./php/classes/Test --coverage-html coverage"
   }
 }
