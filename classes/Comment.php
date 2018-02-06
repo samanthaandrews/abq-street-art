@@ -174,7 +174,7 @@ class Comment implements \JsonSerializable {
 	 * @throws \RangeException if $newCommentContent is > 4096 characters
 	 * @throws \TypeError if $newCommentContent is not a string
 	 **/
-	public function setCommentContent(string $newTweetContent): void {
+	public function setCommentContent(string $newCommentContent): void {
 		// verify the comment content is secure
 		$newCommentContent = trim($newCommentContent);
 		$newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -322,7 +322,47 @@ class Comment implements \JsonSerializable {
 	}
 
 	/**
-	 * get the Comment by by content
+	 * gets the Comment by commentArtId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $commentId comment id to search for
+	 * @return Comment|null Comment found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable is not the correct data type
+	 **/
+	public static function getCommentByCommentArtId(\PDO $pdo, $commentArtId) : ?Comment {
+		// sanitize the commentArtId before searching
+		try {
+			$commentArtId = self::validateUuid($commentArtId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//create query template
+		$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment WHERE commentArtId = :commentArtId";
+		$statement = $pdo->prepare($query);
+
+		//bind the comment id to the place holder in the template
+		$parameters = ["commentArtId" => $commentArtId->getBytes()];
+		$statement->execute($parameters);
+
+		//grab the comment from mySQL
+		try {
+			$comment = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($comment);
+	}
+
+	/**
+	 * get the Comment by content
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $commentContent comment content to search for
@@ -379,7 +419,7 @@ class Comment implements \JsonSerializable {
 public static function getAllComments(\PDO $pdo) : \SplFixedArray {
 	//create query template
 	$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment";
-	$statement->execute();
+	$statement->execute($query);
 
 	//build an array comments
 	$comments = new \SplFixedArray($statement->rowCount());
@@ -399,8 +439,6 @@ public static function getAllComments(\PDO $pdo) : \SplFixedArray {
 
 
 
-
-
 /**
  * formats the state variables for JSON serialization
  *
@@ -417,3 +455,6 @@ public function jsonSerialize() : array {
 	$fields["commentDateTime"] = round(floatval($this->commentDateTime->format("U.u")) * 1000);
 	return($fields);
 }
+
+
+
