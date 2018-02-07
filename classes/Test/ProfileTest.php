@@ -43,7 +43,7 @@ class ProfileTest extends StreetArtTest {
      * valid hash to use
      * @var string $VALID_HASH
      **/
-    //TODO placeholder until we actuall create these
+    //TODO placeholder until we actually create these
     protected $VALID_HASH;
 
     /**
@@ -87,7 +87,6 @@ class ProfileTest extends StreetArtTest {
      * actual test!
      * insert valid profile and verify that mySQL data matches
      **/
-    //TODO create getConnection?
     public function testInsertValidProfile() : void {
         //count number of rows and save for later
         $numRows = $this->getConnection()->getRowCount("profile");

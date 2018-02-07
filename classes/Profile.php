@@ -83,7 +83,7 @@ class Profile implements \JsonSerializable
     {
         try {
             $this->setProfileId($newProfileId);
-            $this->setProfileUserName($newProfileActivationToken);
+            $this->setProfileActivationToken($newProfileActivationToken);
             $this->setProfileEmail($newProfileEmail);
             $this->setProfileHash($newProfileHash);
             $this->setProfileSalt($newProfileSalt);
