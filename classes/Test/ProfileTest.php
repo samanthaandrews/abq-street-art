@@ -23,7 +23,7 @@ require_once (dirname(__DIR__) . "/autoload.php");
  * @author Mary MacMillan <mschmitt5@cnm.edu>
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
-class ProfileTest extends DataDesignTest {
+class ProfileTest extends StreetArtTest {
 
     /**
      * placeholder?? until account activation is created
