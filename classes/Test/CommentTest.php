@@ -86,7 +86,75 @@ class CommentTest extends StreetArtTest {
 		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
 
 		//create and insert a Profile to own the Test
-		$this->profile = new Profile(generateUuidV4(), null)
+		//TODO figure out why phone number is in ProfileSalt
+		$this->profile = new Profile(generateUuidV4(), null, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, "+15054122437", $this->VALID_PROFILE_SALT);
+		$this->profile->insert($this->getPDO());
+
+		// calculate the date (just use the time the unit test was setup...)
+		$this->VALID_COMMENTDATETIME = new \DateTime();
+
+		//format the sunrise date to use for testing
+		$this->VALID_SUNRISEDATE = new \DateTime();
+		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
+
+		//format the sunset date to use for testing
+		$this->VALID_SUNSETDATE = new\DateTime();
+		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
+	}
+
+	/**
+	 * test inserting a valid Comment and verify that mySQL data matches
+	 */
+	public function testInsertValidComment() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		//create a new Comment and insert it into mySQL
+		$profileId = generateUuidV4();
+		$profile = new Profile($profileId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$profile->insert($this->getPDO());
+
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
