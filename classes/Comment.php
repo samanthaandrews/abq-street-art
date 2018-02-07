@@ -276,7 +276,7 @@ class Comment implements \JsonSerializable {
 		$query = "UPDATE comment SET commentArtId = :commentArtId, commentProfileId = :commentProfileId, commentContent = :commentContent, commentDateTime = :commentDateTime WHERE commentId = :commentId";
 		$statement = $pdo->prepare($query);
 
-		$formattedDate = $this->commentDateTime->("Y-m-d H:i:s.u");
+		$formattedDate = $this->commentDateTime->format("YYYY-MM-DD HH:MI:SS");
 		$parameters = ["commentId" => $this->commentId->getBytes(), "commentArtId" => $this->commentArtId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
 		$statement->execute($parameters);
 	}
