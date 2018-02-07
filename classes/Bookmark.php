@@ -151,28 +151,6 @@ public function delete(\PDO $pdo) : void {
 	$statement->execute($parameters);
 }
 
-// can I update foreign keys?? Doesn't seem like I have any attributes to include/change. Dylan did not include an "update" in his GitHub for the "like" class. Commenting all of the "update" PDO out for now. -Erin 2/6
-
-///**
-// * updates this Bookmark in mySQL
-// *
-// * @param \PDO $pdo PDO connection object
-// *
-// * @throws \PDOException when mySQL related errors occur
-// * @throws \TypeError if $pdo is not a PDO connection object
-// *
-// * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
-// **/
-//
-//public function update(\PDO $pdo) : void {
-//
-//	// creates query template
-//	$query = "UPDATE bookmark SET bookmarkArtId = :bookmarkArtId, bookmarkProfileId = :bookmarkProfileId WHERE bookmarkArtId = :bookmarkArtId";
-//
-//	$parameters = ["bookmarkArtId" => $this->bookmarkArtId->getBytes(), "bookmarkProfileId" => $this->bookmarkArtId->getBytes()];
-//	$statement->execute($parameters);
-//}
-
 /**
  * gets the Bookmark by art id and profile id
  *
@@ -310,14 +288,6 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		}
 		return ($bookmarks);
 	}
-
-///**
-// * gets all Bookmarks
-// *
-// * needed? Leaving out for now, as it's not included in Dylan's example -Erin 2/6
-// * https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
-// */
-
 
 /**
  * formats the state variables for JSON serialization
