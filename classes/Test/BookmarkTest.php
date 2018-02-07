@@ -1,5 +1,6 @@
 <?php
 namespace Edu\Cnm\AbqStreetArt\Test;
+
 use Edu\Cnm\AbqStreetArt\{Bookmark, Profile, Art};
 
 // grab the class under scrutiny
@@ -8,7 +9,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
 // grab the uuid generator
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 /**
- * Full PHPUnit test for the Bookmark class
+ * Full PHPUnit test for the ABQ Street Art Bookmark class
  *
  * This is a complete PHPUnit test of the Bookmark class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
@@ -16,6 +17,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Erin Scott <erinleeannscott@gmail.com>
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  *
+ * @see \Edu\Cnm\AbqStreetArt\Bookmark
  * @see Dylan's example on Github: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Test/LikeTest.php
  **/
 class BookmarkTest extends StreetArtTest {
@@ -66,6 +68,8 @@ class BookmarkTest extends StreetArtTest {
 		parent::setUp();
 
 		// create a salt and hash for the mocked profile
+		// TODO I think I need to update these values...? -Erin 2/7
+
 		$password = "abc123";
 		$this->VALID_SALT = bin2hex(random_bytes(32));
 		$this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
@@ -84,7 +88,8 @@ class BookmarkTest extends StreetArtTest {
 	}
 
 	/**
-	 * test inserting a valid Bookmark and verify that the actual mySQL data matches
+	 * the actual test!
+	 * insert a valid Bookmark and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidBookmark() : void {
 
@@ -101,8 +106,9 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->bookmark->getArtId());
 
-		//format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
+		//TODO remove the date information below? Date/Time is not an attribute of Bookmark
+//		//format the date to seconds since the beginning of time to avoid round off error
+//		$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
@@ -145,16 +151,18 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
 
+		//TODO remove the date information below? Date/Time is not an attribute of Bookmark
 		//format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKEDATE->getTimestamp());
+		//$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKEDATE->getTimestamp());
 	}
 
 	/**
 	 * test grabbing a Bookmark that does not exist
 	 **/
-	public function testGetInvalidBookmarkByArtIdAndProfileId() {
+	public function testGetInvalidBookmarkByArtIdAndProfileId() : void {
 
-		// grab a art id and profile id that exceeds the maximum allowable art id and profile id
+		// grab an art id and a profile id that exceeds the maximum allowable art id and profile id
+		//TODO confirm with group that what I have below is correct -Erin 2/7
 		$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), generateUuidV4(), generateUuidV4());
 		$this->assertNull($bookmark);
 	}
@@ -197,7 +205,7 @@ class BookmarkTest extends StreetArtTest {
 	}
 
 	/**
-	 * test grabbing a Bookmark by profile id
+	 * test grabbing a Bookmark by a profile id
 	 **/
 	public function testGetValidBookmarkByProfileId() : void {
 
