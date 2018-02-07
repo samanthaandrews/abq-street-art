@@ -689,6 +689,7 @@ public function setArtId( $newArtId) : void {
 			throw(new \PDOException("art year is invalid"));
 		}
 
+		//TODO: str_replace or something else since this is an integer?
 		// escape any mySQL wild cards
 		$artYear = str_replace("_", "\\_", str_replace("%", "\\%", $artYear));
 
