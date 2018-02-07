@@ -14,6 +14,8 @@ use Ramsey\Uuid\Uuid;
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  *
  * @version 1.0
+ *
+ * @see Dylan's Object Oriented PHP example: https://bootcamp-coders.cnm.edu/class-materials/object-oriented/object-oriented-php.php
  **/
 
 class Bookmark implements \JsonSerialable {
