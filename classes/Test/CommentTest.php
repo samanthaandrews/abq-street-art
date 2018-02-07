@@ -213,7 +213,7 @@ class CommentTest extends StreetArtTest {
 	public function testGetInvalidCommentbyCommentId() : void {
 		//grab a comment id that exceeds the maximum allowable profile id
 		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $comment);
+		$this->assertNull($comment);
 	}
 
 	/**
@@ -285,7 +285,7 @@ class CommentTest extends StreetArtTest {
 	}
 
 	/**
-	 * test grabbing a Comment by an art id that does not exist
+	 * test grabbing a Comment by an profile id that does not exist
 	 */
 	public function testGetInvalidCommentByProfileId() : void {
 		//grab an art id that exceeds the maximum allowable art id
@@ -349,7 +349,7 @@ class CommentTest extends StreetArtTest {
 		$results = Comment::getAllComments($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment");
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 
 		//grab the result from the array and validate it
