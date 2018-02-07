@@ -17,11 +17,6 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  **/
 class ArtTest extends StreetArtTest {
 	/**
-	 * UUID of this art
-	 * @var UUID|string $VALID_ARTID
-	 **/
-	protected $VALID_ARTID = "this is a valid id for this art";
-	/**
 	 * address of this art
 	 * @var string $VALID_ARTADDRESS
 	 **/
@@ -74,7 +69,7 @@ class ArtTest extends StreetArtTest {
 	/**
 	 * create dependent objects before running each test
 	 **/
-	//TODO Do I need any of this setUp function?
+	//TODO Do I need any of this setUp function? I think I can delete the whole thing?
 	public final function setUp()  : void {
 		// run the default setUp() method first
 		parent::setUp();
@@ -129,16 +124,14 @@ class ArtTest extends StreetArtTest {
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
 		$art->insert($this->getPDO());
 		// edit the Art and update it in mySQL
-		$art->setTweetContent($this->VALID_TWEETCONTENT2);
+		//TODO do I need to test ARTARTIST2, ARTYEAR2, ETC??
+		$art->setArtAddress($this->VALID_ARTADDRESS2);
 		$art->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT2);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$pdoArt = Art::getArtByArtId($this->getPDO(), $art->getArtId());
+		$this->assertEquals($pdoArt->getArtId(), $artId);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
+		$this->assertEquals($pdoArt->getArtAddress(), $this->VALID_ARTADDRESS2);
 	}
 	/**
 	 * test creating an Art and then deleting it
@@ -146,65 +139,64 @@ class ArtTest extends StreetArtTest {
 	public function testDeleteValidArt() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("art");
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
-		// delete the Tweet from mySQL
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
-		$tweet->delete($this->getPDO());
-		// grab the data from mySQL and enforce the Tweet does not exist
-		$pdoTweet = Tweet::getTweetByTweetId($this->getPDO(), $tweet->getTweetId());
-		$this->assertNull($pdoTweet);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("tweet"));
+		// create a new Art and insert to into mySQL
+		$artId = generateUuidV4();
+		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		$art->insert($this->getPDO());
+		// delete the Art from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
+		$art->delete($this->getPDO());
+		// grab the data from mySQL and enforce the Art does not exist
+		$pdoArt = Art::getArtByArtId($this->getPDO(), $art->getArtId());
+		$this->assertNull($pdoArt);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("art"));
 	}
 	/**
-	 * test grabbing a Tweet that does not exist
+	 * test grabbing an Art that does not exist
 	 **/
-	public function testGetInvalidTweetByTweetId() : void {
-		// grab a profile id that exceeds the maximum allowable profile id
-		$tweet = Tweet::getTweetByTweetId($this->getPDO(), generateUuidV4());
-		$this->assertNull($tweet);
+	//TODO help??
+	public function testGetInvalidArtByArtId() : void {
+		// grab an art id that exceeds the maximum allowable art id
+		$art = Art::getArtByArtId($this->getPDO(), generateUuidV4());
+		//TODO assertCount? or assertNull?
+		$this->assertNull($art);
 	}
 	/**
-	 * test inserting a Tweet and regrabbing it from mySQL
+	 * test inserting an Art and regrabbing it from mySQL
 	 **/
-	public function testGetValidTweetByTweetProfileId() {
+	public function testGetValidArtByArtId() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		$numRows = $this->getConnection()->getRowCount("art");
+		// create a new Art and insert to into mySQL
+		$artId = generateUuidV4();
+		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetProfileId($this->getPDO(), $tweet->getTweetProfileId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Art::getArtByArtId($this->getPDO(), $art->getArtId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
+		$pdoArt = $results[0];
 
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$this->assertEquals($pdoArt->getArtId(), $artId);
+		$this->assertEquals($pdoArt->getArtAddress(), $this->VALID_ARTADDRESS);
+		$this->assertEquals($pdoArt->getArtArtist(), $this->VALID_ARTARTIST);
+		$this->assertEquals($pdoArt->getArtImageUrl(), $this->VALID_ARTIMAGEURL);
+		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLAT);
+		$this->assertEquals($pdoArt->getArtLocation(), $this->VALID_ARTLOCATION);
+		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
+		$this->assertEquals($pdoArt->getArtTitle(), $this->VALID_ARTTITLE);
+		$this->assertEquals($pdoArt->getArtType(), $this->VALID_ARTTYPE);
+		$this->assertEquals($pdoArt->getArtYear(), $this->VALID_ARTYEAR);
 	}
 	/**
-	 * test grabbing a Tweet that does not exist
+	 * test grabbing an Art by art distance
 	 **/
-	public function testGetInvalidTweetByTweetProfileId() : void {
-		// grab a profile id that exceeds the maximum allowable profile id
-		$tweet = Tweet::getTweetByTweetProfileId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $tweet);
-	}
-	/**
-	 * test grabbing a Tweet by tweet content
-	 **/
-	public function testGetValidTweetByTweetContent() : void {
+	public function testGetValidArtByArtDistance() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
-		// create a new Tweet and insert to into mySQL
+		$numRows = $this->getConnection()->getRowCount("art");
+		// create a new Art and insert to into mySQL
 		$tweetId = generateUuidV4();
 		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
 		$tweet->insert($this->getPDO());
@@ -223,7 +215,7 @@ class ArtTest extends StreetArtTest {
 		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
 	}
 	/**
-	 * test grabbing a Tweet by content that does not exist
+	 * test grabbing an Art whose distance does not exist
 	 **/
 	public function testGetInvalidTweetByTweetContent() : void {
 		// grab a tweet by content that does not exist
@@ -231,26 +223,32 @@ class ArtTest extends StreetArtTest {
 		$this->assertCount(0, $tweet);
 	}
 	/**
-	 * test grabbing all Tweets
+	 * test grabbing an Art by year
 	 **/
-	public function testGetAllValidTweets() : void {
+	public function testGetArtByArtYear() : void {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("tweet");
-		// create a new Tweet and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		$numRows = $this->getConnection()->getRowCount("art");
+		// create a new Art and insert to into mySQL
+		$artId = generateUuidV4();
+		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getAllTweets($this->getPDO());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Art::getArtByArtYear($this->getPDO(), $art->getArtYear());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$pdoArt = $results[0];
+
+		$this->assertEquals($pdoArt->getArtId(), $artId);
+		$this->assertEquals($pdoArt->getArtAddress(), $this->VALID_ARTADDRESS);
+		$this->assertEquals($pdoArt->getArtArtist(), $this->VALID_ARTARTIST);
+		$this->assertEquals($pdoArt->getArtImageUrl(), $this->VALID_ARTIMAGEURL);
+		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLAT);
+		$this->assertEquals($pdoArt->getArtLocation(), $this->VALID_ARTLOCATION);
+		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
+		$this->assertEquals($pdoArt->getArtTitle(), $this->VALID_ARTTITLE);
+		$this->assertEquals($pdoArt->getArtType(), $this->VALID_ARTTYPE);
+		$this->assertEquals($pdoArt->getArtYear(), $this->VALID_ARTYEAR);
 	}
 }
