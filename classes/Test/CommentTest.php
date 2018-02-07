@@ -2,6 +2,7 @@
 namespace Edu\Cnm\AbqStreetArt\Test;
 
 use Edu\Cnm\AbqStreetArt\Profile;
+use function Sodium\randombytes_buf;
 
 
 require_once (dirname(__DIR__) . "/autoload.php");
@@ -81,6 +82,11 @@ class CommentTest extends StreetArtTest {
 		//run the default setUp() method first
 		parent::setUp();
 		$password = "abc123";
+		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
+		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
+
+		//create and insert a Profile to own the Test
+		$this->profile = new Profile(generateUuidV4(), null)
 
 	}
 }
