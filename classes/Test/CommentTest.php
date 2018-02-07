@@ -1,6 +1,7 @@
 <?php
 namespace Edu\Cnm\AbqStreetArt\Test;
 
+use Edu\Cnm\AbqStreetArt\Comment;
 use Edu\Cnm\AbqStreetArt\Profile;
 use function Sodium\randombytes_buf;
 
@@ -110,12 +111,22 @@ class CommentTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("comment");
 
 		//create a new Comment and insert it into mySQL
-		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
-		$profile->insert($this->getPDO());
+		$commentId = generateUuidV4();
+		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment->insert($this->getPDO());
 
+		//grab the data from mySQL and enforce the fields to match our expectations
+		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+		//format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 
 	}
+
+
 
 
 
