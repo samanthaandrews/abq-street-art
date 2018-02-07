@@ -1,9 +1,9 @@
 ALTER DATABASE streetart CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS art;
-DROP TABLE IF EXISTS profile;
 DROP TABLE IF EXISTS bookmark;
 DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS profile;
 
 
 -- create the art entity
@@ -22,18 +22,6 @@ CREATE TABLE art (
   PRIMARY KEY(artId)
 );
 
-CREATE TABLE profile (
-  -- profileId is the primary key
-  profileId BINARY(16) NOT NULL,
-  profileActivationToken CHAR(32) NOT NULL,
-  profileEmail VARCHAR(128) NOT NULL,
-  profileHash CHAR(128) NOT NULL,
-  profileSalt CHAR(64) NOT NULL,
-  profileUserName VARCHAR(32) NOT NULL,
-  UNIQUE(profileEmail),
-  UNIQUE (profileUserName),
-  PRIMARY KEY(profileId)
-);
 
 CREATE TABLE bookmark (
   bookmarkArtId BINARY(16) NOT NULL,
@@ -57,4 +45,17 @@ CREATE TABLE comment (
   FOREIGN KEY(commentArtId) REFERENCES art(artId),
   FOREIGN KEY(commentProfileId) REFERENCES profile(profileId),
   PRIMARY KEY(commentId)
+);
+
+CREATE TABLE profile (
+  -- profileId is the primary key
+  profileId BINARY(16) NOT NULL,
+  profileActivationToken CHAR(32) NOT NULL,
+  profileEmail VARCHAR(128) NOT NULL,
+  profileHash CHAR(128) NOT NULL,
+  profileSalt CHAR(64) NOT NULL,
+  profileUserName VARCHAR(32) NOT NULL,
+  UNIQUE(profileEmail),
+  UNIQUE (profileUserName),
+  PRIMARY KEY(profileId)
 );

@@ -26,7 +26,7 @@ require_once (dirname(__DIR__) . "/autoload.php");
 class ProfileTest extends StreetArtTest {
 
     /**
-     * placeholder?? until account activation is created
+     * placeholder?? until we set up activation token
      * @var string $VALID_ACTIVATION
      **/
     protected $VALID_ACTIVATION;
@@ -36,14 +36,14 @@ class ProfileTest extends StreetArtTest {
      * valid email to use
      * @var string $VALID_EMAIL
      **/
-    protected $VALID_EMAIL = "";
+    protected $VALID_EMAIL = "schmitt.mary7@gmail.com";
 
     /**
      *
      * valid hash to use
      * @var string $VALID_HASH
      **/
-    //TODO dylan didn't give the hash or salt a value - why?
+    //TODO placeholder until we actuall create these
     protected $VALID_HASH;
 
     /**
@@ -58,7 +58,7 @@ class ProfileTest extends StreetArtTest {
      * valid user name to use
      * @var string $VALID_USERNAME
      **/
-    protected $VALID_USERNAME = "";
+    protected $VALID_USERNAME = "Mary";
 
     /**
      *
@@ -66,8 +66,8 @@ class ProfileTest extends StreetArtTest {
      * second valid user name to use
      * @var string $VALID_USERNAME2
      **/
-    //TODO do we need this?
-    protected $VALID_USERNAME2 = "";
+
+    protected $VALID_USERNAME2 = "Mary Ann";
 
     /**
      *
