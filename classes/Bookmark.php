@@ -58,7 +58,7 @@ class Bookmark implements \JsonSerialable {
 	/**
 	 * accessor method for bookmarkArtId
 	 *
-	 * @return Uuid value of artId
+	 * @return Uuid value of bookmarkArtId
 	 **/
 	public function getBookmarkArtId() : Uuid {
 		return($this->bookmarkArtId);
@@ -86,10 +86,10 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 	/**
 	 * accessor method for bookmarkProfileId
 	 *
-	 * @return Uuid value of profileId
+	 * @return Uuid value of bookmarkProfileId
 	 **/
 	public function getBookmarkProfileId() : Uuid {
-		return($this->profileId);
+		return($this->bookmarkProfileId);
 	}
 
 	/**
