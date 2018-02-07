@@ -1,10 +1,10 @@
 ALTER DATABASE streetart CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
-DROP TABLE IF EXISTS art;
-DROP TABLE IF EXISTS profile;
+
 DROP TABLE IF EXISTS bookmark;
 DROP TABLE IF EXISTS comment;
-
+DROP TABLE IF EXISTS profile;
+DROP TABLE IF EXISTS art;
 
 
 -- create the art entity
