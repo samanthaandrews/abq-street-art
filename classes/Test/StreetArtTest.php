@@ -27,7 +27,7 @@ require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
  *
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  *
- * @see Example template in class materials: https://bootcamp-coders.cnm.edu/class-materials/unit-testing/phpunit/
+ * @see Example template on Dylan's GitHub: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Test/DataDesignTest.php
  **/
 abstract class StreetArtTest extends TestCase {
 	use TestCaseTrait;
@@ -43,6 +43,7 @@ abstract class StreetArtTest extends TestCase {
 	 **/
 	public final function getDataSet() : QueryDataSet {
 		$dataset = new QueryDataSet($this->getConnection());
+
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
 		$dataset->addTable("art");
