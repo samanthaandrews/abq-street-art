@@ -87,6 +87,7 @@ class ProfileTest extends DataDesignTest {
      * actual test!
      * insert valid profile and verify that mySQL data matches
      **/
+    //TODO create getConnection?
     public function testInsertValidProfile() : void {
         //count number of rows and save for later
         $numRows = $this->getConnection()->getRowCount("profile");
@@ -203,7 +204,7 @@ class ProfileTest extends DataDesignTest {
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
 
         //enforce no other objects are bleeding into profile
-        $this->assertContainsOnlyInstancesOf("Edu\\CNM\\AbqArtWalk\\Profile", $results);
+        $this->assertContainsOnlyInstancesOf("Edu\\CNM\\AbqStreetArt\\Profile", $results);
 
         //enforce the results meet expectations
         $pdoProfile = $results[0];
