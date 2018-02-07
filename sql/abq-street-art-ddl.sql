@@ -22,6 +22,18 @@ CREATE TABLE art (
   PRIMARY KEY(artId)
 );
 
+CREATE TABLE profile (
+  -- profileId is the primary key
+  profileId BINARY(16) NOT NULL,
+  profileActivationToken CHAR(32) NOT NULL,
+  profileEmail VARCHAR(128) NOT NULL,
+  profileHash CHAR(128) NOT NULL,
+  profileSalt CHAR(64) NOT NULL,
+  profileUserName VARCHAR(32) NOT NULL,
+  UNIQUE(profileEmail),
+  UNIQUE (profileUserName),
+  PRIMARY KEY(profileId)
+);
 
 CREATE TABLE bookmark (
   bookmarkArtId BINARY(16) NOT NULL,
@@ -45,17 +57,4 @@ CREATE TABLE comment (
   FOREIGN KEY(commentArtId) REFERENCES art(artId),
   FOREIGN KEY(commentProfileId) REFERENCES profile(profileId),
   PRIMARY KEY(commentId)
-);
-
-CREATE TABLE profile (
-  -- profileId is the primary key
-  profileId BINARY(16) NOT NULL,
-  profileActivationToken CHAR(32) NOT NULL,
-  profileEmail VARCHAR(128) NOT NULL,
-  profileHash CHAR(128) NOT NULL,
-  profileSalt CHAR(64) NOT NULL,
-  profileUserName VARCHAR(32) NOT NULL,
-  UNIQUE(profileEmail),
-  UNIQUE (profileUserName),
-  PRIMARY KEY(profileId)
 );
