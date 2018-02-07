@@ -189,7 +189,6 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a Comment and regrabbing it from mySQL
-	 * TODO I am confused by how this grabs an artId bigger than allowable
 	 */
 	public function testGetInvalidCommentByCommentArtId() : void {
 		//grab an art id that exceeds the maximum allowable art id
@@ -199,7 +198,6 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a Comment and regrabbing it from mySQL
-	 * TODO I am confused by how this grabs a profile bigger than allowable
 	 */
 	public function testGetInvalidCommentByCommentProfileId() : void {
 		//grab a profile id that exceeds the maximum allowable profile id
@@ -329,7 +327,7 @@ class CommentTest extends StreetArtTest {
 	 **/
 	public function testGetInvalidCommentByCommentContent() : void {
 		//grab a comment by content that does not exist
-		$comment = Comment::getCommentByCommentContent($this->getPDO()), "Snacks are overrated");
+		$comment = Comment::getCommentByCommentContent($this->getPDO(), "Snack are overrated");
 		$this->assertCount(0, $comment);
 	}
 
