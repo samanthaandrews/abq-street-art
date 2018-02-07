@@ -537,61 +537,17 @@ public function setArtId( $newArtId) : void {
 		return($art);
 	}
 
+
 	/**
-	 * gets the Art by artist
+	 * gets the Art by distance
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $artArtist art content to search for
+	 * @param string $artLocation art to search for
 	 * @return \SplFixedArray SplFixedArray of pieces of art found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getArtByArtArtist(\PDO $pdo, string $artArtist) : \SplFixedArray {
-		// sanitize the description before searching
-		$artArtist = trim($artArtist);
-		$artArtist = filter_var($artArtist, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($artArtist) === true) {
-			throw(new \PDOException("artist is invalid"));
-		}
-
-		// escape any mySQL wild cards
-		$artArtist = str_replace("_", "\\_", str_replace("%", "\\%", $artArtist));
-
-		// create query template
-		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artArtist LIKE :artArtist";
-		$statement = $pdo->prepare($query);
-
-		// bind the artist to the place holder in the template
-		$artArtist = "%$artArtist%";
-		$parameters = ["artArtist" => $artArtist];
-		$statement->execute($parameters);
-
-		// build an array of pieces of art
-		$arts = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
-				$arts[$arts->key()] = $art;
-				$arts->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($arts);
-	}
-
-	/**
-	 * gets the Art by location
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $artLocation art location to search for
-	 * @return \SplFixedArray SplFixedArray of pieces of art found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getArtByArtLocation(\PDO $pdo, string $artLocation) : \SplFixedArray {
+	public static function getArtByArtDistance(\PDO $pdo, string $artLocation) : \SplFixedArray {
 		// sanitize the description before searching
 		$artLocation = trim($artLocation);
 		$artLocation = filter_var($artLocation, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -672,51 +628,6 @@ public function setArtId( $newArtId) : void {
 		return($arts);
 	}
 
-	/**
-	 * gets the Art by year
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @param string $artYear art year to search for
-	 * @return \SplFixedArray SplFixedArray of pieces of art found
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError when variables are not the correct data type
-	 **/
-	public static function getArtByArtYear(\PDO $pdo, int $artYear) : \SplFixedArray {
-		// sanitize the description before searching
-		$artYear = trim($artYear);
-		$artYear = filter_var($artYear, FILTER_SANITIZE_NUMBER_INT);
-		if(empty($artYear) === true) {
-			throw(new \PDOException("art year is invalid"));
-		}
-
-		//TODO: str_replace or something else since this is an integer?
-		// escape any mySQL wild cards
-		$artYear = str_replace("_", "\\_", str_replace("%", "\\%", $artYear));
-
-		// create query template
-		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artYear LIKE :artYear";
-		$statement = $pdo->prepare($query);
-
-		// bind the art year to the place holder in the template
-		$artYear = "%$artYear%";
-		$parameters = ["artYear" => $artYear];
-		$statement->execute($parameters);
-
-		// build an array of art
-		$arts = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
-				$arts[$arts->key()] = $art;
-				$arts->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($arts);
-	}
 
 	/**
 	 * formats the state variables for JSON serialization
