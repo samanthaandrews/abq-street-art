@@ -24,13 +24,14 @@ class CommentTest extends StreetArtTest {
 	/**
 	 * Art that the comment is about; this is for foreign keys relations
 	 *
-	 * @var Art art
+	 * @var Art $art
+	 * Art is needed to be commented on, so we use it but set it to null
 	 **/
 	protected $art = null;
 
 	/**
 	 *Profile that created the comment; this is for foreign key relations
-	 * @var Profile profile
+	 * @var Profile $profile
 	 * Profile is needed to make a comment, so we use it but set it to null
 	 */
 	protected $profile = null;
@@ -86,9 +87,15 @@ class CommentTest extends StreetArtTest {
 		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
 		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
 
+		//create and insert an Art object to own the Test
+		//TODO figure out why Art is not defined
+
+		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com");
+		$this->art->insert($this->getPDO());
+
 		//create and insert a Profile to own the Test
 		//TODO figure out why phone number is in ProfileSalt
-		$this->profile = new Profile(generateUuidV4(), null, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, "+15054122437", $this->VALID_PROFILE_SALT);
+		$this->profile = new Profile(generateUuidV4(), null, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT, "@hamsterman");
 		$this->profile->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
