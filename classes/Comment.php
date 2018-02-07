@@ -460,7 +460,7 @@ class Comment implements \JsonSerializable {
 	public static function getAllComments(\PDO $pdo): \SplFixedArray {
 		//create query template
 		$query = "SELECT commentId, commentArtId, commentProfileId, commentContent, commentDateTime FROM comment";
-		$statement->execute($query);
+		$statement = $pdo->prepare($query);
 
 		//build an array comments
 		$comments = new \SplFixedArray($statement->rowCount());
