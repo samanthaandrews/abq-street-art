@@ -140,7 +140,7 @@ class CommentTest extends StreetArtTest {
 
 		//edit the Comment and update it in mySQL
 		$comment->setCommentContent($this->VALID_COMMENTCONTENT2);
-		$comment->update($this->getPDO())
+		$comment->update($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
 		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
@@ -188,7 +188,7 @@ class CommentTest extends StreetArtTest {
 	/**
 	 * test grabbing a Comment by comment content
 	 */
-	public function testgetValidCommentByCommentContent {
+	public function testgetValidCommentByCommentContent() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
 
@@ -239,7 +239,7 @@ class CommentTest extends StreetArtTest {
 		$results = Comment::getAllComments($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment")
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment");
 
 
 		//grab the result from the array and validate it
@@ -250,39 +250,4 @@ class CommentTest extends StreetArtTest {
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
