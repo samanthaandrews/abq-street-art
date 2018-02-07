@@ -24,12 +24,16 @@ class BookmarkTest extends StreetArtTest {
 
 	/**
 	 * Profile that created the bookmarked piece of Art; this is for foreign key relations
+	 * We have to have a test Profile in order for a Bookmark to exist.
+	 *
 	 * @var  Profile $profile
 	 **/
 	protected $profile;
 
 	/**
 	 * Art that was bookmarked; this is for foreign key relations
+	 * We have to have a test Art in order for a Bookmark to exist.
+	 *
 	 * @var Art $art
 	 **/
 	protected $art;
@@ -41,11 +45,12 @@ class BookmarkTest extends StreetArtTest {
 	// placeholder until we actually create the following -Erin 2/7
 	protected $VALID_HASH;
 
-	/**
-	 * timestamp of the Bookmark; this starts as null and is assigned later
-	 * @var \DateTime $VALID_BOOKMARKDATE
-	 **/
-	protected $VALID_BOOKMARKDATE;
+// TODO remove the date information below? Date/Time is not an attribute of Bookmark
+//	/**
+//	 * timestamp of the Bookmark; this starts as null and is assigned later
+//	 * @var \DateTime $VALID_BOOKMARKDATE
+//	 **/
+//	protected $VALID_BOOKMARKDATE;
 
 	/**
 	 * valid salt to use to create the profile object to own the test
@@ -68,23 +73,25 @@ class BookmarkTest extends StreetArtTest {
 		parent::setUp();
 
 		// create a salt and hash for the mocked profile
-		// TODO I think I need to update these values...? -Erin 2/7
 
 		$password = "abc123";
 		$this->VALID_SALT = bin2hex(random_bytes(32));
 		$this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
+		// TODO I need to update these values to not be generic "php unit" -Erin 2/7
 		// create and insert the mocked profile
 		$this->profile = new Profile(generateUuidV4(), null,"@phpunit", "test@phpunit.de",$this->VALID_HASH, "testUserName", $this->VALID_SALT);
 		$this->profile->insert($this->getPDO());
 
+		// TODO I need to update these values to not be generic "php unit" -Erin 2/7
 		// create the and insert the mocked art
 		$this->art = new Art(generateUuidV4(), $this->profile->getProfileId(), "PHPUnit bookmark test passing");
 		$this->art->insert($this->getPDO());
 
+		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
 		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_BOOKMARKDATE = new \DateTime();
+		// $this->VALID_BOOKMARKDATE = new \DateTime();
 	}
 
 	/**
@@ -142,7 +149,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark$this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark == new Bookmark$this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -190,8 +197,9 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
 
+		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
 		//format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
+		// $this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
@@ -229,8 +237,9 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
 
+		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
 		//format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoBookmark->getBookmarkeDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
+		// $this->assertEquals($pdoBookmark->getBookmarkeDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
