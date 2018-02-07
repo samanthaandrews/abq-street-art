@@ -45,13 +45,6 @@ class BookmarkTest extends StreetArtTest {
 	// placeholder until we actually create the following -Erin 2/7
 	protected $VALID_HASH;
 
-// TODO remove the date information below? Date/Time is not an attribute of Bookmark
-//	/**
-//	 * timestamp of the Bookmark; this starts as null and is assigned later
-//	 * @var \DateTime $VALID_BOOKMARKDATE
-//	 **/
-//	protected $VALID_BOOKMARKDATE;
-
 	/**
 	 * valid salt to use to create the profile object to own the test
 	 * @var string $VALID_SALT
@@ -70,10 +63,11 @@ class BookmarkTest extends StreetArtTest {
 	public final function setUp() : void {
 
 		// run the default setUp() method first
+		// you have to have the profile and art objects in order to have a bookmark object
 		parent::setUp();
 
+		// TODO I need to update these values to not be generic -Erin 2/7
 		// create a salt and hash for the mocked profile
-
 		$password = "abc123";
 		$this->VALID_SALT = bin2hex(random_bytes(32));
 		$this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
@@ -88,10 +82,6 @@ class BookmarkTest extends StreetArtTest {
 		// create the and insert the mocked art
 		$this->art = new Art(generateUuidV4(), $this->profile->getProfileId(), "PHPUnit bookmark test passing");
 		$this->art->insert($this->getPDO());
-
-		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
-		// calculate the date (just use the time the unit test was setup...)
-		// $this->VALID_BOOKMARKDATE = new \DateTime();
 	}
 
 	/**
@@ -104,18 +94,15 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->bookmark->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->bookmark->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
+		// $pdoBookmark is an identical copy of the original $bookmark
 		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->profile->getProfileId(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->bookmark->getArtId());
-
-		//TODO remove the date information below? Date/Time is not an attribute of Bookmark
-//		//format the date to seconds since the beginning of time to avoid round off error
-//		$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
@@ -127,7 +114,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// delete the Bookmark from mySQL
@@ -149,7 +136,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark == new Bookmark$this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark == new Bookmark$this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -157,10 +144,6 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
-
-		//TODO remove the date information below? Date/Time is not an attribute of Bookmark
-		//format the date to seconds since the beginning of time to avoid round off error
-		//$this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKEDATE->getTimestamp());
 	}
 
 	/**
@@ -183,7 +166,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -196,10 +179,6 @@ class BookmarkTest extends StreetArtTest {
 		$pdoBookmark = $results[0];
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
-
-		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
-		//format the date to seconds since the beginning of time to avoid round off error
-		// $this->assertEquals($pdoBookmark->getBookmarkDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
@@ -221,7 +200,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId(), $this->VALID_BOOKMARKDATE);
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -236,10 +215,6 @@ class BookmarkTest extends StreetArtTest {
 		$pdoBookmark = $results[0];
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
-
-		// TODO remove the date information below? Date/Time is not an attribute of Bookmark
-		//format the date to seconds since the beginning of time to avoid round off error
-		// $this->assertEquals($pdoBookmark->getBookmarkeDate()->getTimeStamp(), $this->VALID_BOOKMARKDATE->getTimestamp());
 	}
 
 	/**
