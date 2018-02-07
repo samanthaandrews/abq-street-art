@@ -14,8 +14,8 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * This is a complete PHPUnit test of the Bookmark class. It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both invalid and valid inputs.
  *
- * @author Erin Scott <erinleeannscott@gmail.com>
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
+ * @author Erin Scott <erinleeannscott@gmail.com>
  *
  * @see \Edu\Cnm\AbqStreetArt\Bookmark
  * @see Dylan's example on Github: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Test/LikeTest.php
