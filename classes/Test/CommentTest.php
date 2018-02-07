@@ -243,7 +243,15 @@ class CommentTest extends StreetArtTest {
 
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+	}
 
+	/**
+	 * test grabbing a Comment by an art id that does not exist
+	 */
+	public function testGetInvalidCommentByArtId() : void {
+		//grab an art id that exceeds the maximum allowable art id
+		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $comment);
 	}
 
 	/**
