@@ -40,7 +40,7 @@ class ArtTest extends StreetArtTest {
 	 * latitude coordinate for this art
 	 * @var float $VALID_ARTLAT
 	 **/
-	protected $VALID_ARTLAT = "";
+	protected $VALID_ARTLAT = 89;
 	/**
 	 * location description for this art
 	 * @var string $VALID_ARTLOCATION
@@ -50,7 +50,7 @@ class ArtTest extends StreetArtTest {
 	 * longitude coordinate for this art
 	 * @var float $VALID_ARTLONG
 	 **/
-	protected $VALID_ARTLONG = "";
+	protected $VALID_ARTLONG = 170;
 	/**
 	 * title for this art
 	 * @var string $VALID_ARTTITLE
@@ -65,29 +65,8 @@ class ArtTest extends StreetArtTest {
 	 * year this art was installed/made
 	 * @var string $VALID_ARTTYEAR
 	 **/
-	protected $VALID_ARTYEAR = "";
-	/**
-	 * create dependent objects before running each test
-	 **/
-	//TODO Do I need any of this setUp function? I think I can delete the whole thing?
-	public final function setUp()  : void {
-		// run the default setUp() method first
-		parent::setUp();
-		$password = "abc123";
-		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
-		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
-		// create and insert a Profile to own the test Tweet
-		$this->profile = new Profile(generateUuidV4(), null,"@handle", "test@phpunit.de",$this->VALID_PROFILE_HASH, "+12125551212", $this->VALID_PROFILE_SALT);
-		$this->profile->insert($this->getPDO());
-		// calculate the date (just use the time the unit test was setup...)
-		$this->VALID_TWEETDATE = new \DateTime();
-		//format the sunrise date to use for testing
-		$this->VALID_SUNRISEDATE = new \DateTime();
-		$this->VALID_SUNRISEDATE->sub(new \DateInterval("P10D"));
-		//format the sunset date to use for testing
-		$this->VALID_SUNSETDATE = new\DateTime();
-		$this->VALID_SUNSETDATE->add(new \DateInterval("P10D"));
-	}
+	protected $VALID_ARTYEAR = 1992;
+
 	/**
 	 * test inserting a valid Art and verify that the actual mySQL data matches
 	 **/
@@ -154,42 +133,12 @@ class ArtTest extends StreetArtTest {
 	/**
 	 * test grabbing an Art that does not exist
 	 **/
-	//TODO help??
 	public function testGetInvalidArtByArtId() : void {
 		// grab an art id that exceeds the maximum allowable art id
 		$art = Art::getArtByArtId($this->getPDO(), generateUuidV4());
-		//TODO assertCount? or assertNull?
 		$this->assertNull($art);
 	}
-	/**
-	 * test inserting an Art and regrabbing it from mySQL
-	 **/
-	public function testGetValidArtByArtId() {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("art");
-		// create a new Art and insert to into mySQL
-		$artId = generateUuidV4();
-		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
-		$art->insert($this->getPDO());
-		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Art::getArtByArtId($this->getPDO(), $art->getArtId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
-		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
-		// grab the result from the array and validate it
-		$pdoArt = $results[0];
 
-		$this->assertEquals($pdoArt->getArtId(), $artId);
-		$this->assertEquals($pdoArt->getArtAddress(), $this->VALID_ARTADDRESS);
-		$this->assertEquals($pdoArt->getArtArtist(), $this->VALID_ARTARTIST);
-		$this->assertEquals($pdoArt->getArtImageUrl(), $this->VALID_ARTIMAGEURL);
-		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLAT);
-		$this->assertEquals($pdoArt->getArtLocation(), $this->VALID_ARTLOCATION);
-		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
-		$this->assertEquals($pdoArt->getArtTitle(), $this->VALID_ARTTITLE);
-		$this->assertEquals($pdoArt->getArtType(), $this->VALID_ARTTYPE);
-		$this->assertEquals($pdoArt->getArtYear(), $this->VALID_ARTYEAR);
-	}
 	/**
 	 * test grabbing an Art by art distance
 	 **/
@@ -217,10 +166,10 @@ class ArtTest extends StreetArtTest {
 	/**
 	 * test grabbing an Art whose distance does not exist
 	 **/
-	public function testGetInvalidTweetByTweetContent() : void {
-		// grab a tweet by content that does not exist
-		$tweet = Tweet::getTweetByTweetContent($this->getPDO(), "Comcast has the best service EVER #comcastLove");
-		$this->assertCount(0, $tweet);
+	public function testGetInvalidArtByArtDistance() : void {
+		// grab a art by distance that does not exist
+		$art = Art::getArtByArtDistance($this->getPDO(), "Comcast has the best service EVER #comcastLove");
+		$this->assertCount(0, $art);
 	}
 	/**
 	 * test grabbing an Art by year

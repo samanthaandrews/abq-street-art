@@ -254,12 +254,6 @@ public function setArtId( $newArtId) : void {
 	 **/
 
 	public function setArtLat(float $newArtLat) : void {
-	// verify the art latitude is secure
-		$newArtLat = trim($newArtLat);
-		$newArtLat = filter_var($newArtLat, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION, FILTER_FLAG_ALLOW_THOUSAND, FILTER_FLAG_ALLOW_SCIENTIFIC);
-		if(empty($newArtLat) === true) {
-		throw(new\InvalidArgumentException("art latitude is empty or insecure"));
-		}
 	// verify the latitude exists on earth
 	if(floatval($newArtLat) > 90) {
 		throw(new \RangeException("art latitude is not between -90 and 90"));
@@ -323,12 +317,6 @@ public function setArtId( $newArtId) : void {
 	 **/
 
 	public function setArtLong(float $newArtLong) : void {
-		// verify the art longitude is secure
-		$newArtLat = trim($newArtLong);
-		$newArtLat = filter_var($newArtLong, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION, FILTER_FLAG_ALLOW_THOUSAND, FILTER_FLAG_ALLOW_SCIENTIFIC);
-		if(empty($newArtLong) === true) {
-			throw(new\InvalidArgumentException("art longitude is empty or insecure"));
-		}
 		// verify the latitude exists on earth
 		if(floatval($newArtLong) > 180) {
 			throw(new \RangeException("art longitude is not between -180 and 180"));
@@ -542,29 +530,22 @@ public function setArtId( $newArtId) : void {
 	 * gets the Art by distance
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $artLocation art to search for
+	 * @param float $artLat art latitude to pass through
+	 * @param float $artLong art longitude to pass through
 	 * @return \SplFixedArray SplFixedArray of pieces of art found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getArtByArtDistance(\PDO $pdo, string $artLocation) : \SplFixedArray {
-		// sanitize the description before searching
-		$artLocation = trim($artLocation);
-		$artLocation = filter_var($artLocation, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($artLocation) === true) {
-			throw(new \PDOException("art location is invalid"));
-		}
+	public static function getArtByDistance(\PDO $pdo, float $artLat, float $artLong, float $distance) : \SplFixedArray {
 
-		// escape any mySQL wild cards
-		$artLocation = str_replace("_", "\\_", str_replace("%", "\\%", $artLocation));
+
 
 		// create query template
-		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artLocation LIKE :artLocation";
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artLat AND artLong LIKE :artLocation";
 		$statement = $pdo->prepare($query);
 
-		// bind the art location to the place holder in the template
-		$artLocation = "%$artLocation%";
-		$parameters = ["artLocation" => $artLocation];
+		// bind the art distance to the place holder in the template
+		$parameters = ["artLocat" => $artLocation];
 		$statement->execute($parameters);
 
 		// build an array of art
