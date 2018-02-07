@@ -73,14 +73,14 @@ class BookmarkTest extends StreetArtTest {
 		$this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
-		// TODO I need to update these values to not be generic "php unit" -Erin 2/7
+		// TODO I need to update these values to not be generic -Erin 2/7
 		// create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null,"@phpunit", "test@phpunit.de",$this->VALID_HASH, "testUserName", $this->VALID_SALT);
+		$this->profile = new Profile(generateUuidV4(), null, "@emailTest", $this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144), $this->VALID_SALT = bin2hex(random_bytes(32)), "usernameTest";
 		$this->profile->insert($this->getPDO());
 
-		// TODO I need to update these values to not be generic "php unit" -Erin 2/7
-		// create the and insert the mocked art
-		$this->art = new Art(generateUuidV4(), $this->profile->getProfileId(), "PHPUnit bookmark test passing");
+		// TODO I need to update these values to not be generic -Erin 2/7
+		// create and insert the mocked art
+		$this->art = new Art(generateUuidV4(), $this->art->getArtId(), "PHPUnit bookmark test passing");
 		$this->art->insert($this->getPDO());
 	}
 
