@@ -159,6 +159,7 @@ class CommentTest extends StreetArtTest {
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 
@@ -214,6 +215,67 @@ class CommentTest extends StreetArtTest {
 		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
 		$this->assertCount(0, $comment);
 	}
+
+	/**
+	 * test grabbing a Comment by art id
+	 */
+	public function testGetValidCommentByArtId() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		//create a new Comment and insert it into mySQL
+		$commentId = generateUuidV4();
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce that the fields match our expectations
+		$results = Comment::getCommentByCommentArtId($this->getPDO(), $this->art->getArtId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
+
+		//grab the result from the array and validate it
+		$pdoComment = $results[0];
+		//TODO do I need to include this code?
+		//$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+
+		//format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+
+	}
+
+	/**
+	 * test grabbing a Comment by profile id
+	 */
+	public function testGetValidCommentByProfileId() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		//create a new Comment and insert it into mySQL
+		$commentId = generateUuidV4();
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce that the fields match our expectations
+		$results = Comment::getCommentByCommentProfileId($this->getPDO(), $this->profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
+
+		//grab the result from the array and validate it
+		$pdoComment = $results[0];
+		//TODO do I need to include this code?
+		//$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+
+		//format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+
+	}
+
 	/**
 	 * test grabbing a Comment by comment content
 	 */
@@ -223,7 +285,7 @@ class CommentTest extends StreetArtTest {
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce that the fields match our expectations
@@ -237,8 +299,10 @@ class CommentTest extends StreetArtTest {
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 	}
@@ -261,7 +325,7 @@ class CommentTest extends StreetArtTest {
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce that the fields match our expectations
@@ -274,8 +338,10 @@ class CommentTest extends StreetArtTest {
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 	}
