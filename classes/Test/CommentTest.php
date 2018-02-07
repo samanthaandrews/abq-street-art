@@ -285,6 +285,15 @@ class CommentTest extends StreetArtTest {
 	}
 
 	/**
+	 * test grabbing a Comment by an art id that does not exist
+	 */
+	public function testGetInvalidCommentByProfileId() : void {
+		//grab an art id that exceeds the maximum allowable art id
+		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $comment);
+	}
+
+	/**
 	 * test grabbing a Comment by comment content
 	 */
 	public function testgetValidCommentByCommentContent() : void {
