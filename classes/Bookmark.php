@@ -60,8 +60,8 @@ class Bookmark implements \JsonSerialable {
 	 *
 	 * @return Uuid value of artId
 	 **/
-	public function getArtId() : Uuid {
-		return($this->artId);
+	public function getBookmarkArtId() : Uuid {
+		return($this->bookmarkArtId);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public function setBookmarkArtId ( $newBookmarkArtId) : void {
 	 *
 	 * @return Uuid value of profileId
 	 **/
-	public function getProfileId() : Uuid {
+	public function getBookmarkProfileId() : Uuid {
 		return($this->profileId);
 	}
 
@@ -262,7 +262,8 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($bookmarks);
+		return ($bookmarks);
+	}
 
 /**
  * gets the Bookmark by profile id
@@ -307,7 +308,8 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($bookmarks);
+		return ($bookmarks);
+	}
 
 ///**
 // * gets all Bookmarks
