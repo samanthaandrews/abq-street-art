@@ -3,6 +3,7 @@ namespace Edu\Cnm\AbqStreetArt\Test;
 
 use Edu\Cnm\AbqStreetArt\Comment;
 use Edu\Cnm\AbqStreetArt\Profile;
+use Edu\Cnm\AbqStreetArt\Art;
 use function Sodium\randombytes_buf;
 
 
@@ -90,7 +91,7 @@ class CommentTest extends StreetArtTest {
 		//create and insert an Art object to own the Test
 		//TODO figure out why Art is not defined
 
-		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com");
+		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com", "#####", "Art location", "####", "Art Title", "Art Type", "####");
 		$this->art->insert($this->getPDO());
 
 		//create and insert a Profile to own the Test
@@ -119,7 +120,7 @@ class CommentTest extends StreetArtTest {
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
