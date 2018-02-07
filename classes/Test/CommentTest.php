@@ -124,9 +124,11 @@ class CommentTest extends StreetArtTest {
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
+		//TODO Do I need to get this by art and profile id as well? they do for tweet, but tweet does not have primary key
 		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
 		//format the date to seconds since the beginning of time to avoid round off error
@@ -143,7 +145,7 @@ class CommentTest extends StreetArtTest {
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
 		$comment->insert($this->getPDO());
 
 		//edit the Comment and update it in mySQL
@@ -154,6 +156,7 @@ class CommentTest extends StreetArtTest {
 		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
 		//format the date to seconds since the beginning of time to avoid round off error
@@ -170,7 +173,7 @@ class CommentTest extends StreetArtTest {
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
 		$comment->insert($this->getPDO());
 
 		// delete the Comment from mySQL
@@ -185,14 +188,32 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a Comment and regrabbing it from mySQL
+	 * TODO I am confused by how this grabs an artId bigger than allowable
+	 */
+	public function testGetInvalidCommentByCommentArtId() : void {
+		//grab an art id that exceeds the maximum allowable art id
+		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $comment);
+	}
+
+	/**
+	 * test inserting a Comment and regrabbing it from mySQL
 	 * TODO I am confused by how this grabs a profile bigger than allowable
 	 */
 	public function testGetInvalidCommentByCommentProfileId() : void {
 		//grab a profile id that exceeds the maximum allowable profile id
-		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
+		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
 		$this->assertCount(0, $comment);
 	}
 
+	/**
+	 * test grabbing a Comment that does not exist
+	 */
+	public function testGetInvalidCommentbyCommentId() : void {
+		//grab a comment id that exceeds the maximum allowable profile id
+		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $comment);
+	}
 	/**
 	 * test grabbing a Comment by comment content
 	 */
