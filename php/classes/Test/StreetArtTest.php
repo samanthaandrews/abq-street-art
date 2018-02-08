@@ -12,6 +12,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 // autoload Composer packages
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 /**
+ * hi
  * Abstract class containing universal and project specific mySQL parameters
  *
  * This class is designed to lay the foundation of the unit tests per project. It loads  all the database
