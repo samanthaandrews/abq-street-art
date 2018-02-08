@@ -95,8 +95,6 @@ class ProfileTest extends StreetArtTest {
 
         $profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT, $this->VALID_USERNAME);
         $profile->insert($this->getPDO());
-        $profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT, $this->VALID_USERNAME);
-        $profile->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
         $pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
