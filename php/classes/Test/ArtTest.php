@@ -2,7 +2,7 @@
 namespace Edu\Cnm\AbqStreetArt\Test;
 use Edu\Cnm\AbqStreetArt\Art;
 // grab the class under scrutiny
-require_once(dirname(__DIR__) . "../autoload.php");
+require_once(dirname(__DIR__) . "/autoload.php");
 // grab the uuid generator
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 /**
