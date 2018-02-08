@@ -13,7 +13,8 @@ use Edu\Cnm\AbqStreetArt\Profile;
 
 require_once (dirname(__DIR__, 1) . "/autoload.php");
 
-//uuid generator goes here but I don't know what that is so I'm not gonna add it TODO add uuid generator
+// grab the uuid generator
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * PHPUnit test for ABQ Street Art Profile class
@@ -158,7 +159,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test inserting a Profile and regrabbing it from mySQL
      **/
-    public function testGetValidProfileByProfileId() : void {
+    public function testGetValidProfileByProfileId() {
 
         // count the number of rows and save it for later
         $numRows = $this->getConnection()->getRowCount("profile");
@@ -184,7 +185,7 @@ class ProfileTest extends StreetArtTest {
 
         // grab a profile id that exceeds the maximum allowable profile id
         $fakeProfileId = generateUuidV4();
-        $profile = Profile::getProfileByProfileId($this->getPDO(), $fakeProfileId );
+        $profile = Profile::getProfileByProfileId($this->getPDO(), "$fakeProfileId" );
         $this->assertNull($profile);
     }
 
@@ -220,7 +221,7 @@ class ProfileTest extends StreetArtTest {
     public function testGetInvalidProfileByUserName() : void {
 
         // grab a user name that does not exist
-        $profile = Profile::getProfileByProfileUserName($this->getPDO(), "@doesnotexist");
+        $profile = Profile::getProfileByProfileUserName($this->getPDO(), "Bad User Name");
         $this->assertCount(0, $profile);
     }
 
@@ -259,7 +260,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test grabbing a profile by its activation
      **/
-    public function testGetValidProfileByActivationToken() : void {
+    public function testGetValidProfileByActivationToken() {
 
         // count the number of rows and save it for later
         $numRows = $this->getConnection()->getRowCount("profile");
@@ -278,11 +279,11 @@ class ProfileTest extends StreetArtTest {
     }
 
     /**
-     * test grabbing a Profile by an email that does not exists
+     * test grabbing a Profile by an activation token that does not exists
      **/
     public function testGetInvalidProfileActivationToken() : void {
 
-        // grab an email that does not exist
+        // grab an activation token that does not exist
         $profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "5ebc7867885cb8dd25af05b991dd5609");
         $this->assertNull($profile);
     }
