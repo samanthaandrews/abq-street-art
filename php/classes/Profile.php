@@ -370,7 +370,7 @@ class Profile implements \JsonSerializable
         }
 
         //create query template
-        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile WHERE profileId = :profileId";
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUserName FROM profile WHERE profileId = :profileId";
         $statement = $pdo->prepare($query);
 
         //bind the profile id to the place holder in the template
@@ -383,7 +383,7 @@ class Profile implements \JsonSerializable
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
             if ($row !== false) {
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
             }
         } catch (\Exception $exception) {
             //if the row couldn't be converted, rethrow it
@@ -414,7 +414,7 @@ class Profile implements \JsonSerializable
         }
 
         //create query template
-        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile WHERE profileActivationToken = :profileActivationToken";
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt profileUserName FROM profile WHERE profileActivationToken = :profileActivationToken";
         $statement = $pdo->prepare($query);
 
         //bind the profile activation token to the place holder in the template
@@ -427,7 +427,7 @@ class Profile implements \JsonSerializable
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
             if ($row !== false) {
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
             }
         } catch (\Exception $exception) {
             //if the row couldn't be converted, rethrow it
@@ -459,7 +459,7 @@ class Profile implements \JsonSerializable
         $profileUserName = str_replace("_", "\\_", str_replace("%", "\\%", $profileUserName));
 
         //create query template
-        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile WHERE profileUserName LIKE :profileUserName";
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUserName FROM profile WHERE profileUserName LIKE :profileUserName";
         $statement = $pdo->prepare($query);
 
         //bind the profile user name to the place holder in the template
@@ -473,7 +473,7 @@ class Profile implements \JsonSerializable
         while (($row = $statement->fetch()) !== false) {
             try {
 
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
                 $profiles[$profiles->key()] = $profile;
                 $profiles->next();
             } catch (\Exception $exception) {
@@ -493,14 +493,14 @@ class Profile implements \JsonSerializable
             throw (new \PDOException("profile email is invalid"));
         }
         //escape any mySQL wild cards
-        $profileUserName = str_replace("_", "\\_", str_replace("%", "\\%", $profileEmail));
+        $profileEmail = str_replace("_", "\\_", str_replace("%", "\\%", $profileEmail));
 
         //create query template
-        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile WHERE profileEmail LIKE :profileEmail";
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUserName FROM profile WHERE profileEmail LIKE :profileEmail";
         $statement = $pdo->prepare($query);
 
         //bind the profile user name to the place holder in the template
-        $profileUserName = "%$profileEmail%";
+        $profileEmail = "%$profileEmail%";
         $parameters = ["profileEmail" => $profileEmail];
         $statement->execute($parameters);
 
@@ -510,7 +510,7 @@ class Profile implements \JsonSerializable
         while (($row = $statement->fetch()) !== false) {
             try {
 
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
                 $profiles[$profiles->key()] = $profile;
                 $profiles->next();
             } catch (\Exception $exception) {
@@ -535,7 +535,7 @@ class Profile implements \JsonSerializable
     public static function getAllProfiles(\PDO $pdo): \SplFixedArray
     {
         //create query template
-        $query = "SELECT profileId, profileActivationToken, profileEmail, profileUserName FROM profile";
+        $query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUserName FROM profile";
         $statement = $pdo->prepare($query);
         $statement->execute();
 
@@ -544,7 +544,7 @@ class Profile implements \JsonSerializable
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while (($row = $statement->fetch()) !== false) {
             try {
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileUserName"]);
+                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
                 $profiles[$profiles->key()] = $profile;
                 $profiles->next();
             } catch (\Exception $exception) {
