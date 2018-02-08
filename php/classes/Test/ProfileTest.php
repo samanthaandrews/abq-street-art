@@ -228,7 +228,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test grabbing a Profile by email
      **/
-    public function testGetValidProfileByEmail() : void {
+    public function testGetValidProfileByProfileEmail() : void {
 
         // count the number of rows and save it for later
         $numRows = $this->getConnection()->getRowCount("profile");
@@ -250,7 +250,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test grabbing a Profile by an email that does not exists
      **/
-    public function testGetInvalidProfileByEmail() : void {
+    public function testGetInvalidProfileByProfileEmail() : void {
 
         // grab an email that does not exist
         $profile = Profile::getProfileByProfileEmail($this->getPDO(), "does@not.exist");
@@ -281,7 +281,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test grabbing a Profile by an email that does not exists
      **/
-    public function testGetInvalidProfileActivation() : void {
+    public function testGetInvalidProfileActivationToken() : void {
 
         // grab an email that does not exist
         $profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "5ebc7867885cb8dd25af05b991dd5609");
