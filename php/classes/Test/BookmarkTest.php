@@ -96,7 +96,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->bookmark->getArtId());
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -104,7 +104,7 @@ class BookmarkTest extends StreetArtTest {
 		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->profile->getProfileId(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
 		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->bookmark->getArtId());
+		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
 	}
 
 	/**
