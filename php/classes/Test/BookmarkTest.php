@@ -5,7 +5,7 @@ use Edu\Cnm\AbqStreetArt\{Bookmark, Profile, Art};
 
 // TODO: need to update the file path for the autoloader; how do I get out of the "class" directory??
 // grab the class under scrutiny
-require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 // grab the uuid generator
 require_once(dirname(__DIR__, 2) . "/ValidateUuid.php");
@@ -30,7 +30,7 @@ class BookmarkTest extends StreetArtTest {
 	 *
 	 * @var  Profile $profile
 	 **/
-	protected $profile;
+	protected $profile = null;
 
 	/**
 	 * Art that was bookmarked; this is for foreign key relations
@@ -38,7 +38,7 @@ class BookmarkTest extends StreetArtTest {
 	 *
 	 * @var Art $art
 	 **/
-	protected $art;
+	protected $art = null;
 
 	/**
 	 * valid hash to use
