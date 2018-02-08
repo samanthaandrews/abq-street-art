@@ -138,7 +138,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark == new Bookmark$this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark == new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
