@@ -221,7 +221,6 @@ class ProfileTest extends StreetArtTest {
 
         // grab a user name that does not exist
         $profile = Profile::getProfileByProfileUserName($this->getPDO(), "@doesnotexist");
-        var_dump($profile);
         $this->assertCount(0, $profile);
     }
 
