@@ -103,7 +103,6 @@ class ArtTest extends StreetArtTest {
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
 		$art->insert($this->getPDO());
 		// edit the Art and update it in mySQL
-		//TODO do I need to test ARTARTIST2, ARTYEAR2, ETC??
 		$art->setArtAddress($this->VALID_ARTADDRESS2);
 		$art->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
