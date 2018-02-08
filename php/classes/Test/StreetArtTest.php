@@ -50,6 +50,8 @@ abstract class StreetArtTest extends TestCase {
 		$dataset->addTable("profile");
 		$dataset->addTable("bookmark");
 		$dataset->addTable("comment");
+
+		return($dataset);
 	}
 	/**
 	 * templates the setUp method that runs before each test; this method expunges the database before each run
