@@ -171,9 +171,9 @@ class ArtTest extends StreetArtTest {
 		$this->assertCount(0, $art);
 	}
 	/**
-	 * test grabbing an Art by year
+	 * test grabbing an Art by type
 	 **/
-	public function testGetArtByArtYear() : void {
+	public function testGetArtByArtType() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("art");
 		// create a new Art and insert to into mySQL
@@ -181,7 +181,7 @@ class ArtTest extends StreetArtTest {
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
 		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Art::getArtByArtYear($this->getPDO(), $art->getArtYear());
+		$results = Art::getArtByArtType($this->getPDO(), $art->getArtType());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
@@ -198,5 +198,13 @@ class ArtTest extends StreetArtTest {
 		$this->assertEquals($pdoArt->getArtTitle(), $this->VALID_ARTTITLE);
 		$this->assertEquals($pdoArt->getArtType(), $this->VALID_ARTTYPE);
 		$this->assertEquals($pdoArt->getArtYear(), $this->VALID_ARTYEAR);
+	}
+	/**
+	 * test grabbing an Art whose type does not exist
+	 **/
+	public function testGetInvalidArtByArtType() : void {
+		// grab a art by type that does not exist
+		$art = Art::getArtByArtType($this->getPDO(), "ugly");
+		$this->assertCount(0, $art);
 	}
 }
