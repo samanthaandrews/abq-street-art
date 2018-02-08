@@ -3,7 +3,7 @@ namespace Edu\Cnm\AbqStreetArt\Test;
 
 use Edu\Cnm\AbqStreetArt\{Bookmark, Profile, Art};
 
-// TODO need to update the file path for the autoloader; how do I get out of the "class" dirctory??
+// TODO: need to update the file path for the autoloader; how do I get out of the "class" dirctory??
 // grab the class under scrutiny
 require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
 
@@ -20,6 +20,7 @@ require_once(dirname(__DIR__, 2) . "/ValidateUuid.php");
  *
  * @see \Edu\Cnm\AbqStreetArt\Bookmark
  * @see Dylan's example on Github: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Test/LikeTest.php
+ * @see Bootcamp class example: https://bootcamp-coders.cnm.edu/class-materials/unit-testing/phpunit/
  **/
 class BookmarkTest extends StreetArtTest {
 
