@@ -484,7 +484,7 @@ class Profile implements \JsonSerializable
         return ($profiles);
     }
 
-    public static function getProfileByProfileProfileEmail(\PDO $pdo, string $profileEmail): \SplFixedArray
+    public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): \SplFixedArray
     {
         //sanitize the name before searching
         $profileEmail = trim($profileEmail);
