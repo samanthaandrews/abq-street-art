@@ -20,7 +20,7 @@ class ArtTest extends StreetArtTest {
 	 * address of this art
 	 * @var string $VALID_ARTADDRESS
 	 **/
-	protected $VALID_ARTADDRESS = "this is a valid address for this art";
+	protected $VALID_ARTADDRESS = "3900 Artsy Fartsy Lane NE";
 	/**
 	 * address of this art
 	 * @var string $VALID_ARTADDRESS2
@@ -30,12 +30,12 @@ class ArtTest extends StreetArtTest {
 	 * artist who made this art
 	 * @var string $VALID_ARTARTIST
 	 **/
-	protected $VALID_ARTARTIST = "this is a valid artist for this piece of art";
+	protected $VALID_ARTARTIST = "Mr. Art Man";
 	/**
 	 * art image url
 	 * @var string $VALID_ARTIMAGEURL
 	 **/
-	protected $VALID_ARTIMAGEURL = "this is a valid image url for this art";
+	protected $VALID_ARTIMAGEURL = "http://artsyfartsy.org";
 	/**
 	 * latitude coordinate for this art
 	 * @var float $VALID_ARTLAT
@@ -45,7 +45,7 @@ class ArtTest extends StreetArtTest {
 	 * location description for this art
 	 * @var string $VALID_ARTLOCATION
 	 **/
-	protected $VALID_ARTLOCATION = "";
+	protected $VALID_ARTLOCATION = "in the alley where everyone pees";
 	/**
 	 * longitude coordinate for this art
 	 * @var float $VALID_ARTLONG
@@ -55,12 +55,12 @@ class ArtTest extends StreetArtTest {
 	 * title for this art
 	 * @var string $VALID_ARTTITLE
 	 **/
-	protected $VALID_ARTTITLE = "";
+	protected $VALID_ARTTITLE = "A Very Nice ART!";
 	/**
 	 * type of art, i.e. mural, sculpture, etc.
 	 * @var string $VALID_ARTTYPE
 	 **/
-	protected $VALID_ARTTYPE = "";
+	protected $VALID_ARTTYPE = "mural";
 	/**
 	 * year this art was installed/made
 	 * @var string $VALID_ARTTYEAR
