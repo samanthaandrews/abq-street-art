@@ -228,7 +228,7 @@ class ProfileTest extends StreetArtTest {
     /**
      * test grabbing a Profile by email
      **/
-    public function testGetValidProfileByProfileEmail() : void {
+    public function testGetValidProfileByProfileEmail() {
 
         // count the number of rows and save it for later
         $numRows = $this->getConnection()->getRowCount("profile");
