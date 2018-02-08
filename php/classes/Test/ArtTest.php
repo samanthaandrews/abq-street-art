@@ -4,7 +4,7 @@ use Edu\Cnm\AbqStreetArt\Art;
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 // grab the uuid generator
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+require_once(dirname(__DIR__, 2) . "../lib/uuid.php");
 /**
  * Full PHPUnit test for the Art class
  *
@@ -167,7 +167,7 @@ class ArtTest extends StreetArtTest {
 	 **/
 	public function testGetInvalidArtByArtDistance() : void {
 		// grab a art by distance that does not exist
-		$art = Art::getArtByArtDistance($this->getPDO(), "Lat and long out of range");
+		$art = Art::getArtByArtDistance($this->getPDO(), "");
 		$this->assertCount(0, $art);
 	}
 	/**
