@@ -141,7 +141,7 @@ class ArtTest extends StreetArtTest {
 	/**
 	 * test grabbing an Art by art distance
 	 **/
-	public function testGetValidArtByArtDistance() : void {
+	public function testGetValidArtByDistance() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("art");
 		// create a new Art and insert to into mySQL
@@ -149,7 +149,7 @@ class ArtTest extends StreetArtTest {
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
 		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Art::getArtByArtDistance($this->getPDO(), $tweet->getArtDistance());
+		$results = Art::getArtByDistance($this->getPDO(), $art->getDistance());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
 		// enforce no other objects are bleeding into the test
