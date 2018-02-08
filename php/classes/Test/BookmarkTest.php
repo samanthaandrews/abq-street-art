@@ -77,12 +77,12 @@ class BookmarkTest extends StreetArtTest {
 
 		// TODO I need to update these values to not be generic -Erin 2/7
 		// create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null, "@emailTest", $this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144), $this->VALID_SALT = bin2hex(random_bytes(32)), "test username";
+		$this->profile = new Profile(generateUuidV4(), null, "@emailTest", $this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144), $this->VALID_SALT = bin2hex(random_bytes(32)), "test username");
 		$this->profile->insert($this->getPDO());
 
 		// TODO I need to update these values to not be generic -Erin 2/7
 		// create and insert the mocked art
-		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", "###", "test description of location", "####", "test art title", "test art type", "#####";
+		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", "###", "test description of location", "####", "test art title", "test art type", "#####");
 		$this->art->insert($this->getPDO());
 	}
 
@@ -138,7 +138,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark == new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
