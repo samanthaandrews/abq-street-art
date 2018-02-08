@@ -145,23 +145,22 @@ class ArtTest extends StreetArtTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("art");
 		// create a new Art and insert to into mySQL
-		$tweetId = generateUuidV4();
-		$tweet = new Tweet($tweetId, $this->profile->getProfileId(), $this->VALID_TWEETCONTENT, $this->VALID_TWEETDATE);
-		$tweet->insert($this->getPDO());
+		$artId = generateUuidV4();
+		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Tweet::getTweetByTweetContent($this->getPDO(), $tweet->getTweetContent());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("tweet"));
+		$results = Art::getArtByArtDistance($this->getPDO(), $tweet->getArtDistance());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
 		// enforce no other objects are bleeding into the test
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Tweet", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
 		// grab the result from the array and validate it
-		$pdoTweet = $results[0];
-		$this->assertEquals($pdoTweet->getTweetId(), $tweetId);
-		$this->assertEquals($pdoTweet->getTweetProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoTweet->getTweetContent(), $this->VALID_TWEETCONTENT);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoTweet->getTweetDate()->getTimestamp(), $this->VALID_TWEETDATE->getTimestamp());
+		$pdoArt = $results[0];
+		$this->assertEquals($pdoArt->getArtId(), $artId);
+		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLONG);
+		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
 	}
+
 	/**
 	 * test grabbing an Art whose distance does not exist
 	 **/
