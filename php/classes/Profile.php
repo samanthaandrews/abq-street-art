@@ -484,7 +484,18 @@ class Profile implements \JsonSerializable
         return ($profiles);
     }
 
-    public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): \SplFixedArray
+	/**
+	 * gets profile by email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileEmail profile email to search for
+	 *
+	 * @return \SplFixedArray SplFixedArray of profiles found
+	 *
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+    public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail) : ?Profile
     {
         //sanitize the name before searching
         $profileEmail = trim($profileEmail);
@@ -505,20 +516,21 @@ class Profile implements \JsonSerializable
         $statement->execute($parameters);
 
         //build an array of emails
-        $profiles = new \SplFixedArray($statement->rowCount());
-        $statement->setFetchMode(\PDO::FETCH_ASSOC);
-        while (($row = $statement->fetch()) !== false) {
-            try {
-
-                $profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
-                $profiles[$profiles->key()] = $profile;
-                $profiles->next();
-            } catch (\Exception $exception) {
-                //if the row couldn't be converted, rethrow it
-                throw (new \PDOException($exception->getMessage(), 0, $exception));
-            }
-        }
-        return ($profiles);
+        //$profiles = new \SplFixedArray($statement->rowCount());
+        //$statement->setFetchMode(\PDO::FETCH_ASSOC);
+        //while (($row = $statement->fetch()) !== false) {
+            try  {
+					$profile = null;
+					$statement->setFetchMode(\PDO::FETCH_ASSOC);
+					$row = $statement->fetch();
+					if ($row !== false) {
+						$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUserName"]);
+					}
+				} catch (\Exception $exception) {
+					//if the row couldn't be converted, rethrow it
+					throw (new \PDOException($exception->getMessage(), 0, $exception));
+				}
+			  return ($profile);
     }
 
 
