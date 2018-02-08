@@ -3,7 +3,7 @@ namespace Edu\Cnm\AbqStreetArt;
 
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "../vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
@@ -18,7 +18,7 @@ use Ramsey\Uuid\Uuid;
  * @see Dylan's Object Oriented PHP example: https://bootcamp-coders.cnm.edu/class-materials/object-oriented/object-oriented-php.php
  **/
 
-class Bookmark implements \JsonSerialable {
+class Bookmark implements \JsonSerializable {
 	use ValidateUuid;
 
 	/**
