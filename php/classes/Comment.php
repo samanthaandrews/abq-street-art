@@ -236,7 +236,7 @@ class Comment implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		// create query template
-		$query = "INSERT INTO comment(commentId, commentArtId, commentProfileId, commentContent, commentDateTime) VALUES(:commentId, :commentArtId,:commentProfileId, :commentContent, :contentDateTime)";
+		$query = "INSERT INTO comment(commentId, commentArtId, commentProfileId, commentContent, commentDateTime) VALUES(:commentId, :commentArtId, :commentProfileId, :commentContent, :commentDateTime)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
