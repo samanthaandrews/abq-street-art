@@ -230,7 +230,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentArtId($this->getPDO(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertNull($results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
@@ -268,7 +268,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertNull($results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
