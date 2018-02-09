@@ -107,7 +107,7 @@ class Comment implements \JsonSerializable {
 	 * @return Uuid value of comment art id
 	 **/
 	public function getCommentArtId(): Uuid {
-		return ($this->CommentArtId);
+		return ($this->commentArtId);
 	}
 
 	/**
@@ -126,7 +126,7 @@ class Comment implements \JsonSerializable {
 		}
 
 		// convert and store the profile id
-		$this->CommentArtId = $uuid;
+		$this->commentArtId = $uuid;
 	}
 
 	/**
@@ -154,7 +154,7 @@ class Comment implements \JsonSerializable {
 		}
 
 		// convert and store the profile id
-		$this->CommentProfileId = $uuid;
+		$this->commentProfileId = $uuid;
 	}
 
 	/**
@@ -239,7 +239,7 @@ class Comment implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$formattedDate = $this->commentDateTime > format("Y-m-d H:i:s.u");
+		$formattedDate = $this->commentDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["commentId" => $this->commentId->getBytes(), "commentArtId" => $this->commentArtId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
 		$statement->execute($parameters);
 	}

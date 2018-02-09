@@ -28,14 +28,14 @@ class CommentTest extends StreetArtTest {
 	 * @var Art $art
 	 * Art is needed to be commented on, so we use it but set it to null
 	 **/
-	protected $art = null;
+	protected $art;
 
 	/**
 	 *Profile that created the comment; this is for foreign key relations
 	 * @var Profile $profile
 	 * Profile is needed to make a comment, so we use it but set it to null
 	 */
-	protected $profile = null;
+	protected $profile;
 
 	/**
 	 * valid profile hash to create the profile object to own the test
@@ -87,6 +87,7 @@ class CommentTest extends StreetArtTest {
 		$password = "abc123";
 		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
 		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 262144);
+		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert an Art object to own the Test
 		//TODO figure out why Art is not defined
@@ -96,7 +97,7 @@ class CommentTest extends StreetArtTest {
 
 		//create and insert a Profile to own the Test
 		//TODO figure out why phone number is in ProfileSalt
-		$this->profile = new Profile(generateUuidV4(), null, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT, "@hamsterman");
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT, "@hamsterman");
 		$this->profile->insert($this->getPDO());
 
 		// calculate the date (just use the time the unit test was setup...)
@@ -116,7 +117,7 @@ class CommentTest extends StreetArtTest {
 	 */
 	public function testInsertValidComment(): void {
 		//count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("comment");
+//		$numRows = $this->getConnection()->getRowCount("comment");
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
