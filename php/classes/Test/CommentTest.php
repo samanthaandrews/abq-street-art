@@ -91,7 +91,7 @@ class CommentTest extends StreetArtTest {
 		//create and insert an Art object to own the Test
 		//TODO figure out why Art is not defined
 
-		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com", "#####", "Art location", "####", "Art Title", "Art Type", "####");
+		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com", 69.69, "Art location", 69.69, "Art Title", "Art Type", 1969);
 		$this->art->insert($this->getPDO());
 
 		//create and insert a Profile to own the Test
