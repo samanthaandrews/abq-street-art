@@ -1,14 +1,18 @@
 <?php
 namespace Edu\Cnm\AbqStreetArt\Test;
 
-use Edu\Cnm\AbqStreetArt\{Bookmark, Profile, Art};
+use Edu\Cnm\AbqStreetArt\Bookmark;
+use Edu\Cnm\AbqStreetArt\Profile;
+use Edu\Cnm\AbqStreetArt\Art;
 
 // TODO: need to update the file path for the autoloader; how do I get out of the "class" directory??
 // grab the class under scrutiny
+require_once (dirname(__DIR__, 1) . "/autoload.php");
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 // grab the uuid generator
-require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
+//require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
 /**
  * Full PHPUnit test for the ABQ Street Art Bookmark class
  *
@@ -30,7 +34,7 @@ class BookmarkTest extends StreetArtTest {
 	 *
 	 * @var  Profile $profile
 	 **/
-	protected $profile = null;
+	protected $profile;
 
 	/**
 	 * Art that was bookmarked; this is for foreign key relations
@@ -38,7 +42,7 @@ class BookmarkTest extends StreetArtTest {
 	 *
 	 * @var Art $art
 	 **/
-	protected $art = null;
+	protected $art;
 
 	/**
 	 * valid hash to use
@@ -77,12 +81,12 @@ class BookmarkTest extends StreetArtTest {
 
 		// TODO I need to update these values to not be generic -Erin 2/7
 		// create and insert the mocked profile
-		$this->profile = new Profile(generateUuidV4(), null, "@emailTest", $this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144), $this->VALID_SALT = bin2hex(random_bytes(32)), "test username");
+		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "@emailTest", $this->VALID_HASH, $this->VALID_SALT, "test username");
 		$this->profile->insert($this->getPDO());
 
 		// TODO I need to update these values to not be generic -Erin 2/7
 		// create and insert the mocked art
-		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", "###", "test description of location", "####", "test art title", "test art type", "#####");
+		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", 69.69, "test description of location", 69.69, "test art title", "test art type", 1969);
 		$this->art->insert($this->getPDO());
 	}
 

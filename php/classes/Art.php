@@ -69,7 +69,7 @@ class Art implements \JsonSerializable {
 	/**
 	 * constructor for this Art
 	 *
-	 * @param string|Uuid $newArtId id of this Art or null if a new Art
+	 * @param UUID|string $newArtId id of this Art or null if a new Art
 	 * @param string $newArtAddress address of this Art
 	 * @param string $newArtArtist artist of this Art
 	 * @param string $newArtImageUrl image url of this Art
