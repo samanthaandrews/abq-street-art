@@ -117,7 +117,7 @@ class CommentTest extends StreetArtTest {
 	 */
 	public function testInsertValidComment(): void {
 		//count the number of rows and save it for later
-//		$numRows = $this->getConnection()->getRowCount("comment");
+		$numRows = $this->getConnection()->getRowCount("comment");
 
 		//create a new Comment and insert it into mySQL
 		$commentId = generateUuidV4();
