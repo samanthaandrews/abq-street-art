@@ -159,7 +159,7 @@ class CommentTest extends StreetArtTest {
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT2);
 
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
@@ -230,13 +230,13 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentArtId($this->getPDO(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertNull($results);
+		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
 		//TODO do I need to include this code?
-		//$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
+		$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 
