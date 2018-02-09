@@ -440,7 +440,7 @@ public function setArtId( $newArtId) : void {
 	public function insert(\PDO $pdo) : void {
 
 		// create query template
-		$query = "INSERT INTO art(artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear) VALUES(:artId, :artArtist, :artImageUrl, :artLat, :artLocation, :artLong, :artTitle, :artType, :artYear)";
+		$query = "INSERT INTO art(artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear) VALUES(:artId, :artAddress, :artArtist, :artImageUrl, :artLat, :artLocation, :artLong, :artTitle, :artType, :artYear)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
