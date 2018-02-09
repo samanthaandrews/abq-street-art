@@ -78,7 +78,7 @@ class ProfileTest extends StreetArtTest {
     public final function setUp() : void {
         parent::setUp();
         //
-        $password = "abc123";
+        $password = "thisismydogsname";
         $this->VALID_SALT = bin2hex(random_bytes(32));
         $this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
         $this->VALID_ACTIVATION = bin2hex(random_bytes(16));
