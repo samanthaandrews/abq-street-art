@@ -165,9 +165,9 @@ class ArtTest extends StreetArtTest {
 	 * test grabbing an Art whose distance does not exist
 	 **/
 
-	public function testGetInvalidArtByArtDistance() : void {
-		// grab a art by distance that does not exist
-		$art = Art::getArtByArtDistance($this->getPDO(), .00002);
+	public function testGetInvalidArtByDistance() : void {
+		// grab an art by distance that does not exist
+		$art = Art::getArtByDistance($this->getPDO(), .00002);
 		$this->assertCount(0, $art);
 	}
 
