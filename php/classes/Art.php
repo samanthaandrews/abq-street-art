@@ -530,20 +530,22 @@ public function setArtId( $newArtId) : void {
 	 * gets the Art by distance
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param float $artLat art latitude to pass through
-	 * @param float $artLong art longitude to pass through
+	 * @param float $userLat latitude coordinate of where user is
+	 * @param float $userLong longitude coordinate of where user is
+	 * @param float $distance distance in miles that the user is searching by
 	 * @return \SplFixedArray SplFixedArray of pieces of art found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
+	 * **/
 
-	public static function getArtByDistance(\PDO $pdo, float $artLat, float $artLong, float $distance) : \SplFixedArray {
+	public static function getArtByDistance(\PDO $pdo, float $userLong, float $userLat, float $distance) : \SplFixedArray {
 
 		// create query template
-		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE artLat AND artLong LIKE :artLocation";
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art WHERE haversine(:userLong, :userLat, artLong, artLat) < :distance";
 		$statement = $pdo->prepare($query);
 
 		// bind the art distance to the place holder in the template
-		$parameters = ["artLocat" => $artLocation];
+		$parameters = ["distance" => $distance];
 		$statement->execute($parameters);
 
 		// build an array of art
@@ -561,7 +563,6 @@ public function setArtId( $newArtId) : void {
 		}
 		return($arts);
 	}
-	 **/
 
 	/**
 	 * gets the Art by type
