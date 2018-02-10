@@ -140,6 +140,7 @@ class ArtTest extends StreetArtTest {
 
 	/**
 	 * test grabbing an Art by art distance
+	 **/
 
 	public function testGetValidArtByDistance() : void {
 		// count the number of rows and save it for later
@@ -160,16 +161,16 @@ class ArtTest extends StreetArtTest {
 		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLONG);
 		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
 	}
-	 **/
 	/**
 	 * test grabbing an Art whose distance does not exist
+	 **/
 
 	public function testGetInvalidArtByArtDistance() : void {
 		// grab a art by distance that does not exist
-		$art = Art::getArtByArtDistance($this->getPDO(), "");
+		$art = Art::getArtByArtDistance($this->getPDO(), .00002);
 		$this->assertCount(0, $art);
 	}
-	 **/
+
 	/**
 	 * test grabbing an Art by type
 	 **/
