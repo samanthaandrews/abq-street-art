@@ -31,6 +31,13 @@ class CommentTest extends StreetArtTest {
 	protected $art;
 
 	/**
+	 * Comment that the comment is about; this is for
+	 *
+	 * @var Comment $comment
+	 * comment is needed to be commented on, so we use it but set it to null
+	 **/
+	protected $comment;
+	/**
 	 *Profile that created the comment; this is for foreign key relations
 	 * @var Profile $profile
 	 * Profile is needed to make a comment, so we use it but set it to null
@@ -230,7 +237,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentArtId($this->getPDO(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
@@ -268,7 +275,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertNull($comment);
+		$this->assertCount(0, $comment);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
@@ -347,7 +354,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getAllComments($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 
