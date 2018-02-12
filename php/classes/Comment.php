@@ -331,7 +331,7 @@ class Comment implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getCommentByCommentArtId(\PDO $pdo, $commentArtId): ?Comment {
+	public static function getCommentByCommentArtId(\PDO $pdo, $commentArtId): \SplFixedArray {
 		// sanitize the commentArtId before searching
 		try {
 			$commentArtId = self::validateUuid($commentArtId);
@@ -348,7 +348,6 @@ class Comment implements \JsonSerializable {
 		$statement->execute($parameters);
 
 //		//build and array of comments
-		//TODO figure out the array to return for the search by artId
 		$comments = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
@@ -361,20 +360,7 @@ class Comment implements \JsonSerializable {
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-//		return ($comments);
-		//grab the comment from mySQL
-		try {
-			$comment = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
-			}
-		} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-		return ($comment);
+		return ($comments);
 	}
 
 	/**
@@ -386,7 +372,7 @@ class Comment implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
-	public static function getCommentByCommentProfileId(\PDO $pdo, $commentProfileId): ?Comment {
+	public static function getCommentByCommentProfileId(\PDO $pdo, $commentProfileId): \SplFixedArray {
 		// sanitize the commentProfileId before searching
 		try {
 			$commentProfileId = self::validateUuid($commentProfileId);
@@ -402,19 +388,20 @@ class Comment implements \JsonSerializable {
 		$parameters = ["commentProfileId" => $commentProfileId->getBytes()];
 		$statement->execute($parameters);
 
-		//grab the comment from mySQL
-		try {
-			$comment = null;
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		//build and array of comments
+		$comments = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while (($row = $statement->fetch()) !== false) {
+			try {
 				$comment = new Comment($row["commentId"], $row["commentArtId"], $row["commentProfileId"], $row["commentContent"], $row["commentDateTime"]);
+				$comments[$comments->key()] = $comment;
+				$comments->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return ($comment);
+		return ($comments);
 	}
 
 //	/**
