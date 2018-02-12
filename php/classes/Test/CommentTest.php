@@ -275,7 +275,7 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(0, $comment);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
@@ -354,7 +354,8 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getAllComments($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(0, $results);
+		//TODO Dylan has this count set to one, we get and error when we try that, why???
+		$this->assertCount(1, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 
