@@ -176,7 +176,7 @@ class BookmarkTest extends StreetArtTest {
 		$results = Bookmark::getBookmarkByBookmarkArtId($this->getPDO(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\StreetArt\\Bookmark", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Bookmark", $results);
 
 		// grab the result from the array and validate it
 		$pdoBookmark = $results[0];
@@ -212,7 +212,7 @@ class BookmarkTest extends StreetArtTest {
 		$this->assertCount(1, $results);
 
 		// enforce that no other objects are bleeding into the test
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\StreetArt\\Bookmark", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Bookmark", $results);
 
 		// grab the result from the array and validate it
 		$pdoBookmark = $results[0];

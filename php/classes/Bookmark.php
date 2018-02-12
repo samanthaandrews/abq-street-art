@@ -155,8 +155,8 @@ public function delete(\PDO $pdo) : void {
  * gets the Bookmark by art id and profile id
  *
  * @param \PDO $pdo PDO connection object
- * @param string $bookmarkArtId art id of this bookmark to search for
- * @param string $bookmarkProfileId profile id of this bookmark to search for
+ * @param  $bookmarkArtId art id of this bookmark to search for
+ * @param  $bookmarkProfileId profile id of this bookmark to search for
  *
  * @return Bookmark|null Bookmark found or null if not found
  *
@@ -166,7 +166,7 @@ public function delete(\PDO $pdo) : void {
  * @see Example on Dylan's Github for Tweet Like: https://github.com/deepdivedylan/data-design/blob/master/php/classes/Like.php
  **/
 
-public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo, string $bookmarkArtId, string $bookmarkProfileId) : ?Bookmark {
+public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo, $bookmarkArtId, $bookmarkProfileId) : ?Bookmark {
 
 	// sanitize the bookmarkArtId before searching
 	try {
@@ -175,8 +175,15 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		throw(new \PDOException($exception->getMessage(), 0, $exception));
 	}
 
+	// sanitize the bookmarkProfileId before searching
+	try {
+		$bookmarkProfileId = self::validateUuid($bookmarkProfileId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+
 	// create query template
-	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
+	$query = "SELECT bookmarkArtId, bookmarkProfileId FROM bookmark WHERE bookmarkArtId = :bookmarkArtId AND bookmarkProfileId = :bookmarkProfileId";
 	$statement = $pdo->prepare($query);
 
 	// bind the art id and the profile id to the placeholder in the template
@@ -220,7 +227,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		}
 
 		// create query template
-		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkArtId = :bookmarkArtId";
+		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM bookmark WHERE bookmarkArtId = :bookmarkArtId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
@@ -265,7 +272,7 @@ public static function getBookmarkByBookmarkArtIdAndBookmarkProfileId(\PDO $pdo,
 		}
 
 		// create query template
-		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM 'bookmark' WHERE bookmarkProfileId = :bookmarkProfileId";
+		$query = "SELECT bookmarkArtId, bookmarkProfileId FROM bookmark WHERE bookmarkProfileId = :bookmarkProfileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
