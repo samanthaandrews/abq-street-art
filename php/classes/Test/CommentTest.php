@@ -41,18 +41,18 @@ class CommentTest extends StreetArtTest {
 	 *Profile that created the comment; this is for foreign key relations
 	 * @var Profile $profile
 	 * Profile is needed to make a comment, so we use it but set it to null
-	 */
+	 **/
 	protected $profile;
 
 	/**
 	 * valid profile hash to create the profile object to own the test
 	 * @var $VALID_HASH
-	 */
+	 **/
 	protected $VALID_PROFILE_HASH;
 	/**
 	 * valid salt to use to create the profile object to own the test
 	 * @var string $VALID_SALT
-	 */
+	 **/
 	protected $VALID_PROFILE_SALT;
 
 	/**
@@ -87,7 +87,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * create dependent objects before running each test
-	 */
+	 **/
 	public final function setUp(): void {
 		//run the default setUp() method first
 		parent::setUp();
@@ -118,7 +118,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a valid Comment and verify that mySQL data matches
-	 */
+	 **/
 	public function testInsertValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -142,7 +142,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a Comment, editing it, and then updating it
-	 */
+	 **/
 	public function testUpdateValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -171,7 +171,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test creating a Comment and then deleting it
-	 */
+	 **/
 	public function testDeleteValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -221,7 +221,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by commentId that does not exist
-	 */
+	 **/
 	public function testGetInvalidCommentByCommentId() : void {
 		//grab a comment id that exceeds the maximum allowable profile id
 		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
@@ -230,7 +230,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by art id
-	 */
+	 **/
 	public function testGetValidCommentByCommentArtId() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -260,7 +260,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by an art id that does not exist
-	 */
+	 **/
 	public function testGetInvalidCommentByCommentArtId() : void {
 		//grab an art id that exceeds the maximum allowable art id
 		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
@@ -269,7 +269,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by profile id
-	 */
+	 **/
 	public function testGetValidCommentByCommentProfileId() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -298,7 +298,7 @@ class CommentTest extends StreetArtTest {
 	}
 	/**
 	 * test grabbing a Comment by profileId that does not exist
-	 */
+	 **/
 	public function testGetInvalidCommentByCommentProfileId() : void {
 		//grab a profile id that exceeds the maximum allowable profile id
 		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
