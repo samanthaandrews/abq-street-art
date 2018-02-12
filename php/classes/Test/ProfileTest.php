@@ -287,28 +287,4 @@ class ProfileTest extends StreetArtTest {
         $profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "5ebc7867885cb8dd25af05b991dd5609");
         $this->assertNull($profile);
     }
-
-    /**
-     * test grabbing all profiles
-     **/
-    public function testGetAllValidProfiles() : void {
-        // count the number of rows and save it for later
-        $numRows = $this->getConnection()->getRowCount("profile");
-        // create a new profile and insert to into mySQL
-        $profileId = generateUuidV4();
-        $profile = new Profile($profileId,  $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT, $this->VALID_USERNAME);
-        $profile->insert($this->getPDO());
-
-        // grab the data from mySQL and enforce the fields match our expectation
-        $results = Profile::getAllProfiles($this->getPDO());
-        $pdoProfile = $results[0];
-        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-        $this->assertCount(1, $results);
-        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Profile", $results);
-        $this->assertEquals($pdoProfile->getProfileId(), $profileId);
-        $this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-        $this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-        $this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-        $this->assertEquals($pdoProfile->getProfileUserName(), $this->VALID_USERNAME);
-    }
 }
