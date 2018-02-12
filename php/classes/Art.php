@@ -609,6 +609,35 @@ public function setArtId( $newArtId) : void {
 		return($arts);
 	}
 
+	/**
+	 * gets all Arts
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Arts found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllArts(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear FROM art";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+		// build an array of arts
+		$tweets = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$art = new Art($row["artId"], $row["artAddress"], $row["artArtist"], $row["artImageUrl"], $row["artLat"], $row["artLocation"], $row["artLong"], $row["artTitle"], $row["artType"], $row["artYear"]);
+				$arts[$arts->key()] = $art;
+				$arts->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($arts);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
