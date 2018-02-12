@@ -192,7 +192,32 @@ class CommentTest extends StreetArtTest {
 	}
 
 
+	/**
+	 * test grabbing a Comment by commentId
+	 **/
+	public function testGetValidCommentByCommentId() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
 
+		//create a new Comment and insert it into mySQL
+		$commentId = generateUuidV4();
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce that the fields match our expectations
+		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+
+		//grab the result from the array and validate it
+
+		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+
+		//format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+	}
 
 	/**
 	 * test grabbing a Comment by commentId that does not exist
