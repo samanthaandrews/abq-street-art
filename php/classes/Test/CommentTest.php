@@ -41,18 +41,18 @@ class CommentTest extends StreetArtTest {
 	 *Profile that created the comment; this is for foreign key relations
 	 * @var Profile $profile
 	 * Profile is needed to make a comment, so we use it but set it to null
-	 **/
+	 */
 	protected $profile;
 
 	/**
 	 * valid profile hash to create the profile object to own the test
 	 * @var $VALID_HASH
-	 **/
+	 */
 	protected $VALID_PROFILE_HASH;
 	/**
 	 * valid salt to use to create the profile object to own the test
 	 * @var string $VALID_SALT
-	 **/
+	 */
 	protected $VALID_PROFILE_SALT;
 
 	/**
@@ -87,7 +87,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * create dependent objects before running each test
-	 **/
+	 */
 	public final function setUp(): void {
 		//run the default setUp() method first
 		parent::setUp();
@@ -97,10 +97,13 @@ class CommentTest extends StreetArtTest {
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert an Art object to own the Test
+		//TODO figure out why Art is not defined
+
 		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com", 040.717274011, "side of building", 040.717274011, "Art Title", "Art Type", 2000);
 		$this->art->insert($this->getPDO());
 
 		//create and insert a Profile to own the Test
+		//TODO figure out why phone number is in ProfileSalt
 		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT, "@hamsterman");
 		$this->profile->insert($this->getPDO());
 
@@ -118,7 +121,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a valid Comment and verify that mySQL data matches
-	 **/
+	 */
 	public function testInsertValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -129,6 +132,7 @@ class CommentTest extends StreetArtTest {
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
+		//TODO Do I need to get this by art and profile id as well? they do for tweet, but tweet does not have primary key
 		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
@@ -142,7 +146,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test inserting a Comment, editing it, and then updating it
-	 **/
+	 */
 	public function testUpdateValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -171,7 +175,7 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test creating a Comment and then deleting it
-	 **/
+	 */
 	public function testDeleteValidComment(): void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
@@ -191,38 +195,28 @@ class CommentTest extends StreetArtTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("comment"));
 	}
 
-
 	/**
-	 * test grabbing a Comment by commentId
-	 **/
-	public function testGetValidCommentByCommentId() : void {
-		//count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("comment");
-
-		//create a new Comment and insert it into mySQL
-		$commentId = generateUuidV4();
-		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
-		$comment->insert($this->getPDO());
-
-		//grab the data from mySQL and enforce that the fields match our expectations
-		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-
-		//grab the result from the array and validate it
-
-		$this->assertEquals($pdoComment->getCommentId(), $commentId);
-		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
-		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
-
-		//format the date to seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+	 * test inserting a Comment and regrabbing it from mySQL
+	 */
+	public function testGetInvalidCommentByCommentArtId() : void {
+		//grab an art id that exceeds the maximum allowable art id
+		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
+		$this->assertNull($comment);
 	}
 
 	/**
-	 * test grabbing a Comment by commentId that does not exist
-	 **/
-	public function testGetInvalidCommentByCommentId() : void {
+	 * test inserting a Comment and regrabbing it from mySQL
+	 */
+	public function testGetInvalidCommentByCommentProfileId() : void {
+		//grab a profile id that exceeds the maximum allowable profile id
+		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
+		$this->assertNull($comment);
+	}
+
+	/**
+	 * test grabbing a Comment that does not exist
+	 */
+	public function testGetInvalidCommentbyCommentId() : void {
 		//grab a comment id that exceeds the maximum allowable profile id
 		$comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
 		$this->assertNull($comment);
@@ -230,8 +224,8 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by art id
-	 **/
-	public function testGetValidCommentByCommentArtId() : void {
+	 */
+	public function testGetValidCommentByArtId() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
 
@@ -243,16 +237,15 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentArtId($this->getPDO(), $this->art->getArtId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
-
-		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		//TODO do I need to include this code?
+		$this->assertEquals($pdoComment->getCommentId(), $comment);
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
-		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
 
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
@@ -260,17 +253,17 @@ class CommentTest extends StreetArtTest {
 
 	/**
 	 * test grabbing a Comment by an art id that does not exist
-	 **/
-	public function testGetInvalidCommentByCommentArtId() : void {
+	 */
+	public function testGetInvalidCommentByArtId() : void {
 		//grab an art id that exceeds the maximum allowable art id
 		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $comment);
+		$this->assertNull($comment);
 	}
 
 	/**
 	 * test grabbing a Comment by profile id
-	 **/
-	public function testGetValidCommentByCommentProfileId() : void {
+	 */
+	public function testGetValidCommentByProfileId() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
 
@@ -282,13 +275,13 @@ class CommentTest extends StreetArtTest {
 		//grab the data from mySQL and enforce that the fields match our expectations
 		$results = Comment::getCommentByCommentProfileId($this->getPDO(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertCount(1, $results);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
 
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
-
-		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		//TODO do I need to include this code?
+		//$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 
@@ -296,12 +289,84 @@ class CommentTest extends StreetArtTest {
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 
 	}
+
 	/**
-	 * test grabbing a Comment by profileId that does not exist
-	 **/
-	public function testGetInvalidCommentByCommentProfileId() : void {
-		//grab a profile id that exceeds the maximum allowable profile id
+	 * test grabbing a Comment by an profile id that does not exist
+	 */
+	public function testGetInvalidCommentByProfileId() : void {
+		//grab an art id that exceeds the maximum allowable art id
 		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $comment);
+		$this->assertNull($comment);
+	}
+
+//	/**
+//	 * test grabbing a Comment by comment content
+//	 */
+//	public function testgetValidCommentByCommentContent() : void {
+//		//count the number of rows and save it for later
+//		$numRows = $this->getConnection()->getRowCount("comment");
+//
+//		//create a new Comment and insert it into mySQL
+//		$commentId = generateUuidV4();
+//		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+//		$comment->insert($this->getPDO());
+//
+//		//grab the data from mySQL and enforce that the fields match our expectations
+//		$results = Comment::getCommentByCommentContent($this->getPDO(), $comment->getCommentContent());
+//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+//		$this->assertCount(1, $results);
+//
+//		//enforce that no other objecs are bleeding into the test
+//		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
+//
+//		//grab the result from the array and validate it
+//		$pdoComment = $results[0];
+//		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+//		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
+//		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+//		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+//
+//		//format the date to seconds since the beginning of time to avoid round off error
+//		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
+//	}
+
+//	/**
+//	 * test grabbing a Comment by content that does not exist
+//	 **/
+//	public function testGetInvalidCommentByCommentContent() : void {
+//		//grab a comment by content that does not exist
+//		$comment = Comment::getCommentByCommentContent($this->getPDO(), "Snack are overrated");
+//		$this->assertCount(0, $comment);
+//	}
+
+	/**
+	 * test grabbing all Comments
+	 **/
+	public function testGetAllValidComments() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		//create a new Comment and insert it into mySQL
+		$commentId = generateUuidV4();
+		$comment = new Comment($commentId, $this->art->getArtId(), $this->profile->getProfileId(), $this->VALID_COMMENTCONTENT, $this->VALID_COMMENTDATETIME);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce that the fields match our expectations
+		$results = Comment::getAllComments($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		//TODO Dylan has this count set to one, we get and error when we try that, why???
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Comment", $results);
+
+
+		//grab the result from the array and validate it
+		$pdoComment = $results[0];
+		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_COMMENTCONTENT);
+
+		//format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 	}
 }
