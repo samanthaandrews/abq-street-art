@@ -40,7 +40,7 @@ class ArtTest extends StreetArtTest {
 	 * latitude coordinate for this art
 	 * @var float $VALID_ARTLAT
 	 **/
-	protected $VALID_ARTLAT = 89;
+	protected $VALID_ARTLAT = 35;
 	/**
 	 * location description for this art
 	 * @var string $VALID_ARTLOCATION
@@ -50,7 +50,7 @@ class ArtTest extends StreetArtTest {
 	 * longitude coordinate for this art
 	 * @var float $VALID_ARTLONG
 	 **/
-	protected $VALID_ARTLONG = 170;
+	protected $VALID_ARTLONG = -106;
 	/**
 	 * title for this art
 	 * @var string $VALID_ARTTITLE
@@ -150,7 +150,7 @@ class ArtTest extends StreetArtTest {
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
 		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
-		$results = Art::getArtByDistance($this->getPDO(), 040.717274011, 040.717274011, 0.1);
+		$results = Art::getArtByDistance($this->getPDO(), -106.652099, 35.083612, 100);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
 		$this->assertCount(1, $results);
 		// enforce no other objects are bleeding into the test
@@ -158,7 +158,7 @@ class ArtTest extends StreetArtTest {
 		// grab the result from the array and validate it
 		$pdoArt = $results[0];
 		$this->assertEquals($pdoArt->getArtId(), $artId);
-		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLONG);
+		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLAT);
 		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
 	}
 	/**
@@ -218,6 +218,7 @@ class ArtTest extends StreetArtTest {
 		// create a new Art and insert to into mySQL
 		$artId = generateUuidV4();
 		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		$art->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Art::getAllArts($this->getPDO());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
