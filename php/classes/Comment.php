@@ -327,7 +327,7 @@ class Comment implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $commentArtId comment art id to search for
-	 * @return Comment|null Comment found or null if not found
+	 * @return \SplFixedArray array of comments found or empty if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/
@@ -368,7 +368,7 @@ class Comment implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $commentProfileId comment profile id to search for
-	 * @return Comment|null Comment found or null if not found
+	 * @return \SplFixedArray array of comments found or empty if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable is not the correct data type
 	 **/

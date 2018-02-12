@@ -97,13 +97,10 @@ class CommentTest extends StreetArtTest {
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert an Art object to own the Test
-		//TODO figure out why Art is not defined
-
 		$this->art = new Art(generateUuidV4(), "123 Main St.", "Artist Name", "www.art.com", 040.717274011, "side of building", 040.717274011, "Art Title", "Art Type", 2000);
 		$this->art->insert($this->getPDO());
 
 		//create and insert a Profile to own the Test
-		//TODO figure out why phone number is in ProfileSalt
 		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "natjgus@gmail.com", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT, "@hamsterman");
 		$this->profile->insert($this->getPDO());
 
@@ -132,7 +129,6 @@ class CommentTest extends StreetArtTest {
 		$comment->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields to match our expectations
-		//TODO Do I need to get this by art and profile id as well? they do for tweet, but tweet does not have primary key
 		$pdoComment = Comment::getCommentbyCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
@@ -195,26 +191,11 @@ class CommentTest extends StreetArtTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("comment"));
 	}
 
-	/**
-	 * test inserting a Comment and regrabbing it from mySQL
-	 */
-//	public function testGetInvalidCommentByCommentArtId() : void {
-//		//grab an art id that exceeds the maximum allowable art id
-//		$comment = Comment::getCommentByCommentArtId($this->getPDO(), generateUuidV4());
-//		$this->assertNull($comment);
-//	}
+
+
 
 	/**
-	 * test inserting a Comment and regrabbing it from mySQL
-	 */
-	public function testGetInvalidCommentByCommentProfileId() : void {
-		//grab a profile id that exceeds the maximum allowable profile id
-		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
-		$this->assertCount(0, $comment);
-	}
-
-	/**
-	 * test grabbing a Comment that does not exist
+	 * test grabbing a Comment by commentId that does not exist
 	 */
 	public function testGetInvalidCommentByCommentId() : void {
 		//grab a comment id that exceeds the maximum allowable profile id
@@ -243,7 +224,6 @@ class CommentTest extends StreetArtTest {
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
 
-		//TODO do I need to include this code?
 		$this->assertEquals($pdoComment->getCommentId(), $commentId);
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
@@ -282,13 +262,21 @@ class CommentTest extends StreetArtTest {
 
 		//grab the result from the array and validate it
 		$pdoComment = $results[0];
-		//TODO do I need to include this code?
-		//$this->assertEquals($pdoComment->getCommentId(), $this->comment->getCommentId());
+
+		$this->assertEquals($pdoComment->getCommentId(), $commentId);
 		$this->assertEquals($pdoComment->getCommentArtId(), $this->art->getArtId());
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 
 		//format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoComment->getCommentDateTime()->getTimestamp(), $this->VALID_COMMENTDATETIME->getTimestamp());
 
+	}
+	/**
+	 * test grabbing a Comment by profileId that does not exist
+	 */
+	public function testGetInvalidCommentByCommentProfileId() : void {
+		//grab a profile id that exceeds the maximum allowable profile id
+		$comment = Comment::getCommentByCommentProfileId($this->getPDO(), generateUuidV4());
+		$this->assertCount(0, $comment);
 	}
 }
