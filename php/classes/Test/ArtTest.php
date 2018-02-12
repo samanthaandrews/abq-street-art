@@ -208,4 +208,33 @@ class ArtTest extends StreetArtTest {
 		$art = Art::getArtByArtType($this->getPDO(), "ugly");
 		$this->assertCount(0, $art);
 	}
+
+	/**
+	 * test grabbing all Arts
+	 **/
+	public function testGetAllValidArts() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("art");
+		// create a new Art and insert to into mySQL
+		$artId = generateUuidV4();
+		$art = new Art($artId, $this->VALID_ARTADDRESS, $this->VALID_ARTARTIST, $this->VALID_ARTIMAGEURL, $this->VALID_ARTLAT, $this->VALID_ARTLOCATION, $this->VALID_ARTLONG, $this->VALID_ARTTITLE, $this->VALID_ARTTYPE, $this->VALID_ARTYEAR);
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Art::getAllArts($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("art"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqStreetArt\\Art", $results);
+		// grab the result from the array and validate it
+		$pdoArt = $results[0];
+
+		$this->assertEquals($pdoArt->getArtId(), $artId);
+		$this->assertEquals($pdoArt->getArtAddress(), $this->VALID_ARTADDRESS);
+		$this->assertEquals($pdoArt->getArtArtist(), $this->VALID_ARTARTIST);
+		$this->assertEquals($pdoArt->getArtImageUrl(), $this->VALID_ARTIMAGEURL);
+		$this->assertEquals($pdoArt->getArtLat(), $this->VALID_ARTLAT);
+		$this->assertEquals($pdoArt->getArtLocation(), $this->VALID_ARTLOCATION);
+		$this->assertEquals($pdoArt->getArtLong(), $this->VALID_ARTLONG);
+		$this->assertEquals($pdoArt->getArtTitle(), $this->VALID_ARTTITLE);
+		$this->assertEquals($pdoArt->getArtType(), $this->VALID_ARTTYPE);
+		$this->assertEquals($pdoArt->getArtYear(), $this->VALID_ARTYEAR);
+	}
 }
