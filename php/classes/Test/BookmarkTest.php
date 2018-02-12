@@ -29,14 +29,6 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 class BookmarkTest extends StreetArtTest {
 
 	/**
-	 * Profile that created the bookmarked piece of Art; this is for foreign key relations
-	 * We have to have a test Profile in order for a Bookmark to exist.
-	 *
-	 * @var  Profile $profile
-	 **/
-	protected $profile;
-
-	/**
 	 * Art that was bookmarked; this is for foreign key relations
 	 * We have to have a test Art in order for a Bookmark to exist.
 	 *
@@ -45,23 +37,30 @@ class BookmarkTest extends StreetArtTest {
 	protected $art;
 
 	/**
+	 * Profile that created the bookmarked piece of Art; this is for foreign key relations
+	 * We have to have a test Profile in order for a Bookmark to exist.
+	 *
+	 * @var  Profile $profile
+	 **/
+	protected $profile;
+
+	/**
+	 * valid activationToken to create the profile object to own the test
+	 * @var string $VALID_ACTIVATION
+	 **/
+	protected $VALID_ACTIVATION;
+
+	/**
 	 * valid hash to use
 	 * @var $VALID_HASH
-	 */
-	// placeholder until we actually create the following -Erin 2/7
+	 **/
 	protected $VALID_HASH;
 
 	/**
 	 * valid salt to use to create the profile object to own the test
 	 * @var string $VALID_SALT
-	 */
+	 **/
 	protected $VALID_SALT;
-
-	/**
-	 * valid activationToken to create the profile object to own the test
-	 * @var string $VALID_ACTIVATION
-	 */
-	protected $VALID_ACTIVATION;
 
 	/**
 	 * create dependent objects before running each test
@@ -72,22 +71,20 @@ class BookmarkTest extends StreetArtTest {
 		// you have to have the profile and art objects in order to have a bookmark object
 		parent::setUp();
 
-		// TODO I need to update these values to not be generic -Erin 2/7
 		// create a salt and hash for the mocked profile
 		$password = "abc123";
 		$this->VALID_SALT = bin2hex(random_bytes(32));
 		$this->VALID_HASH = hash_pbkdf2("sha512", $password, $this->VALID_SALT, 262144);
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
-		// TODO I need to update these values to not be generic -Erin 2/7
+		// create and insert the mocked art
+		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", 69.69, "test description of location", 69.69, "test art title", "test art type", 1969);
+		$this->art->insert($this->getPDO());
+
 		// create and insert the mocked profile
 		$this->profile = new Profile(generateUuidV4(), $this->VALID_ACTIVATION, "@emailTest", $this->VALID_HASH, $this->VALID_SALT, "test username");
 		$this->profile->insert($this->getPDO());
 
-		// TODO I need to update these values to not be generic -Erin 2/7
-		// create and insert the mocked art
-		$this->art = new Art(generateUuidV4(), "12345 test street", "test artist name", "www.testimageurl.com", 69.69, "test description of location", 69.69, "test art title", "test art type", 1969);
-		$this->art->insert($this->getPDO());
 	}
 
 	/**
@@ -100,15 +97,15 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->art->getArtId(), $this->profile->getProfileId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		// $pdoBookmark is an identical copy of the original $bookmark
-		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->profile->getProfileId(), $this->art->getArtId());
+		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->art->getArtId(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
-		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -120,7 +117,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->art->getArtId(), $this->profile->getProfileId());
 		$bookmark->insert($this->getPDO());
 
 		// delete the Bookmark from mySQL
@@ -128,7 +125,7 @@ class BookmarkTest extends StreetArtTest {
 		$bookmark->delete($this->getPDO());
 
 		// grab the data from mySQL and enforce the Art does not exist
-		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->profile->getProfileId(), $this->art->getArtId());
+		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->art->getArtId(), $this->profile->getProfileId());
 		$this->assertNull($pdoBookmark);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("bookmark"));
 	}
@@ -142,14 +139,14 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->art->getArtId(), $this->profile->getProfileId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->profile->getProfileId(), $this->art->getArtId());
+		$pdoBookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($this->getPDO(), $this->art->getArtId(), $this->profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("bookmark"));
-		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -172,7 +169,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->art->getArtId(), $this->profile->getProfileId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -183,8 +180,8 @@ class BookmarkTest extends StreetArtTest {
 
 		// grab the result from the array and validate it
 		$pdoBookmark = $results[0];
-		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
@@ -206,7 +203,7 @@ class BookmarkTest extends StreetArtTest {
 		$numRows = $this->getConnection()->getRowCount("bookmark");
 
 		// create a new Bookmark and insert to into mySQL
-		$bookmark = new Bookmark($this->profile->getProfileId(), $this->art->getArtId());
+		$bookmark = new Bookmark($this->art->getArtId(), $this->profile->getProfileId());
 		$bookmark->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -219,8 +216,8 @@ class BookmarkTest extends StreetArtTest {
 
 		// grab the result from the array and validate it
 		$pdoBookmark = $results[0];
-		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBookmark->getBookmarkArtId(), $this->art->getArtId());
+		$this->assertEquals($pdoBookmark->getBookmarkProfileId(), $this->profile->getProfileId());
 	}
 
 	/**
