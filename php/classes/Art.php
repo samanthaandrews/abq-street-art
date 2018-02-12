@@ -545,7 +545,7 @@ public function setArtId( $newArtId) : void {
 		$statement = $pdo->prepare($query);
 
 		// bind the art distance to the place holder in the template
-		$parameters = ["distance" => $distance];
+		$parameters = ["distance" => $distance, "userLat" => $userLat, "userLong" => $userLong];
 		$statement->execute($parameters);
 
 		// build an array of art
@@ -623,7 +623,7 @@ public function setArtId( $newArtId) : void {
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 		// build an array of arts
-		$tweets = new \SplFixedArray($statement->rowCount());
+		$arts = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
