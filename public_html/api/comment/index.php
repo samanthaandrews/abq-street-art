@@ -35,6 +35,7 @@ try {
 		setXsrfCookie();
 		//gets a specific comment associated based on its composite key
 		if($commentProfileId !== null && $commentArtId !== null) {
+			//TODO do we need to write a method for this and test it; or can we getByCommentId instead? should we getByCommentId at all in this api?
 			$comment = Comment::getCommentByCommentArtIdAndCommentProfileId($pdo, $commentProfileId, $commentArtId);
 			if($comment !== null) {
 				$reply->data = $comment;
@@ -59,10 +60,10 @@ try {
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		if(empty($requestObject->commentProfileId) === true) {
-			throw (new \InvalidArgumentException("no profile linked to the Comment", 405));
+			throw (new \InvalidArgumentException("no profile linked to the comment", 405));
 		}
 		if(empty($requestObject->commentArtId) === true) {
-			throw (new \InvalidArgumentException("no art linked to the Comment", 405));
+			throw (new \InvalidArgumentException("no art linked to the comment", 405));
 		}
 		if(empty($requestObject->commentDateTime) === true) {
 			$requestObject->commentDateTime = date("y-m-d H:i:s");
