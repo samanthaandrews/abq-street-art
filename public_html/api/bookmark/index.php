@@ -73,16 +73,17 @@ try {
 			throw new InvalidArgumentException("invalid search parameters ", 404);
 		}
 
+		// TODO: I'm not convinced that we need to include POST and PUT for bookmark - in my notes from our scrum, I
 	} else if($method === "POST" || $method === "PUT") {
 
 		//decode the response from the frontend
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		if(empty($requestObject->likeProfileId) === true) {
-			throw (new \InvalidArgumentException("No Profile linked to the Like", 405));
+		if(empty($requestObject->likeArtId) === true) {
+			throw (new \InvalidArgumentException("No art linked to the bookmark", 405));
 		}
-		if(empty($requestObject->likeTweetId) === true) {
-			throw (new \InvalidArgumentException("No tweet linked to the Like", 405));
+		if(empty($requestObject->likeProfileId) === true) {
+			throw (new \InvalidArgumentException("No profile linked to the bookmark", 405));
 		}
 		if($method === "POST") {
 
@@ -91,39 +92,19 @@ try {
 
 			//enforce the end user has a JWT token
 			//validateJwtHeader();
-			// enforce the user is signed in
+
+			//In George's "Like" example, it seems like maybe something was deleted here?? https://github.com/deepdivedylan/data-design/blob/master/public_html/api/like/index.php '
+
+			//enforce that the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
-				throw(new \InvalidArgumentException("you must be logged in too like posts", 403));
+				throw(new \InvalidArgumentException("You must be logged in to bookmark pieces of art", 403));
 			}
 
 			//validateJwtHeader();
-			$like = new Like($_SESSION["profile"]->getProfileId(), $requestObject->likeTweetId);
-			$like->insert($pdo);
-			$reply->message = "liked tweet successful";
-		} else if($method === "PUT") {
-
-			//enforce the end user has a XSRF token.
-			verifyXsrf();
-
-			//enforce the end user has a JWT token
-			//validateJwtHeader();
-			//grab the like by its composite key
-			$like = Like::getLikeByLikeTweetIdAndLikeProfileId($pdo, $requestObject->likeProfileId, $requestObject->likeTweetId);
-			if($like === null) {
-				throw (new RuntimeException("Like does not exist"));
-			}
-
-			//enforce the user is signed in and only trying to edit their own bookmark
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId() !== $like->getLikeProfileId()) {
-				throw(new \InvalidArgumentException("You are not allowed to delete this tweet", 403));
-			}
-
-			//validateJwtHeader();
-			//preform the actual delete
-			$like->delete($pdo);
-
-			//update the message
-			$reply->message = "Like successfully deleted";
+			//TODO: is "validating the JWT header" actually what is happening below? The comments in the Like example seem to be off. https://github.com/deepdivedylan/data-design/blob/master/public_html/api/like/index.php
+			$bookmark = new Bookmark($_SESSION["profile"]->getProfileId(), $requestObject->bookmarProfileId);
+			$bookmark->insert($pdo);
+			$reply->message = "Successfully bookmarked this piece of art";
 		}
 
 		// if any other HTTP request is sent throw an exception
