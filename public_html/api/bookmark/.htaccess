@@ -1,0 +1,10 @@
+#In the same directory as your API, you will want to include a .htaccess file. This is a seperate file from the API. This file will do some configuration on the Apache server to support your API.
+
+#Refer to: https://bootcamp-coders.cnm.edu/class-materials/php/writing-restful-apis/
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^/?([\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12})?$ ?id=$1&%{QUERY_STRING}
+</IfModule>

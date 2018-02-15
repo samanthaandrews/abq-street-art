@@ -1,3 +1,7 @@
+<!--* Bookmark-->
+<!--* DELETE by both (user and art). No mass deleting.-->
+<!--* Be strict on IF blocks on DELETEs. Must have both user and art in order to delete anything-->
+
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "../php/classes/autoload.php";
@@ -43,7 +47,7 @@ try {
 		//set XSRF cookie
 		setXsrfCookie();
 
-		//gets the specific bookmark that is associated, based on its composite key
+		//gets the specific bookmark that is associated, based on its composite key (get by both)
 		if ($bookmarkArtId !== null && $bookmarkProfileId !== null) {
 			$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $bookmarkArtId, $bookmarkProfileId);
 			if($bookmark!== null) {
@@ -71,7 +75,7 @@ try {
 
 	} else if($method === "POST" || $method === "PUT") {
 
-		//decode the response from the front end
+		//decode the response from the frontend
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 		if(empty($requestObject->likeProfileId) === true) {
@@ -79,9 +83,6 @@ try {
 		}
 		if(empty($requestObject->likeTweetId) === true) {
 			throw (new \InvalidArgumentException("No tweet linked to the Like", 405));
-		}
-		if(empty($requestObject->likeDate) === true) {
-			$requestObject->LikeDate =  date("y-m-d H:i:s");
 		}
 		if($method === "POST") {
 
