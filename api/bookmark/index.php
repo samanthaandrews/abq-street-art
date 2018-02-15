@@ -2,7 +2,7 @@
 require_once dirname(__DIR__, 3) . "../vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "../php/classes/autoload.php";
 
-// TODO: not sure where to get the file below that George included in the Like API example. -Erin 2/15
+// TODO: not sure where to get the file below that George included in the Like API example. Commenting out for now. -Erin 2/15
 //require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 require_once dirname(__DIR__, 3) . "../php/lib/xsrf.php";
@@ -20,7 +20,7 @@ use Edu\Cnm\AbqStreetArt\{
  * @author Erin Scott
  */
 
-//verify the session, start if not active
+//verify the session, start session if not already active
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
@@ -30,39 +30,40 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/ddctwitter.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize the search parameters
-	$likeProfileId = $id = filter_input(INPUT_GET, "likeProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
-	$likeTweetId = $id = filter_input(INPUT_GET, "likeTweetId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$bookmarkArtId = $id = filter_input(INPUT_GET, "bookmarkArtId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$bookmarkProfileId = $id = filter_input(INPUT_GET, "bookmarkProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 	if($method === "GET") {
 
 		//set XSRF cookie
 		setXsrfCookie();
 
-		//gets  a specific like associated based on its composite key
-		if ($likeProfileId !== null && $likeTweetId !== null) {
-			$like = Like::getLikeByLikeTweetIdAndLikeProfileId($pdo, $likeProfileId, $likeTweetId);
-			if($like!== null) {
-				$reply->data = $like;
+		//gets the specific bookmark that is associated, based on its composite key
+		if ($bookmarkArtId !== null && $bookmarkProfileId !== null) {
+			$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $bookmarkArtId, $bookmarkProfileId);
+			if($bookmark!== null) {
+				$reply->data = $bookmark;
 			}
 
-			//if none of the search parameters are met throw an exception
-		} else if(empty($likeProfileId) === false) {
-			$like = Like::getLikeByLikeProfileId($pdo, $likeProfileId)->toArray();
-			if($like !== null) {
-				$reply->data = $like;
+			//if none of the search parameters are met, throw an exception
+		} else if(empty($bookmarkArtId) === false) {
+			$bookmark = Bookmark::getBookmarkByBookmarkArtId($pdo, $bookmarkArtId)->toArray();
+			if($bookmark !== null) {
+				$reply->data = $bookmark;
 			}
 
-			//get all the likes associated with the tweetId
-		} else if(empty($likeTweetId) === false) {
-			$like = Like::getLikeByLikeTweetId($pdo, $likeTweetId)->toArray();
-			if($like !== null) {
-				$reply->data = $like;
+			//get all of the bookmarks associated with the profileId
+		} else if(empty($bookmarkProfileId) === false) {
+			$bookmark = Bookmark::getBookmarkByBookmarkProfileId($pdo, $bookmarkProfileId)->toArray();
+			if($bookmark !== null) {
+				$reply->data = $bookmark;
 			}
+
 		} else {
 			throw new InvalidArgumentException("incorrect search parameters ", 404);
 		}
