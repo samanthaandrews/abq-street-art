@@ -22,7 +22,7 @@ use Edu\Cnm\AbqStreetArt\{
  *
  * @author George Kephart
  * @author Erin Scott
- */
+ **/
 
 //verify the session, start session if not already active
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -42,6 +42,11 @@ try {
 	//sanitize the search parameters
 	$bookmarkArtId = $id = filter_input(INPUT_GET, "bookmarkArtId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 	$bookmarkProfileId = $id = filter_input(INPUT_GET, "bookmarkProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+
+	/**
+	 * Get API for Bookmark
+	 **/
+
 	if($method === "GET") {
 
 		//set XSRF cookie
@@ -73,7 +78,11 @@ try {
 			throw new InvalidArgumentException("invalid search parameters ", 404);
 		}
 
-		// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete, no post and no put. On 2/15 George told me to also include "post" -Erin 2/15
+	/**
+	 * Post API for Bookmark
+	 **/
+	// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete: no post and no put. On 2/15 George told me to also include "post" -Erin 2/15
+
 	} else if($method === "POST") {
 
 		//decode the response from the frontend
@@ -108,6 +117,9 @@ try {
 		}
 	}
 
+	/**
+	 * Delete API for Bookmark
+	 **/
 	else if($method === "DELETE") {
 
 			//enforce that the end user has a XSRF token.
@@ -125,7 +137,7 @@ try {
 			throw(new \InvalidArgumentException("You are not allowed to delete this bookmark", 403));
 		}
 
-			//TODO: Am I missing something for the comments below?? -Erin 2/15
+			//TODO: Am I missing something to correspond with the comments from the code examples below?? -Erin 2/15
 			//enforce the end user has a JWT token
 			//validateJwtHeader();
 
