@@ -20,8 +20,8 @@ CREATE TABLE art (
   artTitle VARCHAR(200),
   artType VARCHAR(200),
   artYear SMALLINT UNSIGNED,
-  INDEX (artArtist),
-  PRIMARY KEY(artId)
+  INDEX (artType),
+  PRIMARY KEY (artId)
 );
 
 CREATE TABLE profile (
