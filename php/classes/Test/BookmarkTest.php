@@ -5,11 +5,10 @@ use Edu\Cnm\AbqStreetArt\Bookmark;
 use Edu\Cnm\AbqStreetArt\Profile;
 use Edu\Cnm\AbqStreetArt\Art;
 
-// TODO: need to update the file path for the autoloader; how do I get out of the "class" directory??
 // grab the class under scrutiny
 require_once (dirname(__DIR__, 1) . "/autoload.php");
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+require_once(dirname(__DIR__, 2) . "../lib/uuid.php");
 
 // grab the uuid generator
 //require_once(dirname(__DIR__, 1) . "/ValidateUuid.php");
