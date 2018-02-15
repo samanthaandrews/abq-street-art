@@ -20,7 +20,7 @@ use Edu\Cnm\AbqStreetArt\{
 /**
  * Api for the Bookmark class
  *
- * @author george kephart
+ * @author George Kephart
  * @author Erin Scott
  */
 
@@ -73,8 +73,8 @@ try {
 			throw new InvalidArgumentException("invalid search parameters ", 404);
 		}
 
-		// TODO: I'm not convinced that we need to include POST and PUT for bookmark - in my notes from our scrum, I
-	} else if($method === "POST" || $method === "PUT") {
+		// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete, no post and no put. On 2/15 George told me to also include "post" -Erin 2/15
+	} else if($method === "POST") {
 
 		//decode the response from the frontend
 		$requestContent = file_get_contents("php://input");
@@ -106,20 +106,49 @@ try {
 			$bookmark->insert($pdo);
 			$reply->message = "Successfully bookmarked this piece of art";
 		}
-
-		// if any other HTTP request is sent throw an exception
-	} else {
-		throw new \InvalidArgumentException("invalid http request", 400);
 	}
 
-	//catch any exceptions that is thrown, and update the reply status and message
-} catch(\Exception | \TypeError $exception) {
-	$reply->status = $exception->getCode();
-	$reply->message = $exception->getMessage();
+	else if($method === "DELETE") {
+
+			//enforce that the end user has a XSRF token.
+			verifyXsrf();
+
+			// retrieve the Bookmark to be deleted
+			//TODO: something weird is happening on the line below but I'm having trouble seeing the error. I was referring to the delete for a "Tweet": https://github.com/deepdivedylan/data-design/blob/master/public_html/api/tweet/index.php
+			$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $id);
+			if($bookmark === null) {
+				throw(new RuntimeException("Bookmark does not exist", 404));
+			}
+
+			//enforce that the user is signed in and only trying to edit their own bookmark
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $bookmark->getBookmarkProfileId()->toString()) {
+			throw(new \InvalidArgumentException("You are not allowed to delete this bookmark", 403));
+		}
+
+			//TODO: Am I missing something for the comments below?? -Erin 2/15
+			//enforce the end user has a JWT token
+			//validateJwtHeader();
+
+
+			// delete bookmark
+			$bookmark->delete($pdo);
+
+			// update reply message to user
+			$reply->message = "Bookmark successfully deleted";
+
+	// if any other HTTP request is sent throw an exception
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP request", 418));
+	}
+
+		//catch any exceptions that is thrown, and update the reply status and message
+	} catch(\Exception | \TypeError $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
 }
-header("Content-type: application/json");
-if($reply->data === null) {
-	unset($reply->data);
+	header("Content-type: application/json");
+	if($reply->data === null) {
+		unset($reply->data);
 }
 
 // encode and return reply to front end caller
