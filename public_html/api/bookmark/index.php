@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__, 3) . "../vendor/autoload.php";
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "../php/classes/autoload.php";
 
 // TODO: not sure where to get the file below that George included in the Like API example. Commenting out for now. -Erin 2/15
