@@ -50,7 +50,7 @@ try {
 				$reply->data = $bookmark;
 			}
 
-			//if none of the search parameters are met, throw an exception
+			//get all of the bookmarks associated with the artId
 		} else if(empty($bookmarkArtId) === false) {
 			$bookmark = Bookmark::getBookmarkByBookmarkArtId($pdo, $bookmarkArtId)->toArray();
 			if($bookmark !== null) {
@@ -64,9 +64,11 @@ try {
 				$reply->data = $bookmark;
 			}
 
+			//if none of the search parameters are met, throw an exception
 		} else {
-			throw new InvalidArgumentException("incorrect search parameters ", 404);
+			throw new InvalidArgumentException("invalid search parameters ", 404);
 		}
+
 	} else if($method === "POST" || $method === "PUT") {
 
 		//decode the response from the front end
