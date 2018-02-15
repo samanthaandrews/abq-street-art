@@ -52,6 +52,14 @@ try {
         setXsrfCookie();
 
         //gets a post by...nothing?
+        //TODO I really don't know what to do here...
+        if(empty($id) === false) {
+            $profile = Profile::getProfileByProfileId($pdo, $id);
+            if ($profile !== null) {
+                $reply->data = $profile;
+            }
+        }
+
     }
 
 
