@@ -38,6 +38,7 @@ try {
 	$artTitle = filter_input(INPUT_GET, "artTitle", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$artType = filter_input(INPUT_GET, "artType", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$artYear = filter_input(INPUT_GET, "artYear", FILTER_VALIDATE_INT);
+	//TODO figure out if this distance input is correct
 	$distance = filter_input(INPUT_GET, "distance", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	// handle GET request - if id is present, that crime is returned, otherwise all crimes are returned
 	if($method === "GET") {
@@ -49,6 +50,7 @@ try {
 			if($art !== null) {
 				$reply->data = $art;
 			}
+			//TODO figure out if this part is correct
 		} else if(empty($userLat) === false && empty($userLong) === false && empty($distance) === false) {
 			$arts = Art::getArtByDistance($pdo, new Point($userLat, $userLong), $distance)->toArray();
 			if($arts !== null) {
@@ -66,9 +68,9 @@ try {
 				$reply->data = $arts;
 			}
 		}
+		// If the method request is not GET an exception is thrown
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP Method Request"));
-		// If the method request is not GET an exception is thrown
 	}
 // update reply with exception information
 } catch(Exception $exception) {
