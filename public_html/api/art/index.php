@@ -38,7 +38,7 @@ try {
 	$artTitle = filter_input(INPUT_GET, "artTitle", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$artType = filter_input(INPUT_GET, "artType", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$artYear = filter_input(INPUT_GET, "artYear", FILTER_VALIDATE_INT);
-	$userDistance = filter_input(INPUT_GET, "userDistance", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$distance = filter_input(INPUT_GET, "distance", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	// handle GET request - if id is present, that crime is returned, otherwise all crimes are returned
 	if($method === "GET") {
 		//set XSRF cookie
@@ -49,32 +49,21 @@ try {
 			if($art !== null) {
 				$reply->data = $art;
 			}
-		} else if(empty($crimeLocation) === false) {
-			$crimes = Crime::getCrimeByCrimeLocation($pdo, $crimeLocation)->toArray();
-			if($crimes !== null) {
-				$reply->data = $crimes;
+		} else if(empty($userLat) === false && empty($userLong) === false && empty($distance) === false) {
+			$arts = Art::getArtByDistance($pdo, new Point($userLat, $userLong), $distance)->toArray();
+			if($arts !== null) {
+				$reply->data = $arts;
 			}
-		} elseif(empty($userLocationX) === false && empty($userLocationY) === false && empty($userDistance) === false) {
-			$crimes = Crime::getCrimeByCrimeGeometry($pdo, new Point($userLocationX, $userLocationY), $userDistance)->toArray();
-			if($crimes !== null) {
-				$reply->data = $crimes;
+		} else if(empty($artType) === false) {
+			$arts = Art::getArtByArtType($pdo, $artType)->toArray();
+			if($arts !== null) {
+				$reply->data = $arts;
 			}
-		} else if(empty($crimeDescription) === false) {
-			$crimes = Crime::getCrimeByCrimeDescription($pdo, $crimeDescription)->toArray();
-			if($crimes !== null) {
-				$reply->data = $crimes;
-			}
-		} else if(empty($crimeSunriseDate) === false && empty($crimeSunsetDate) === false) {
-			$crimeSunriseDate = \DateTime::createFromFormat("U", ceil($crimeSunriseDate / 1000));
-			$crimeSunsetDate = \DateTime::createFromFormat("U", floor($crimeSunsetDate / 1000));
-			$crimes = Crime::getCrimeByCrimeDate($pdo, $crimeSunriseDate, $crimeSunsetDate)->toArray();
-			if($crimes !== null) {
-				$reply->data = $crimes;
-			}
-		} else {
-			$crimes = Crime::getAllCrimes($pdo)->toArray();
-			if($crimes !== null) {
-				$reply->data = $crimes;
+		}
+		else {
+			$arts = Art::getAllArts($pdo)->toArray();
+			if($arts !== null) {
+				$reply->data = $arts;
 			}
 		}
 	} else {
