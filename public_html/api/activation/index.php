@@ -45,7 +45,7 @@ try {
 
 	//make sure the activation token is the correct size
 	if(strlen($activation) !== 32 ){
-		throw(new InvalidArgumentException("activation is not correct length", 405);
+		throw(new InvalidArgumentException("activation is not correct length", 405));
 	}
 
 	// verify that the activation token is a string value of a hexadecimal
@@ -94,6 +94,10 @@ try {
 	$reply->message = $typeError->getMessage();
 }
 
-
+//prepare and send the reply
+header("Content-type: application/json");
+if($reply->data === null){
+	unset($reply->data);
 }
+
 
