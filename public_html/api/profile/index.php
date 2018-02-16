@@ -38,8 +38,11 @@ try {
 
     //sanitize input (id is equivalent to profileId and the id for what the user thinks of as a page
     $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-    $profileUserName = filter_input(INPUT_GET, "profileUserName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+    // TODO do I need activation token? Rochelle has it - George does not.
+    $profileActivationToken = filter_input(INPUT_GET,"profileActivationToken", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
     $profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    $profileUserName = filter_input(INPUT_GET, "profileUserName", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
     //make sure the id is valid for methods that require it
     if (($method === "PUT") && (empty($id) === true)) {
@@ -51,24 +54,30 @@ try {
         //set XSRF cookie
         setXsrfCookie();
 
-        //gets a post by...nothing?
+        //gets a post by...
         //TODO I really don't know what to do here since we're trying to "get with no parameter - universal get (tricky, tricky, tricky!)"... universal get doesn't seem the same as a get with no parameter?
         if(empty($id) === false) {
             $profile = Profile::getProfileByProfileId($pdo, $id);
             if ($profile !== null) {
                 $reply->data = $profile;
             }
-        } else if(empty($profileEmail) === false) {
+        } elseif (empty($profileActivationToken) === false) {
+            $profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+            if ($profile !== null) {
+                $reply->data = $profile;
+            }
+        }else if(empty($profileEmail) === false) {
             $profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
             if($profile !== null) {
                 $reply->data = $profile;
             }
+        }else if(empty($profileUserName) === false) {
+            $profile = Profile::getProfileByProfileUserName($pdo, $profileUserName);
+            if ($profile !== null) {
+                $reply->data = $profile;
+            }
         }
-    } else if(empty($profileUserName) === false) {
-        $profile = Profile::getProfileByProfileUserName($pdo, $profileUserName);
-        if($profile !== null) {
-            $reply->data = $profile;
-        }
+//        TODO Rochelle has getAllProfiles here. George told us not to have that method. What is a universal get????
     } elseif($method === "PUT") {
         //enforce that the XSRF token is present in the header
         verifyXsrf();
@@ -77,7 +86,7 @@ try {
 
         //enforce the user is signed in and only trying to edit their own profile
         if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $id) {
-            throw(new \InvalidArgumentException("You do not have access", 403));
+            throw(new \InvalidArgumentException("You do not have access!", 403));
         }
         validateJwtHeader();
 
@@ -101,6 +110,7 @@ try {
             $requestObject->ProfileUserName = $profile->getProfileUserName();
         }
 
+        //TODO this is different from Rochelle's line 116. I think her's makes more sense to me.
         $profile->setProfileEmail($requestObject->profileEmail);
         $profile->setProfileUserName($requestObject->profileUserName);
         $profile->update($pdo);
@@ -119,9 +129,10 @@ try {
         }
         //enforce the user is signed in and only trying to edit their own profile
         if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $profile->getProfileId()->toString()) {
-            throw(new \InvalidArgumentException("Profile Username or Password is incorrect.", 403));
+            throw(new \InvalidArgumentException("You do not have access!", 403));
         }
         validateJwtHeader();
+
 
         //delete the profile from the database
         $profile->delete($pdo);
@@ -143,4 +154,3 @@ if($reply->data === null) {
 // encode and return reply to front end caller
 echo json_encode($reply);
 
-//TODO we haven't done anything with activation token... should we?
