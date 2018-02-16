@@ -52,16 +52,95 @@ try {
         setXsrfCookie();
 
         //gets a post by...nothing?
-        //TODO I really don't know what to do here...
+        //TODO I really don't know what to do here since we're trying to "get with no parameter - universal get (tricky, tricky, tricky!)"... universal get doesn't seem the same as a get with no parameter?
         if(empty($id) === false) {
             $profile = Profile::getProfileByProfileId($pdo, $id);
             if ($profile !== null) {
                 $reply->data = $profile;
             }
+        } else if(empty($profileEmail) === false) {
+            $profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+            if($profile !== null) {
+                $reply->data = $profile;
+            }
+        }
+    } else if(empty($profileUserName) === false) {
+        $profile = Profile::getProfileByProfileUserName($pdo, $profileUserName);
+        if($profile !== null) {
+            $reply->data = $profile;
+        }
+    } elseif($method === "PUT") {
+        //enforce that the XSRF token is present in the header
+        verifyXsrf();
+        //enforce the end user has a JWT token
+        //validateJwtHeader();
+
+        //enforce the user is signed in and only trying to edit their own profile
+        if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $id) {
+            throw(new \InvalidArgumentException("You do not have access", 403));
+        }
+        validateJwtHeader();
+
+        //decode the response from the front end
+        $requestContent = file_get_contents("php://input");
+        $requestObject = json_decode($requestContent);
+
+        //retrieve the profile to be updated
+        $profile = Profile::getProfileByProfileId($pdo, $id);
+        if($profile === null) {
+            throw(new RuntimeException("Profile does not exist", 404));
         }
 
+        //profile email is a required field
+        if(empty($requestObject->profileEmail) === true) {
+            throw(new \InvalidArgumentException ("No profile email present", 405));
+        }
+
+        //profile userName
+        if(empty($requestObject->profileUserName) === true) {
+            $requestObject->ProfileUserName = $profile->getProfileUserName();
+        }
+
+        $profile->setProfileEmail($requestObject->profileEmail);
+        $profile->setProfileUserName($requestObject->profileUserName);
+        $profile->update($pdo);
+
+        // update reply
+        $reply->message = "Profile information updated";
+    } elseif($method === "DELETE") {
+
+        //verify the XSRF Token
+        verifyXsrf();
+        //enforce the end user has a JWT token
+        //validateJwtHeader();
+        $profile = Profile::getProfileByProfileId($pdo, $id);
+        if($profile === null) {
+            throw (new RuntimeException("Profile does not exist"));
+        }
+        //enforce the user is signed in and only trying to edit their own profile
+        if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $profile->getProfileId()->toString()) {
+            throw(new \InvalidArgumentException("Profile Username or Password is incorrect.", 403));
+        }
+        validateJwtHeader();
+
+        //delete the profile from the database
+        $profile->delete($pdo);
+        $reply->message = "Profile Deleted";
+    } else {
+        throw (new InvalidArgumentException("Invalid HTTP request", 400));
     }
 
-
-
+    // catch any exceptions that were thrown and update the status and message state variable fields
+} catch(\Exception | \TypeError $exception) {
+    $reply->status = $exception->getCode();
+    $reply->message = $exception->getMessage();
 }
+header("Content-type: application/json");
+if($reply->data === null) {
+    unset($reply->data);
+}
+
+// encode and return reply to front end caller
+echo json_encode($reply);
+
+//TODO we haven't done anything with activation token... should we?
