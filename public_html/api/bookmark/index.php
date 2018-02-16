@@ -17,7 +17,7 @@ use Edu\Cnm\AbqStreetArt\{
  * Api for the Bookmark class
  *
  * @author George Kephart
- * @author Erin Scott
+ * @author Erin Scott <erinleeannscott@gmail.com>
  **/
 
 //verify the session, start session if not already active
