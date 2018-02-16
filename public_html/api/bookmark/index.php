@@ -1,17 +1,13 @@
-<!--* Bookmark-->
-<!--* DELETE by both (user and art). No mass deleting.-->
-<!--* Be strict on IF blocks on DELETEs. Must have both user and art in order to delete anything-->
-
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
-require_once dirname(__DIR__, 3) . "../php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 
 // TODO: not sure where to get the file below that George included in the Like API example. Commenting out for now. -Erin 2/15
 //require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-require_once dirname(__DIR__, 3) . "../php/lib/xsrf.php";
-require_once dirname(__DIR__, 3) . "../php/lib/jwt.php";
-require_once dirname(__DIR__, 3) . "../php/lib/uuid.php";
+require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
+require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 
 use Edu\Cnm\AbqStreetArt\{
 	Bookmark
@@ -81,7 +77,7 @@ try {
 	/**
 	 * Post API for Bookmark
 	 **/
-	// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete: no post and no put. On 2/15 George told me to also include "post" -Erin 2/15
+	// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete: no post and no put. On 2/15 George told me to also include "post". Need to clarify what should be included according to our use case. -Erin 2/15
 
 	} else if($method === "POST") {
 
