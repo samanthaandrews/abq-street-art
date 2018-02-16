@@ -99,7 +99,7 @@ try {
 			throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
 		}
 
-		//add profile to session
+		//add profile to session upon successful sign-in
 		$_SESSION["profile"] = $profile;
 
 		//create the auth payload
