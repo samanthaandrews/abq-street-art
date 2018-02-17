@@ -65,6 +65,7 @@ class DataDownloader {
 		$eTags = json_decode($config["etags"]);
 		/**
 		 * TODO this is the code from abquery. They have to databases to load... which is why they have this line of code. Do we need to check that the previousETag < eTag??
+		 *
 		 * $previousETag = $eTags->$whichETag;
 		 * if($previousETag < $eTag) {
 		 * return ($eTag);
