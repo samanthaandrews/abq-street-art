@@ -17,6 +17,7 @@ use Edu\Cnm\AbqStreetArt\ {
  *
  * @author Mary MacMillan <mschmitt5@cnm.edu>
  * @author Gkephart
+ * @author Rochelle Lewis <rlewis37@cnm.edu>
  **/
 
 //verify the session, if it is not active, start it
@@ -110,13 +111,36 @@ try {
             $requestObject->ProfileUserName = $profile->getProfileUserName();
         }
 
-        //TODO this is different from Rochelle's line 116. I think her's makes more sense to me.
+        //TODO this is different from Rochelle's line 116. I think her's makes more sense to me. ALSO we should move the email section to were it requires a password if we are doing that at all.
         $profile->setProfileEmail($requestObject->profileEmail);
         $profile->setProfileUserName($requestObject->profileUserName);
         $profile->update($pdo);
 
         // update reply
         $reply->message = "Profile information updated";
+
+        //TODO unsure if we want this. We wanted it in the scrum, but George mentioned that updating the password should be it's own API and maybe to just leave it out? if we *do* want it, I will add change email to this section as well.
+        //change password if requested and all required fields are passed
+        if(($requestObject->currentProfilePassword !== null) && ($requestObject->newProfilePassword !== null) && ($requestObject->newProfileConfirmPassword !== null)) {
+
+            //throw exception if current password given doesn't hash to match the current password!
+            $currentPasswordHash = hash_pbkdf2("sha512", $requestObject->currentProfilePassword, $profile->getProfileSalt(), 262144);
+            if($currentPasswordHash !== $profile->getProfileHash()) {
+                throw (new \RuntimeException("Current password is incorrect.", 401));
+            }
+
+            //throw exception if new password confirmation field doesn't match
+            if($requestObject->newProfilePassword !== $requestObject->newProfileConfirmPassword) {
+                throw (new \RuntimeException("New passwords do not match", 401));
+            }
+
+            //generate new salt and hash for new password
+            $newProfileSalt = bin2hex(random_bytes(32));
+            $newProfileHash = hash_pbkdf2("sha512", $requestObject->newProfilePassword, $newProfileSalt, 262144);
+            //update password
+            $profile->setProfileSalt($newProfileSalt);
+            $profile->setProfileHash($newProfileHash);
+        }
     } elseif($method === "DELETE") {
 
         //verify the XSRF Token
