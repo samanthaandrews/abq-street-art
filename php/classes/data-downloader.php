@@ -60,8 +60,7 @@ class DataDownloader {
 			throw(new \RuntimeException("etag cannot be found", 404));
 		}
 
-		//TODO find right ini file name
-		$config = readConfig("/etc/apache2/capstone-mysql/AbqStreetArt.ini");
+		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
 		$eTags = json_decode($config["etags"]);
 		/**
 		 * TODO this is the code from abquery. They have to databases to load... which is why they have this line of code. Do we need to check that the previousETag < eTag??
