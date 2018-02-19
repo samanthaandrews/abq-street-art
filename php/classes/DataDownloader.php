@@ -75,40 +75,41 @@ class DataDownloader {
 		 * }
 		 **/
 	}
-}
 
-/**
- *
- * Decodes Json file, converts to string, sifts through the string and inserts the data into database
- *
- * @param string $url
- * @throws \PDOException for PDO related errors
- * @throws \Exception catch-all exceptions
- * @return \SplFixedArray $allData
- *
- **/
 
-public function readDataJson($url){
+	/**
+	 *
+	 * Decodes Json file, converts to string, sifts through the string and inserts the data into database
+	 *
+	 * @param string $url
+	 * @throws \PDOException for PDO related errors
+	 * @throws \Exception catch-all exceptions
+	 * @return \SplFixedArray $allData
+	 *
+	 **/
 
-	// http://php.net/manual/en/function.stream-context-create.php creates a stream for file input
-	$context = stream_context_create(["http" => ["ignore_errors" => true, "method" => "GET"]]);
-	try{
-		// http://php.net/manual/en/function.file-get-contents.php file-get-contents returns file in string context
-		if(($jsonData = file_get_contents($url, null, $context)) === false) {
-			throw(new \RuntimeException("cannot connect to city server"));
+	public function readDataJson($url) {
+
+		// http://php.net/manual/en/function.stream-context-create.php creates a stream for file input
+		$context = stream_context_create(["http" => ["ignore_errors" => true, "method" => "GET"]]);
+		try {
+			// http://php.net/manual/en/function.file-get-contents.php file-get-contents returns file in string context
+			if(($jsonData = file_get_contents($url, null, $context)) === false) {
+				throw(new \RuntimeException("cannot connect to city server"));
+			}
+
+			//decode the Json file
+			$jsonConverted = json_decode($jsonData);
+
+			//format
+			$jsonFeatures = $jsonConverted->features;
+
+			//create array from the converted Json file
+			$features = \SplFixedArray::fromArray($jsonFeatures);
+
+		} catch(\Exception $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-
-		//decode the Json file
-		$jsonConverted = json_decode($jsonData);
-
-		//format
-		$jsonFeatures = $jsonConverted->features;
-
-		//create array from the converted Json file
-		$features = \SplFixedArray::fromArray($jsonFeatures);
-
-	} catch(\Exception $exception) {
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
+		return ($features);
 	}
-	return ($features);
 }

@@ -308,7 +308,7 @@ class Comment implements \JsonSerializable {
 		$statement->execute($parameters);
 
 		//grab the comment from mySQL
-		try {
+		try {s
 			$comment = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
