@@ -1875,6 +1875,11 @@
             ],
             "authors": [
                 {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.io/"
+                },
+                {
                     "name": "James Titcumb",
                     "email": "james@asgrim.com",
                     "homepage": "https://github.com/asgrim"
@@ -1888,15 +1893,10 @@
                     "name": "Jaroslav Hanslík",
                     "email": "kukulich@kukulich.cz",
                     "homepage": "https://github.com/kukulich"
-                },
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "https://ocramius.github.io/"
                 }
             ],
             "description": "Better Reflection - an improved code reflection API",
-            "time": "2018-02-16T06:16:24+00:00"
+            "time": "2018-02-05T08:17:47+00:00"
         },
         {
             "name": "roave/signature",
