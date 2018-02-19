@@ -30,7 +30,6 @@ try {
 	//stores the Primary Key ($artId) for the GET method in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$artType = filter_input(INPUT_GET, "artType", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$artYear = filter_input(INPUT_GET, "artYear", FILTER_VALIDATE_INT);
 	$distance = filter_input(INPUT_GET, "distance", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$userLat = filter_input(INPUT_GET, "userLat", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	$userLong = filter_input(INPUT_GET, "userLong", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
