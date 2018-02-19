@@ -13,6 +13,7 @@ use Edu\Cnm\AbqStreetArt\ {
  * API to check profile activation status
  *
  * @author Nathaniel Gustafson <natjgus@gmail.com> and Abq Street Art
+ *
  **/
 
 //Check the session. If it is not active, start the session.

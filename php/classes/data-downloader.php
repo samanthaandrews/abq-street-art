@@ -11,6 +11,8 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
  * This class will download data from the City of Albuquerque City Data Database.
  *
  * @author Nathaniel Gustafson <natjgus@gmail.com>
+ * @author Gkephart
+ * @author Rochelle Lewis <rlewis37@cnm.edu>
  **/
 class DataDownloader {
 
@@ -63,7 +65,7 @@ class DataDownloader {
 		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
 		$eTags = json_decode($config["etags"]);
 		/**
-		 * TODO this is the code from abquery. They have to databases to load... which is why they have this line of code. Do we need to check that the previousETag < eTag??
+		 * TODO this is the code from abquery. They have two databases to load... which is why they have this line of code. Do we need to check that the previousETag < eTag??
 		 *
 		 * $previousETag = $eTags->$whichETag;
 		 * if($previousETag < $eTag) {
@@ -86,7 +88,7 @@ class DataDownloader {
  *
  **/
 
-public static function readDataJson($url){
+public function readDataJson($url){
 
 	// http://php.net/manual/en/function.stream-context-create.php creates a stream for file input
 	$context = stream_context_create(["http" => ["ignore_errors" => true, "method" => "GET"]]);
