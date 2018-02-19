@@ -5,7 +5,8 @@
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
     "ramsey/uuid": "@stable",
-    "roave/better-reflection": "dev-master#a402048"
+    "roave/better-reflection": "dev-master#a402048",
+    "swiftmailer/swiftmailer": "@stable"
   },
 
   "scripts": {
