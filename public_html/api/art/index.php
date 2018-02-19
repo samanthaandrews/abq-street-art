@@ -52,7 +52,7 @@ try {
 			}
 			//TODO figure out if this part is correct
 		} else if(empty($userLat) === false && empty($userLong) === false && empty($distance) === false) {
-			$arts = Art::getArtByDistance($pdo, new Point($userLat, $userLong), $distance)->toArray();
+			$arts = Art::getArtByDistance($pdo, $userLat, $userLong, $distance)->toArray();
 			if($arts !== null) {
 				$reply->data = $arts;
 			}
