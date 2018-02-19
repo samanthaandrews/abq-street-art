@@ -60,7 +60,7 @@ class DataDownloader {
 		if($eTag === null) {
 			throw(new \RuntimeException("etag cannot be found", 404));
 		}
-
+//TODO Why are we writing to an ini file? What do we do about "whichETag"?
 		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
 		$eTags = json_decode($config["etags"]);
 		$previousETag = $eTags->$whichETag;
