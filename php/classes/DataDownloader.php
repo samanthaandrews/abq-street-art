@@ -63,16 +63,13 @@ class DataDownloader {
 
 		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
 		$eTags = json_decode($config["etags"]);
-		/**
-		 * TODO this is the code from abquery. They have two databases to load... which is why they have this line of code. Do we need to check that the previousETag < eTag??
-		 *
-		 * $previousETag = $eTags->$whichETag;
-		 * if($previousETag < $eTag) {
-		 * return ($eTag);
-		 * } else {
-		 * throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
-		 * }
-		 **/
+		$previousETag = $eTags->$whichETag;
+
+		if($previousETag < $eTag) {
+			return ($eTag);
+		} else {
+			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
+		}
 	}
 
 
