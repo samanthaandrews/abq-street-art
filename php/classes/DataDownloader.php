@@ -81,7 +81,7 @@ class DataDownloader {
 		 *run getMetaData and catch exception if the data hasn't changed
 		 **/
 		$features = null;
-		try{
+		try {
 			DataDownloader::getMetaData($artUrl, "art");
 			$features = DataDownloader::readDataJson($artUrl);
 			$artETag = DataDownloader::getMetaData($artUrl, "art");
@@ -93,36 +93,31 @@ class DataDownloader {
 		} catch(\OutOfBoundsException $outOfBoundsException) {
 			echo("no new art data found");
 		}
-		return($features);
+		return ($features);
+	}
+
+	/**
+	 *assigns data from object->features->attributes
+	 **/
+	public static function getArtData(\SplFixedArray $features) {
+		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
+		foreach($features as $feature) {
+			$artId = $feature->attributes->OBJECTID;
+			$artAddress = $feature->attributes->ADDRESS;
+			$artArtist = $feature->attributes->ARTIST;
+			$artImageUrl = $feature->attributes->JPG_URL;
+			$artLat = $feature->attributes->X;
+			$artLocation = $feature->attributes->LOCATION;
+			$artLong = $feature->attributes->Y;
+			$artTitle = $feature->attributes->TITLE;
+			$artType = $feature->attributes->TYPE;
+			$artYear = $feature->attributes->YEAR;
+
+
+			$art = new Art($artId, $artAddress, $artArtist, $artImageUrl, $artLat, $artLocation, $artLong, $artTitle, $artType, $artYear);
+			$art->insert($pdo);
 		}
-
-		/**
-		 *assigns data from object->features->attributes
-		 **/
-		public static function getArtData(\SplFixedArray $features) {
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
-			foreach($features as $feature) {
-				$artId = $feature->attributes->OBJECTID;
-				$artAddress = $feature->attributes->ADDRESS;
-				$artArtist = $feature->attributes->ARTIST;
-				$artImageUrl = $feature->attributes->JPG_URL;
-				$artLat = $feature->attributes->X;
-				$artLocation = $feature->attributes->LOCATION;
-				$artLong = $feature->attributes->Y;
-				$artTitle = $feature->attributes->TITLE;
-				$artType = $feature->attributes->TYPE;
-				$artYear = $feature->attributes->YEAR;
-
-				if(empty($feature->distance) === true) {
-					continue;
-				} else {
-					$artGeometry = new Point($feature->geometry->x, $feature->geometry->y);
-				}
-				$art = new Art($artId, $artAddress, $artArtist, $artImageUrl, $artLat, $artLocation, $artLong, $artTitle, $artType, $artYear);
-				$art->insert($pdo);
-			}
-		}
-
+	}
 	/**
 	 *
 	 * Decodes Json file, converts to string, sifts through the string and inserts the data into database
@@ -159,3 +154,11 @@ class DataDownloader {
 		return ($features);
 	}
 }
+
+try {
+$features = DataDownloader::compareArtAndDownload();
+DataDownloader::getArtData($features);
+} catch(\Exception $exception) {
+	echo $exception->getMessage() . PHP_EOL;
+}
+
