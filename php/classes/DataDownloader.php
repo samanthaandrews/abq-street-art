@@ -69,8 +69,59 @@ class DataDownloader {
 		} else {
 			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
 		}
+
+
 	}
 
+	public static function compareArtAndDownload() {
+
+		$artUrl = "http://coagisweb.cabq.gov/arcgis/rest/services/public/PublicArt/MapServer/0/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&f=pjson";
+
+		/**
+		 *run getMetaData and catch exception if the data hasn't changed
+		 **/
+		$features = null;
+		try{
+			DataDownloader::getMetaData($artUrl, "art");
+			$features = DataDownloader::readDataJson($artUrl);
+			$artETag = DataDownloader::getMetaData($artUrl, "art");
+			$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
+			$eTags = json_decode($config["etags"]);
+			$eTags->art = $artETag;
+			$config["etags"] = json_encode($eTags);
+			writeConfig($config, "/etc/apache2/capstone-mysql/streetart.ini");
+		} catch(\OutOfBoundsException $outOfBoundsException) {
+			echo("no new art data found");
+		}
+		return($features);
+		}
+
+		/**
+		 *assigns data from object->features->attributes
+		 **/
+		public static function getArtData(\SplFixedArray $features) {
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
+			foreach($features as $feature) {
+				$artId = $feature->attributes->OBJECTID;
+				$artAddress = $feature->attributes->ADDRESS;
+				$artArtist = $feature->attributes->ARTIST;
+				$artImageUrl = $feature->attributes->JPG_URL;
+				$artLat = $feature->attributes->X;
+				$artLocation = $feature->attributes->LOCATION;
+				$artLong = $feature->attributes->Y;
+				$artTitle = $feature->attributes->TITLE;
+				$artType = $feature->attributes->TYPE;
+				$artYear = $feature->attributes->YEAR;
+
+				if(empty($feature->distance) === true) {
+					continue;
+				} else {
+					$artGeometry = new Point($feature->geometry->x, $feature->geometry->y);
+				}
+				$art = new Art($artId, $artAddress, $artArtist, $artImageUrl, $artLat, $artLocation, $artLong, $artTitle, $artType, $artYear);
+				$art->insert($pdo);
+			}
+		}
 
 	/**
 	 *
