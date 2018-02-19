@@ -12,7 +12,7 @@ use Edu\Cnm\AbqStreetArt\{
 /**
  * * api for Art class
  *
- * @author Samantha Andrews samantharaeandrews@gmail.com and Abq Street Art
+ * @author Samantha Andrews samantharaeandrews@gmail.com, George Kephart and Abq Street Art
  **/
 //verify the session, start if not active
 if(session_status() !== PHP_SESSION_ACTIVE) {
@@ -27,7 +27,7 @@ try {
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
-	//stores the Primary Key ($crimeId) for the GET method in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
+	//stores the Primary Key ($artId) for the GET method in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$artAddress = filter_input(INPUT_GET, "artAddress", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$artArtist = filter_input(INPUT_GET, "artArtist", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -40,11 +40,11 @@ try {
 	$artYear = filter_input(INPUT_GET, "artYear", FILTER_VALIDATE_INT);
 	//TODO figure out if this distance input is correct
 	$distance = filter_input(INPUT_GET, "distance", FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	// handle GET request - if id is present, that crime is returned, otherwise all crimes are returned
+	// handle GET request - if id is present, that art is returned, otherwise all arts are returned
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-		//get a specific crime or all crimes and update reply
+		//get a specific art or all arts and update reply
 		if(empty($id) === false) {
 			$art = Art::getArtByArtId($pdo, $id);
 			if($art !== null) {
