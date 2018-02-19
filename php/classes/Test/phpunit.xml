@@ -1,7 +1,7 @@
 <phpunit>
     <testsuites>
         <testsuite name="ABQ Street Art Test">
-             <file>ArtTest.php</file>
+            <file>ArtTest.php</file>
             <file>ProfileTest.php</file>
             <file>BookmarkTest.php</file>
             <file>CommentTest.php</file>

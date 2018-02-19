@@ -28,7 +28,6 @@ class DataDownloader {
 	 * @return string $eTag to be compared to previous eTag to determine last download
 	 * @throws \RuntimeException if stream cant be opened.
 	 **/
-
 	public static function getMetaData(string $url, string $eTag) {
 		if($eTag !== "art") {
 			throw(new \RuntimeException("not a valid etag", 400));
