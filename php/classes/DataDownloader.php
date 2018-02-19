@@ -45,12 +45,11 @@ class DataDownloader {
 			throw(new \RuntimeException("unable to open HTTP stream"));
 		}
 
-		// TODO need to look up fclose when I have internet
+
 		fclose($fd);
 		$header = $metaData["wrapper_data"];
 		$eTag = null;
 		foreach($header as $value) {
-			//TODO what does explode do?
 			$explodeETag = explode(":", $value);
 			$findETag = array_search("ETag", $explodeETag);
 			if($findETag !== false) {
