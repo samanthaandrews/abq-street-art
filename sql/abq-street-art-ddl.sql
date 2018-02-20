@@ -27,7 +27,7 @@ CREATE TABLE art (
 CREATE TABLE profile (
   -- profileId is the primary key
   profileId BINARY(16) NOT NULL,
-  profileActivationToken CHAR(32) NOT NULL,
+  profileActivationToken CHAR(32),
   profileEmail VARCHAR(128) NOT NULL,
   profileHash CHAR(128) NOT NULL,
   profileSalt CHAR(64) NOT NULL,
