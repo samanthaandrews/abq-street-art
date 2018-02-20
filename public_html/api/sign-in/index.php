@@ -19,7 +19,9 @@ require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-use Edu\Cnm\AbqStreetArt\Profile;
+use Edu\Cnm\AbqStreetArt\{
+	Profile
+};
 
 /**
  * API for app sign in, Profile class
