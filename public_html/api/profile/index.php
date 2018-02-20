@@ -78,7 +78,7 @@ try {
                 $reply->data = $profile;
             }
         }
-//        TODO Rochelle has getAllProfiles here. George told us not to have that method. What is a universal get????
+
     } elseif($method === "PUT") {
         //enforce that the XSRF token is present in the header
         verifyXsrf();
@@ -111,7 +111,6 @@ try {
             $requestObject->ProfileUserName = $profile->getProfileUserName();
         }
 
-        //TODO this is different from Rochelle's line 116. I think her's makes more sense to me. ALSO we should move the email section to were it requires a password if we are doing that at all.
         $profile->setProfileEmail($requestObject->profileEmail);
         $profile->setProfileUserName($requestObject->profileUserName);
         $profile->update($pdo);
@@ -119,7 +118,7 @@ try {
         // update reply
         $reply->message = "Profile information updated";
 
-        //TODO unsure if we want this. We wanted it in the scrum, but George mentioned that updating the password should be it's own API and maybe to just leave it out? if we *do* want it, I will add change email to this section as well.
+
         //change password if requested and all required fields are passed
         if(($requestObject->currentProfilePassword !== null) && ($requestObject->newProfilePassword !== null) && ($requestObject->newProfileConfirmPassword !== null)) {
 
