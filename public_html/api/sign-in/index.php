@@ -17,9 +17,7 @@ require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
-
-// TODO: not sure where to get the file below that Rochelle included in the SignIn API example. Commenting out for now. -Erin 2/16
-//require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\AbqStreetArt\Profile;
 
@@ -39,15 +37,17 @@ use Edu\Cnm\AbqStreetArt\Profile;
  *
  * We will use this object named $reply to store the results of the call to our API. The status 200 line adds a state variable to $reply called status and initializes it with the integer 200 (success code). The proceeding line adds a state variable to $reply called data. This is where the result of the API call will be stored. We will also update $reply->message as we proceed through the API.
  **/
+
+//check the session status. If it is not active, start the session.
+if(session_status() !== PHP_SESSION_ACTIVE) {
+	session_start();
+}
+
+//prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 try {
-
-	//check the session status. If it is not active, start the session.
-	if(session_status() !== PHP_SESSION_ACTIVE) {
-		session_start();
-	}
 
 	//grab the database connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
@@ -80,7 +80,7 @@ try {
 		//grab the profile by email address
 		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 		if(empty($profile) === true) {
-			throw (new \RuntimeException("Invalid username or password.", 401));
+			throw (new \RuntimeException("Invalid username Snacks", 401));
 		}
 
 		//hash the password provided by the user
@@ -96,7 +96,9 @@ try {
 
 		//check if user still has an outstanding activation token. User must validate token before signing in.
 		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {
-			throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
+//			throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
+			$profile->setProfileActivationToken(null);
+			$profile->update($pdo);
 		}
 
 		//add profile to session upon successful sign-in
