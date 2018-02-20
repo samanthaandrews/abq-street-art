@@ -61,3 +61,5 @@ CREATE TABLE comment (
   FOREIGN KEY(commentProfileId) REFERENCES profile(profileId),
   PRIMARY KEY(commentId)
 );
+
+# INSERT INTO art (artId, artAddress, artArtist, artImageUrl, artLat, artLocation, artLong, artTitle, artType, artYear) VALUES ('1234567890123456', '123 Main St.', 'Pablo Picasso', 'www.myurl.museum', 35.0931, 'building', -106.6641772, 'Hotline Bling', 'public sculpture', 1991);

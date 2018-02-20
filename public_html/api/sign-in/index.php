@@ -97,15 +97,11 @@ try {
 		$profile = Profile::getProfileByProfileId($pdo, $profile->getProfileId());
 
 		//check if user still has an outstanding activation token. User must validate token before signing in.
-		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {
-//			throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
-			$profile->setProfileActivationToken(null);
-			$profile->update($pdo);
+		if(!empty($profile->getProfileActivationToken()) || $profile->getProfileActivationToken() !== null) {throw (new \RuntimeException("Please check your email to activate your account before logging in.", 403));
 		}
 
 		//add profile to session upon successful sign-in
 		$_SESSION["profile"] = $profile;
-
 		//create the auth payload
 		$authObject = (object) [
 			"profileId" => $profile->getProfileId(),
