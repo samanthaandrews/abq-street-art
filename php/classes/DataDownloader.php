@@ -61,8 +61,8 @@ class DataDownloader {
 		}
 //TODO Why are we writing to an ini file? What do we do about "whichETag"?
 		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
-		$eTags = json_decode($config["etags"]);
-		$previousETag = $eTags->$whichETag;
+		$eTags = json_decode($config["eTags"]);
+		$previousETag = $eTags->whichETag;
 
 		if($previousETag < $eTag) {
 			return ($eTag);
