@@ -33,10 +33,9 @@ try {
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-		//gets a specific comment associated based on its composite key
-		if($commentProfileId !== null && $commentArtId !== null) {
-			//TODO do we need to write a method for this and test it; or can we getByCommentId instead? should we getByCommentId at all in this api?
-			$comment = Comment::getCommentByCommentArtIdAndCommentProfileId($pdo, $commentProfileId, $commentArtId);
+		//gets a specific comment based on its commentId
+		if(empty($id) === false) {
+			$comment = Comment::getCommentByCommentId($pdo, $id);
 			if($comment !== null) {
 				$reply->data = $comment;
 			}
