@@ -142,18 +142,19 @@ try {
 
         //verify the XSRF Token
         verifyXsrf();
+
         //enforce the end user has a JWT token
-        //validateJwtHeader();
+        validateJwtHeader();
         $profile = Profile::getProfileByProfileId($pdo, $id);
         if($profile === null) {
             throw (new RuntimeException("Profile does not exist"));
         }
+
         //enforce the user is signed in and only trying to edit their own profile
         if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $profile->getProfileId()->toString()) {
             throw(new \InvalidArgumentException("You do not have access!", 403));
         }
-        validateJwtHeader();
-
+		 validateJwtHeader();
 
         //delete the profile from the database
         $profile->delete($pdo);

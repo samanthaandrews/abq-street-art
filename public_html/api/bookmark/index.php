@@ -118,16 +118,17 @@ try {
 	}
 
 	/**
-	 * Delete API for Bookmark
+	 * Put API for Bookmark
+	 *
+	 * You can only delete only id, thus we have to use a PUT.
 	 **/
-	else if($method === "DELETE") {
+	else if($method === "PUT") {
 
 			//enforce that the end user has a XSRF token.
 			verifyXsrf();
 
 			// retrieve the Bookmark to be deleted
-			//TODO: something weird is happening on the line below but I'm having trouble seeing the error. I was referring to the delete for a "Tweet": https://github.com/deepdivedylan/data-design/blob/master/public_html/api/tweet/index.php
-			$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $id);
+			$bookmark = Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $bookmarkArtId, $bookmarkProfileId);
 			if($bookmark === null) {
 				throw(new RuntimeException("Bookmark does not exist", 404));
 			}
