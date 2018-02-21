@@ -56,6 +56,11 @@ try {
 			throw new InvalidArgumentException("incorrect search parameters ", 404);
 		}
 	} else if($method === "POST") {
+		//enforce that the end user has a XSRF token.
+		verifyXsrf();
+		//enforce the end user has a JWT token
+		validateJwtHeader();
+
 		//decode the response from the front end
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
@@ -69,16 +74,13 @@ try {
 			$requestObject->commentDateTime = date("y-m-d H:i:s");
 		}
 
-			//enforce that the end user has a XSRF token.
-			verifyXsrf();
-			//enforce the end user has a JWT token
-			validateJwtHeader();
+
 			// enforce the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("you must be logged in to comment on art", 403));
 			}
-
-			$comment = new Comment($_SESSION["profile"]->getProfileId(), $requestObject->commentArtId, $requestObject->commentContent, $requestObject->commentDateTime);
+			$commentId = generateUuidV4();
+			$comment = new Comment($commentId, $requestObject->commentArtId, $_SESSION["profile"]->getProfileId(), $requestObject->commentContent, $requestObject->commentDateTime);
 			$comment->insert($pdo);
 			$reply->message = "comment posted successfully";
 

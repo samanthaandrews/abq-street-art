@@ -111,7 +111,7 @@ try {
 			}
 
 
-			$bookmark = new Bookmark($_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId);
+			$bookmark = new Bookmark($requestObject->bookmarkArtId, $_SESSION["profile"]->getProfileId());
 			$bookmark->insert($pdo);
 			echo("116");
 			$reply->message = "Successfully bookmarked this piece of art";
