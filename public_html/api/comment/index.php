@@ -7,7 +7,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 
 use Edu\Cnm\AbqStreetArt\{
-	Comment
+	Comment, Profile, Art
 };
 
 /**
@@ -68,7 +68,7 @@ try {
 		if(empty($requestObject->commentDateTime) === true) {
 			$requestObject->commentDateTime = date("y-m-d H:i:s");
 		}
-		if($method === "POST") {
+
 			//enforce that the end user has a XSRF token.
 			verifyXsrf();
 			//enforce the end user has a JWT token
@@ -77,11 +77,11 @@ try {
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("you must be logged in to comment on art", 403));
 			}
-			validateJwtHeader();
-			$comment = new Comment($_SESSION["profile"]->getProfileId(), $requestObject->commentArtId);
+
+			$comment = new Comment($_SESSION["profile"]->getProfileId(), $requestObject->commentArtId, $requestObject->commentContent, $requestObject->commentDateTime);
 			$comment->insert($pdo);
 			$reply->message = "comment posted successfully";
-		}
+
 		// if any other HTTP request is sent throw an exception
 	} else {
 		throw new \InvalidArgumentException("invalid http request", 400);

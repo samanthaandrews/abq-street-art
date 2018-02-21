@@ -10,7 +10,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 
 use Edu\Cnm\AbqStreetArt\{
-	Bookmark
+	Bookmark, Art, Profile
 };
 
 /**
@@ -36,9 +36,9 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize the search parameters
-	$bookmarkArtId = $id = filter_input(INPUT_GET, "bookmarkArtId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$bookmarkArtId = filter_input(INPUT_GET, "bookmarkArtId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	$bookmarkProfileId = $id = filter_input(INPUT_GET, "bookmarkProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$bookmarkProfileId = filter_input(INPUT_GET, "bookmarkProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	/**
 	 * Get API for Bookmark
@@ -81,36 +81,41 @@ try {
 
 
 	} else if($method === "POST") {
+		//enforce that the end user has a XSRF token.
+		verifyXsrf();
+
+		//enforce the end user has a JWT token
+		validateJwtHeader();
 
 		//decode the response from the frontend
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		if(empty($requestObject->bookmarkArtId) === true) {
-			throw (new \InvalidArgumentException("No art linked to the bookmark", 405));
-		}
 		if(empty($requestObject->bookmarkProfileId) === true) {
 			throw (new \InvalidArgumentException("No profile linked to the bookmark", 405));
 		}
-		if($method === "POST") {
+		if(empty($requestObject->bookmarkArtId) === true) {
+			throw (new \InvalidArgumentException("No art linked to the bookmark", 405));
+		}
 
-			//enforce that the end user has a XSRF token.
-			verifyXsrf();
 
-			//enforce the end user has a JWT token
-			validateJwtHeader();
-
+		if(Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId)!==null){
+			throw(new \InvalidArgumentException("The Bookmark already exists."));
+		}
+		if (Art::getArtByArtId($pdo,$requestObject->bookmarkArtId)===null){
+			throw(new \InvalidArgumentException("The art does not exist."));
+		}
 
 			//enforce that the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("You must be logged in to bookmark pieces of art", 403));
 			}
 
-			validateJwtHeader();
 
 			$bookmark = new Bookmark($_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId);
 			$bookmark->insert($pdo);
+			echo("116");
 			$reply->message = "Successfully bookmarked this piece of art";
-		}
+
 	}
 
 	/**
