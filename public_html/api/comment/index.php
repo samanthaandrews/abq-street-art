@@ -25,15 +25,19 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
+
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
 	//sanitize the search parameters
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$commentProfileId = $id = filter_input(INPUT_GET, "commentProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$commentArtId = $id = filter_input(INPUT_GET, "commentArtId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	if($method === "GET") {
+
 		//set XSRF cookie
 		setXsrfCookie();
+
 		//gets a specific comment based on its commentId
 		if(empty($id) === false) {
 			$comment = Comment::getCommentByCommentId($pdo, $id);
@@ -55,6 +59,9 @@ try {
 		} else {
 			throw new InvalidArgumentException("incorrect search parameters ", 404);
 		}
+/**
+ * Post for Comment
+ **/
 	} else if($method === "POST") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
@@ -71,9 +78,8 @@ try {
 			throw (new \InvalidArgumentException("no art linked to the comment", 405));
 		}
 		if(empty($requestObject->commentDateTime) === true) {
-			$requestObject->commentDateTime = date("y-m-d H:i:s");
+//			$requestObject->commentDateTime = date("y-m-d H:i:s");
 		}
-
 
 			// enforce the user is signed in
 			if(empty($_SESSION["profile"]) === true) {

@@ -79,7 +79,6 @@ try {
 	 * Post API for Bookmark
 	 **/
 
-
 	} else if($method === "POST") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
@@ -97,13 +96,13 @@ try {
 			throw (new \InvalidArgumentException("No art linked to the bookmark", 405));
 		}
 
-
-		if(Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId)!==null){
-			throw(new \InvalidArgumentException("The Bookmark already exists."));
-		}
-		if (Art::getArtByArtId($pdo,$requestObject->bookmarkArtId)===null){
-			throw(new \InvalidArgumentException("The art does not exist."));
-		}
+//TODO: We may need to delete this or fix it...we don't know. Ask Dylan.
+//		if(Bookmark::getBookmarkByBookmarkArtIdAndBookmarkProfileId($pdo, $_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId)!==null){
+//			throw(new \InvalidArgumentException("The Bookmark already exists."));
+//		}
+//		if (Art::getArtByArtId($pdo,$requestObject->bookmarkArtId)===null){
+//			throw(new \InvalidArgumentException("The art does not exist."));
+//		}
 
 			//enforce that the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
