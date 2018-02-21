@@ -45,7 +45,7 @@ try {
 			}
 			//TODO figure out if this part is correct
 		} else if(empty($userLat) === false && empty($userLong) === false && empty($distance) === false) {
-			$arts = Art::getArtByDistance($pdo, $userLat, $userLong, $distance)->toArray();
+			$arts = Art::getArtByDistance($pdo, $userLong, $userLat, $distance)->toArray();
 			if($arts !== null) {
 				$reply->data = $arts;
 			}
@@ -63,7 +63,7 @@ try {
 		}
 		// If the method request is not GET an exception is thrown
 	} else {
-		throw (new InvalidArgumentException("Invalid HTTP Method Request"));
+		throw (new InvalidArgumentException("Invalid HTTP Method Request", 418));
 	}
 // update reply with exception information
 } catch(Exception $exception) {

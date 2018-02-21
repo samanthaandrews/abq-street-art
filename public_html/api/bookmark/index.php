@@ -77,7 +77,7 @@ try {
 	/**
 	 * Post API for Bookmark
 	 **/
-	// TODO: in notes from our scrum on 2/14, we were told that bookmark only needed get and delete: no post and no put. On 2/15 George told me to also include "post". Need to clarify what should be included according to our use case. -Erin 2/15
+
 
 	} else if($method === "POST") {
 

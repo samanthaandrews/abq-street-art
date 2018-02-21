@@ -60,15 +60,15 @@ class DataDownloader {
 			throw(new \RuntimeException("etag cannot be found", 404));
 		}
 //TODO Why are we writing to an ini file? What do we do about "whichETag"?
-		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
-		$eTags = json_decode($config["eTags"]);
-		$previousETag = $eTags->whichETag;
-
-		if($previousETag < $eTag) {
-			return ($eTag);
-		} else {
-			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
-		}
+//		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
+//		$eTags = json_decode($config["eTags"]);
+//		$previousETag = $eTags->whichETag;
+//
+//		if($previousETag < $eTag) {
+//			return ($eTag);
+//		} else {
+//			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
+//		}
 
 
 	}
@@ -106,9 +106,9 @@ class DataDownloader {
 			$artAddress = $feature->attributes->ADDRESS;
 			$artArtist = $feature->attributes->ARTIST;
 			$artImageUrl = $feature->attributes->JPG_URL;
-			$artLat = $feature->attributes->X;
+			$artLat = $feature->attributes->Y;
 			$artLocation = $feature->attributes->LOCATION;
-			$artLong = $feature->attributes->Y;
+			$artLong = $feature->attributes->X;
 			$artTitle = $feature->attributes->TITLE;
 			$artType = $feature->attributes->TYPE;
 			$artYear = $feature->attributes->YEAR;
