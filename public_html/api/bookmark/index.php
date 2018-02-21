@@ -2,8 +2,8 @@
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 
-// TODO: not sure where to get the file below that George included in the Like API example. Commenting out for now. -Erin 2/15
-//require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
@@ -37,6 +37,7 @@ try {
 
 	//sanitize the search parameters
 	$bookmarkArtId = $id = filter_input(INPUT_GET, "bookmarkArtId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+
 	$bookmarkProfileId = $id = filter_input(INPUT_GET, "bookmarkProfileId", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	/**
@@ -84,10 +85,10 @@ try {
 		//decode the response from the frontend
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
-		if(empty($requestObject->likeArtId) === true) {
+		if(empty($requestObject->bookmarkArtId) === true) {
 			throw (new \InvalidArgumentException("No art linked to the bookmark", 405));
 		}
-		if(empty($requestObject->likeProfileId) === true) {
+		if(empty($requestObject->bookmarkProfileId) === true) {
 			throw (new \InvalidArgumentException("No profile linked to the bookmark", 405));
 		}
 		if($method === "POST") {
@@ -96,18 +97,17 @@ try {
 			verifyXsrf();
 
 			//enforce the end user has a JWT token
-			//validateJwtHeader();
+			validateJwtHeader();
 
-			//In George's "Like" example, it seems like maybe something was deleted here?? https://github.com/deepdivedylan/data-design/blob/master/public_html/api/like/index.php '
 
 			//enforce that the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("You must be logged in to bookmark pieces of art", 403));
 			}
 
-			//validateJwtHeader();
-			//TODO: is "validating the JWT header" actually what is happening below? The comments in the Like example seem to be off. https://github.com/deepdivedylan/data-design/blob/master/public_html/api/like/index.php
-			$bookmark = new Bookmark($_SESSION["profile"]->getProfileId(), $requestObject->bookmarProfileId);
+			validateJwtHeader();
+
+			$bookmark = new Bookmark($_SESSION["profile"]->getProfileId(), $requestObject->bookmarkArtId);
 			$bookmark->insert($pdo);
 			$reply->message = "Successfully bookmarked this piece of art";
 		}
@@ -135,7 +135,7 @@ try {
 
 			//TODO: Am I missing something to correspond with the comments from the code examples below?? -Erin 2/15
 			//enforce the end user has a JWT token
-			//validateJwtHeader();
+			validateJwtHeader();
 
 
 			// delete bookmark

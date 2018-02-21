@@ -56,6 +56,7 @@ try {
 
 	//determine which HTTP method, store the result in $method
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
 	if($method === "POST") {
 
 		//check xsrf token

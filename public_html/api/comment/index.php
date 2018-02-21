@@ -72,12 +72,12 @@ try {
 			//enforce that the end user has a XSRF token.
 			verifyXsrf();
 			//enforce the end user has a JWT token
-			//validateJwtHeader();
+			validateJwtHeader();
 			// enforce the user is signed in
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("you must be logged in to comment on art", 403));
 			}
-			//validateJwtHeader();
+			validateJwtHeader();
 			$comment = new Comment($_SESSION["profile"]->getProfileId(), $requestObject->commentArtId);
 			$comment->insert($pdo);
 			$reply->message = "comment posted successfully";
