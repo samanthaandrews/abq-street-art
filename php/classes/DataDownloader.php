@@ -113,10 +113,14 @@ class DataDownloader {
 			$artType = $feature->attributes->TYPE;
 			$artYear = $feature->attributes->YEAR;
 
-			var_dump($feature);
+			try {
+
 			$art = new Art($artId, $artAddress, $artArtist, $artImageUrl, $artLat, $artLocation, $artLong, $artTitle, $artType, $artYear);
 			$art->insert($pdo);
 		}
+		catch (\TypeError $typeError) {
+			echo ("Leave Nat on The Beach!!!!!");
+		}}
 	}
 	/**
 	 *
