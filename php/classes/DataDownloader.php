@@ -6,6 +6,7 @@ namespace Edu\Cnm\AbqStreetArt;
 //TODO Not sure what else would need to be required for the data-downloader
 require_once("autoload.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once(dirname(__DIR__, 1) . "/lib/uuid.php");
 
 /**
  * This class will download data from the City of Albuquerque City Data Database.
@@ -59,16 +60,15 @@ class DataDownloader {
 		if($eTag === null) {
 			throw(new \RuntimeException("etag cannot be found", 404));
 		}
-//TODO Why are we writing to an ini file? What do we do about "whichETag"?
-//		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
-//		$eTags = json_decode($config["eTags"]);
-//		$previousETag = $eTags->whichETag;
-//
-//		if($previousETag < $eTag) {
-//			return ($eTag);
-//		} else {
-//			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
-//		}
+		$config = readConfig("/etc/apache2/capstone-mysql/streetart.ini");
+		$eTags = json_decode($config["etags"]);
+		$previousETag = $eTags->art;
+
+		if($previousETag < $eTag) {
+			return ($eTag);
+		} else {
+			throw(new \OutOfBoundsException("same old story, same old song and dance", 401));
+		}
 
 
 	}
@@ -89,7 +89,7 @@ class DataDownloader {
 			$eTags = json_decode($config["etags"]);
 			$eTags->art = $artETag;
 			$config["etags"] = json_encode($eTags);
-			writeConfig($config, "/etc/apache2/capstone-mysql/streetart.ini");
+//			writeConfig($config, "/etc/apache2/capstone-mysql/streetart.ini");
 		} catch(\OutOfBoundsException $outOfBoundsException) {
 			echo("no new art data found");
 		}
@@ -102,7 +102,7 @@ class DataDownloader {
 	public static function getArtData(\SplFixedArray $features) {
 		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/streetart.ini");
 		foreach($features as $feature) {
-			$artId = $feature->attributes->OBJECTID;
+			$artId = generateUuidV4();
 			$artAddress = $feature->attributes->ADDRESS;
 			$artArtist = $feature->attributes->ARTIST;
 			$artImageUrl = $feature->attributes->JPG_URL;
@@ -113,7 +113,7 @@ class DataDownloader {
 			$artType = $feature->attributes->TYPE;
 			$artYear = $feature->attributes->YEAR;
 
-
+			var_dump($feature);
 			$art = new Art($artId, $artAddress, $artArtist, $artImageUrl, $artLat, $artLocation, $artLong, $artTitle, $artType, $artYear);
 			$art->insert($pdo);
 		}
