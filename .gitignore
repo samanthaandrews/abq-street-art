@@ -8,3 +8,4 @@
 /public_html/dist
 /public_html/index.html
 /npm-debug.log
+/webpack/target.js
