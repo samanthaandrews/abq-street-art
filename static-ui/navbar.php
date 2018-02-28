@@ -1,5 +1,7 @@
 <?php require_once ("head-utils.php");?>
 
+<?php require_once ("sign-in-modal.php");?>
+
 <header>
 	<div class="container-fluid p-0 black ">
 		<nav class="navbar navbar-expand-lg">
