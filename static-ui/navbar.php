@@ -1,3 +1,5 @@
+<?php require_once ("head-utils.php");?>
+
 <header>
 	<div class="container pb-5">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
