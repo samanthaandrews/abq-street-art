@@ -3,10 +3,6 @@
 <?php require_once("navbar.php");?>
 
 <main>
-<!--    <!-- Button trigger modal -->
-<!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">-->
-<!--        Launch demo modal-->
-<!--    </button>-->
 
     <!-- Modal -->
     <div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true">
@@ -21,8 +17,8 @@
                 <div class="modal-body gray">
                     <form class="form-control-lg" id="form" action="" method="post">
                         <div class="info">
-                                <input id="email" type="email" name="email" placeholder=" Email"/>
-                                <input id="password" type="text" name="password" placeholder=" Password">
+                                <input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
+                                <input class="form-control" id="password" type="text" name="password" placeholder=" Password">
                         </div>
                     </form>
                     <div class="modal-footer">

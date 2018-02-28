@@ -15,9 +15,23 @@ a {
     color: rgb(252, 216, 33);
 }
 
+.close {
+    color: rgb(252, 216, 33);
+    opacity: 1;
+    text-shadow: none;
+}
+
+.close:hover {
+    color: rgb(176, 145, 31);
+}
+
 .name {
     font-weight: bolder;
     font-size: larger;
+}
+
+.modal-footer, .modal-header {
+    border: none;
 }
 
 main {
@@ -27,10 +41,6 @@ main {
 
 .gray {
     background-color: rgb(32, 32, 32);
-}
-
-.green {
-    background-color: rgb(0, 82, 55);
 }
 
 .list-group-item {
@@ -58,5 +68,22 @@ body {
 
 .btn:hover {
     background-color: rgb(252, 216, 33);
+    color: white;
+}
+
+li>a:hover {
+    color: rgb(176, 145, 31);
+}
+
+
+/*keep this stuff after the btn stuff for the green submit button*/
+.green {
+    border-color: rgb(50, 215, 54);
+    color: rgb(50, 215, 54);
+    background-color: transparent;
+}
+
+.green:hover {
+    background-color: rgb(50, 215, 54);
     color: white;
 }

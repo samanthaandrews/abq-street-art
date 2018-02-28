@@ -19,7 +19,7 @@
                             </p>
                             <input class="btn" type="submit" value="Search">
                         </form>
-                        <ul class="list-group list-group-flush p-2">
+                        <ul class="list-group list-group-flush">
                             <li class="list-group-item"><a href="#" class="card-link">Murals</a></li>
                             <li class="list-group-item"><a href="#" class="card-link">Sculptures</a></li>
                             <li class="list-group-item"><a href="#" class="card-link">Photos</a></li>
