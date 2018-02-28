@@ -2,7 +2,7 @@
 
 <?php require_once("navbar.php");?>
 
-<main class="gray">
+<main>
     <div class="container text-center">
         <h1>Sign Up for ABQ Street Art!</h1>
         <form class="form-control-lg" id="form" action="" method="post">
