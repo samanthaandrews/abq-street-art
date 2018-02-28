@@ -11,7 +11,7 @@
                     <input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
                     <input class="form-control" id="password" type="text" name="password" placeholder=" Password">
                     <input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
-                <input class="btn btn-outline-warning" type="submit" value="Sign Up!">
+                <input class="btn" type="submit" value="Sign Up!">
             </div>
         </form>
     </div>

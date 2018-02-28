@@ -26,7 +26,7 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <input class="btn btn-outline-warning" type="submit" value="Sign In!">
+                        <input class="btn" type="submit" value="Sign In!">
                     </div>
                 </div>
             </div>

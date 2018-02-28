@@ -11,7 +11,7 @@
                 <input class="form-control" id="password" type="text" name="password" placeholder=" Password"/>
                 <input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password"/>
             </div>
-            <button type="button" class="btn btn-outline-warning pull-right m-2" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn pull-right m-2" data-dismiss="modal">Cancel</button>
             <button type="button" class="btn btn-outline-success pull-right m-2">Save changes</button>
         </form>
     </div>

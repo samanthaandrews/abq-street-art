@@ -16,7 +16,7 @@
                         <p>
                             <input id="type" type="text" name="type" placeholder="type of art"/>
                         </p>
-                        <input class="btn btn-outline-warning" type="submit" value="Search">
+                        <input class="btn" type="submit" value="Search">
                     </form>
                     <ul class="list-group list-group-flush p-2">
                         <li class="list-group-item"><a href="#" class="card-link">Murals</a></li>

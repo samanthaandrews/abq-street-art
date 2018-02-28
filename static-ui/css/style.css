@@ -49,3 +49,14 @@ body {
 .form-control {
     margin-bottom: 1rem;
 }
+
+.btn {
+    border-color: rgb(252, 216, 33);
+    color: rgb(252, 216, 33);
+    background-color: transparent;
+}
+
+.btn:hover {
+    background-color: rgb(252, 216, 33);
+    color: white;
+}
