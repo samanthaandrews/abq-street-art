@@ -11,6 +11,6 @@ export class UserService {
     // private userUrl = "https://jsonplaceholder.typicode.com/users/";
 
     getAllUsers() : Observable<Art[]> {
-        return(this.http.get<Art[]>(this.userUrl));
+        return(this.http.get<Art[]>(this.artUrl));
     }
 }
