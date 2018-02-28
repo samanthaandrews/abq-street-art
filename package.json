@@ -1,0 +1,57 @@
+{
+  "name": "abq-street-art",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Dylan McDonald, Samantha Andrews, Nathaniel Gustafson, Mary MacMillan, Erin Scott",
+    "email": "dylan@deepdivedylan.io",
+    "url": "https://bootcamp-coders.cnm.edu/~sandrews20/abq-street-art/"
+  },
+  "scripts": {
+    "build": "rimraf public_html/dist && tsc && webpack --config webpack/webpack.live.js --progress --profile --bail",
+    "start": "rimraf public_html/dist && webpack-dev-server --config webpack/webpack.dev.js --inline --progress --port 7272"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samanthaandrews/abq-street-art"
+  },
+  "dependencies": {
+    "@angular/common": "^5.2.6",
+    "@angular/compiler": "^5.2.6",
+    "@angular/core": "^5.2.6",
+    "@angular/forms": "^5.2.6",
+    "@angular/platform-browser": "^5.2.6",
+    "@angular/platform-browser-dynamic": "^5.2.6",
+    "@angular/router": "^5.2.6",
+    "core-js": "^2.5.3",
+    "rxjs": "^5.5.6",
+    "jquery": "^3.3.1",
+    "zone.js": "^0.8.20"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome": "^1.1.4",
+    "@fortawesome/fontawesome-free-brands": "^5.0.7",
+    "@fortawesome/fontawesome-free-regular": "^5.0.7",
+    "@fortawesome/fontawesome-free-solid": "^5.0.7",
+    "@types/node": "^8.0.47",
+    "ajv": "^6.2.0",
+    "awesome-typescript-loader": "^3.5.0",
+    "bootstrap": "^4.0.0",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.10",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^2.30.1",
+    "null-loader": "^0.1.1",
+    "popper.js": "^1.12.9",
+    "raw-loader": "^0.5.1",
+    "resolve-url-loader": "^2.2.1",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.20.2",
+    "typescript": "^2.7.2",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.2",
+    "webpack-merge": "^4.1.2"
+  }
+}
