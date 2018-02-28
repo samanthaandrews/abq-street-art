@@ -1,3 +1,48 @@
 .black {
     background-color: black;
 }
+
+.logo {
+    height: 10vh;
+}
+
+.navbar{
+    color: rgb(252, 216, 33);
+    font-family: 'Oswald', sans-serif;
+}
+
+a {
+    color: rgb(252, 216, 33);
+}
+
+.name {
+    font-weight: bolder;
+    font-size: larger;
+}
+
+main {
+    font-family: 'Oswald', sans-serif;
+    color: rgb(252, 216, 33);
+}
+
+.gray {
+    background-color: rgb(32, 32, 32);
+}
+
+.green {
+    background-color: rgb(0, 82, 55);
+}
+
+.list-group-item {
+    background-color: rgb(32, 32, 32);
+}
+
+.card {
+    background-color: black;
+    padding: 1.5em;
+}
+
+.fa-bars {
+    background-color: white;
+
+}

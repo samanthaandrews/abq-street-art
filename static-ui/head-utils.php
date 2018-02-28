@@ -8,6 +8,9 @@
 	<!-- Font Awesome -->
 	<link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 
