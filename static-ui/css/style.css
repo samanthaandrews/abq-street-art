@@ -46,3 +46,11 @@ main {
     background-color: white;
 
 }
+
+form {
+    align-content: center;
+}
+
+body {
+    background-color: rgb(32, 32, 32);
+}
