@@ -2,6 +2,8 @@
 
 <?php require_once("navbar.php");?>
 
+<?php require_once ("sign-in-modal.php");?>
+
 <main class="gray">
     <div class="container-fluid p-5">
         <div class="container-fluid p-2" id="map">
