@@ -45,3 +45,7 @@ main {
 body {
     background-color: rgb(32, 32, 32);
 }
+
+.form-control {
+    margin-bottom: 1rem;
+}

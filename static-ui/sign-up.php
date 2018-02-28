@@ -7,18 +7,10 @@
         <h1>Sign Up for ABQ Street Art!</h1>
         <form class="form-control-lg" id="form" action="" method="post">
             <div class="info">
-                <p>
-                    <input id="name" type="text" name="name" placeholder=" User Name"/>
-                </p>
-                <p>
-                    <input id="email" type="email" name="email" placeholder=" Email"/>
-                </p>
-                <p>
-                    <input id="password" type="text" name="password" placeholder=" Password">
-                </p>
-                <p>
-                    <input id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
-                </p>
+                    <input class="form-control" id="name" type="text" name="name" placeholder=" User Name"/>
+                    <input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
+                    <input class="form-control" id="password" type="text" name="password" placeholder=" Password">
+                    <input class="form-control" id="password-confirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
                 <input class="btn btn-outline-warning" type="submit" value="Sign Up!">
             </div>
         </form>

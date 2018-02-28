@@ -16,7 +16,8 @@
 						<a href="sign-up.php" class="nav-link">Sign up</a>
 					</li>
 					<li class="nav-item">
-						<a href="sign-in-modal.php" class="nav-link">Sign in</a>
+                        <!-- link trigger modal -->
+						<a href="sign-in-modal.php" class="nav-link" data-toggle="modal" data-target="#signIn">Sign in</a>
 					</li>
 					<li class="nav-item">
 						<a href="update-profile.php" class="nav-link">Settings</a>
