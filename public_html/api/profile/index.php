@@ -54,8 +54,7 @@ try {
         //set XSRF cookie
         setXsrfCookie();
 
-        //gets a post by...
-        //TODO I really don't know what to do here since we're trying to "get with no parameter - universal get (tricky, tricky, tricky!)"... universal get doesn't seem the same as a get with no parameter?
+        //gets a post by profile id
         if(empty($id) === false) {
             $profile = Profile::getProfileByProfileId($pdo, $id);
             if ($profile !== null) {

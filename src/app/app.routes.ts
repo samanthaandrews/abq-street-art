@@ -16,7 +16,7 @@ export const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [
-   {provide:APP_BASE_HREF useValue:}
+   {provide:APP_BASE_HREF, useValue: window["_base_href"]}
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
    // UserService
 ];
