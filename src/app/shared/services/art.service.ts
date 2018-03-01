@@ -4,13 +4,13 @@ import {Observable} from "rxjs/Observable";
 import {Art} from "../classes/art";
 
 @Injectable()
-export class UserService {
+export class ArtService {
 
     constructor(protected http: HttpClient) {}
 
     // private userUrl = "https://jsonplaceholder.typicode.com/users/";
 
-    getAllUsers() : Observable<Art[]> {
-        return(this.http.get<Art[]>(this.artUrl));
-    }
-}
+//     getAllArts() : Observable<Art[]> {
+//         return(this.http.get<Art[]>(this.artUrl));
+//     }
+ }
