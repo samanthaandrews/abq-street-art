@@ -1,12 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-
 import {Status} from "../classes/status";
 import {Comment} from "../classes/comment";
 import {Observable} from "rxjs/Observable";
 
 @Injectable ()
-export class ProfileService {
+export class CommentService {
 
 	constructor(protected http: HttpClient) {
 	}
@@ -21,17 +20,17 @@ export class ProfileService {
 	}
 
 	// call to the Comment API and get a Comment object by its id
-	getCommentByCommentId(id: number) : Observable<Comment> {
+	getCommentByCommentId(id: string) : Observable<Comment> {
 		return(this.http.get<Comment>(this.commentUrl + id));
 	}
 
 	// call to the Comment API and get a Comment object by its foreign key, profile id
-	getCommentByCommentProfileId(commentProfileId: number) : Observable<Comment[]> {
+	getCommentByCommentProfileId(commentProfileId: string) : Observable<Comment[]> {
 		return(this.http.get<Comment[]>(this.commentUrl + commentProfileId));
 	}
 
 	// call to the Comment API and get a Comment object by its foreign key, art id
-	getCommentByCommentArtId(commentArtId: number) : Observable<Comment[]> {
+	getCommentByCommentArtId(commentArtId: string) : Observable<Comment[]> {
 		return(this.http.get<Comment[]>(this.commentUrl + commentArtId));
 	}
 }
