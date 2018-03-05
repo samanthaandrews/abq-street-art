@@ -20,14 +20,10 @@ export class BookmarkService {
 		return (this.http.post<Status>(this.bookmarkUrl, bookmark));
 	}
 
-	// call to the bookmark API and edit the bookmark in question
-	editBookmark(bookmark : Bookmark) : Observable<Status> {
-		return(this.http.put<Status>(this.BookmarkUrl, {params: new HttpParams().set("bookmark", bookmark)});
-	}
-
-	//call to the bookmark API and delete the bookmark in question
-	deleteBookmark(bookmark : Bookmark) : Observable <Bookmark> {
-		return (this.http.get<Bookmark>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkId", bookmarkId)}))
+	//call to the bookmark API and delete (PUT) the bookmark in question
+	//TODO I don't know if this delete (PUT) it written correctly at all
+	deleteBookmark(bookmarkProfileId : string, bookmarkArtId : string) : Observable <Bookmark> {
+		return (this.http.put<Bookmark>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkProfileId", bookmarkProfileId).set("bookmarkArtId", bookmarkArtId)}));
 	}
 
 	//call the bookmark API and get by composite key
@@ -36,13 +32,15 @@ export class BookmarkService {
 	}
 
 	//call the bookmark API and get by bookmark art id
-	getBookmarkByBookmarkArtId(bookmarkArtId : string) : Observable <Bookmark> {
-		return (this.http.get<Bookmark>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkArtId", bookmarkArtId)}));
+	//TODO should this return an array?
+	getBookmarkByBookmarkArtId(bookmarkArtId : string) : Observable <Bookmark[]> {
+		return (this.http.get<Bookmark[]>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkArtId", bookmarkArtId)}));
 	}
 
 	//call the bookmark API and get by bookmark profile id
-	getBookmarkByBookmarkProfileId(bookmarkProfileId : string) : Observable <Bookmark> {
-		return (this.http.get<Bookmark>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkProfileId", bookmarkProfileId)}));
+	//TODO should this return an array?
+	getBookmarkByBookmarkProfileId(bookmarkProfileId : string) : Observable <Bookmark[]> {
+		return (this.http.get<Bookmark[]>(this.bookmarkUrl, {params: new HttpParams().set("bookmarkProfileId", bookmarkProfileId)}));
 	}
 
 }

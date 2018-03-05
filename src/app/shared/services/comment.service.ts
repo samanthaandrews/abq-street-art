@@ -2,8 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 
 import {Status} from "../classes/status";
-import {Profile} from "../classes/profile";
-import {Art} from "../classes/art";
+import {Comment} from "../classes/comment";
 import {Observable} from "rxjs/Observable";
 
 @Injectable ()
