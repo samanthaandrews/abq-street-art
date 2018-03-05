@@ -28,7 +28,6 @@ export class ProfileService  {
 	// call to the Profile API and get a Profile object by its id
 	getProfileByProfileId(id: number) : Observable<Profile> {
 		return(this.http.get<Profile>(this.profileUrl + id));
-
 	}
 
 	// call to the API to grab an array of profiles based on the user input
