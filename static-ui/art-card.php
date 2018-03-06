@@ -5,7 +5,7 @@
 <main>
     <div class="container-fluid p-2">
         <div class="card">
-            <img class="card-img-top p-1" src="img/unicorn.jpg" alt="Card image cap">
+            <img class="card-img-top p-1" src="../src/img/unicorn.jpg" alt="Card image cap">
             <ul class="p-1 list-group list-group-flush">
                 <li class="list-group-item">Title: piece of art</li>
                 <li class="list-group-item">Artist: mr art man</li>

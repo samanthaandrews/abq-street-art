@@ -5,7 +5,7 @@
 <header>
 	<div class="container-fluid p-0 black ">
 		<nav class="navbar navbar-expand-lg">
-            <img src="img/logo1.svg" alt="logo" class="logo">
+            <img src="../src/img/logo1.svg" alt="logo" class="logo">
 <!--			<span href="home-view.php" class="navbar-brand text-center ml-3 name">ABQ Street Art</span>-->
 			<button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
 					  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,7 +19,7 @@
 					</li>
 					<li class="nav-item">
                         <!-- link trigger modal -->
-						<a href="sign-in-modal.php" class="nav-link" data-toggle="modal" data-target="#signIn">Sign in</a>
+						<signIn></signIn>
 					</li>
 					<li class="nav-item">
 						<a href="update-profile.php" class="nav-link">Settings</a>
