@@ -1,0 +1,89 @@
+.black {
+	background-color: black;
+}
+
+.logo {
+	height: 10vh;
+}
+
+.navbar{
+	color: rgb(252, 216, 33);
+	font-family: 'Oswald', sans-serif;
+}
+
+a {
+	color: rgb(252, 216, 33);
+}
+
+.close {
+	color: rgb(252, 216, 33);
+	opacity: 1;
+	text-shadow: none;
+}
+
+.close:hover {
+	color: rgb(176, 145, 31);
+}
+
+.name {
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.modal-footer, .modal-header {
+	border: none;
+}
+
+main {
+	font-family: 'Oswald', sans-serif;
+	color: rgb(252, 216, 33);
+}
+
+.gray {
+	background-color: rgb(32, 32, 32);
+}
+
+.list-group-item {
+	background-color: rgb(32, 32, 32);
+}
+
+.card {
+	background-color: black;
+	padding: 1.5em;
+}
+
+body {
+	background-color: rgb(32, 32, 32);
+}
+
+.form-control {
+	margin-bottom: 1rem;
+}
+
+.btn {
+	border-color: rgb(252, 216, 33);
+	color: rgb(252, 216, 33);
+	background-color: transparent;
+}
+
+.btn:hover {
+	background-color: rgb(252, 216, 33);
+	color: white;
+}
+
+li>a:hover {
+	color: rgb(176, 145, 31);
+}
+
+
+/*keep this stuff after the btn stuff for the green submit button*/
+.green {
+	border-color: rgb(50, 215, 54);
+	color: rgb(50, 215, 54);
+	background-color: transparent;
+}
+
+.green:hover {
+	background-color: rgb(50, 215, 54);
+	color: white;
+}
