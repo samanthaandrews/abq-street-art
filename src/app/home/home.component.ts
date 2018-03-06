@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit{
 		let array : any[];
 
 		this.artService.getAllArts().subscribe( arts=>{
-			this.featuredArt = arts;});
+            this.featuredArt = arts;});
 
 	}
 
