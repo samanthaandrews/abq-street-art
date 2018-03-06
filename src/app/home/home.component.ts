@@ -1,23 +1,32 @@
 import {Component, OnInit} from "@angular/core";
 // import {User} from "../shared/classes/user";
-// import {UserService} from "../shared/services/user.service";
+import {ArtService} from "../shared/services/art.service";
+import {Art} from "../shared/classes/art";
 
 @Component({
 	template: require("./home.component.html")
 })
 
 // Once Angular is booted up, do the following:
-export class HomeComponent {
+export class HomeComponent implements OnInit{
 	// State variable, an array of users, currently an empty placeholder.
-	// users: User[] = [];
 
-	constructor() {}
+	featuredArt : Art[];
+
+	constructor(protected artService : ArtService) {}
 
 // Angular on init. What happens when the route loads, kind of Angular's version of "loaded"
-// 	ngOnInit(): void {
-// 		this.userService.getAllUsers()
-//
-// 		// Whatever we receive from the service, let's store it in this users array for later use in the DOM.
-// 			.subscribe(users => this.users = users);
-// 	}
+	ngOnInit(): void {
+		this.getFeaturedArt();
+	}
+
+	getFeaturedArt() : void {
+		let array : any[];
+
+		this.artService.getAllArts().subscribe( arts=>{
+			this.featuredArt = arts;});
+
+	}
+
+
 }

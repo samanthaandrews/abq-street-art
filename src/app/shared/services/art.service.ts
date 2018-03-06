@@ -30,7 +30,7 @@ export class ArtService {
 
 // call to the Art API and get an Art object by its type
 	getAllArts(): Observable<Art[]> {
-		return (this.http.get<Art[]>(this.artUrl));
+		return (this.http.get<Art[]>(this.artUrl).take(4));
 	}
 
 }
