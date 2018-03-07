@@ -15,6 +15,8 @@ import {SignInModalComponent} from "./shared/components/sign-in-modal.component"
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {SignedInHomeviewComponent} from "./signed-in-homeview/signed-in-homeview.component";
+import {SessionService} from "./shared/services/session.service";
+import {CookieService} from "ngx-cookie-service";
 
 
 
@@ -39,7 +41,7 @@ const providers: any[] = [
    // UserService
 ];
 
-const services: any[] = [ArtService, AuthService, BookmarkService, CommentService, ProfileService, SignInService, SignUpService];
+const services: any[] = [ArtService, AuthService, BookmarkService, CookieService,CommentService, ProfileService, SignInService, SignUpService, SessionService];
 
 export const appRoutingProviders : any[] = [providers,  services];
 
