@@ -5,28 +5,28 @@
             <div class="info">
 
                 <!--profileUserName-->
-                <input class="form-control" id="profileUserName" type="text" name="name" placeholder=" User Name"/>
+                <input class="form-control" id="profileUserName" type="text" name="name" placeholder=" User Name" formControlName="profileUserName"/>
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.profileUserName?.touched">
                     <p *ngIf="signUpForm.controls.profileUserName?.errors.maxlength">Username is too long</p>
                     <p *ngIf="signUpForm.controls.profileUserName?.errors.required">Username required</p>
                 </div>
 
                 <!--profileEmail-->
-                <input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email"/>
+                <input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email" formControlName="profileEmail"/>
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.profileEmail?.invalid && signUpForm.controls.profileEmail?.touched">
                     <p *ngIf="signUpForm.controls.profileEmail?.errors.maxlength">email is too long</p>
                     <p *ngIf="signUpForm.controls.profileEmail?.errors.required">valid email address is required</p>
                 </div>
 
                 <!--profilePassword-->
-                <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password">
+                <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password" formControlName="profilePassword">
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.profilePassword?.invalid && signUpForm.controls.profilePassword?.touched">
                     <p *ngIf="signUpForm.controls.profilepassword?.errors.maxlength">Password is too long</p>
                     <p *ngIf="signUpForm.controls.profilePassword?.errors.required">Valid password required</p>
                 </div>
 
                 <!--profilePasswordConfirm-->
-                <input class="form-control" id="profilePasswordConfirm" type="text" name="password-confirm" placeholder=" Re-enter Password">
+                <input class="form-control" id="profilePasswordConfirm" type="text" name="password-confirm" placeholder=" Re-enter Password" formControlName="profilePasswordConfirm">
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.profilePasswordConfirm?.invalid && signUpForm.controls.profilePasswordConfirm?.touched">
                     <p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.maxlength">Password is too long</p>
                     <p *ngIf="signUpForm.controls.email?.errors.required">Valid password required</p>

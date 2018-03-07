@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit{
                     setTimeout(function() {
                         $("#signUpForm").modal('hide');
                     }, 500);
-                    this.router.navigate([""]);
+                    this.router.navigate(["home"]);
                 }
             });
     }

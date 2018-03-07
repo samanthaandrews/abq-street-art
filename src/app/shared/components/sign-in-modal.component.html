@@ -14,14 +14,14 @@
                         <div class="info">
 
                             <!--profileEmail-->
-                            <input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email"/>
+                            <input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email" formControlName="profileEmail"/>
 
                             <div class="alert alert-danger" *ngIf="signInForm.controls.profileEmail?.invalid && signInForm.controls.profileEmail?.touched">
                                 <p *ngIf="signInForm.controls.profileEmail?.errors.required">Email or password is incorrect</p>
                             </div>
 
                             <!--profilePassword-->
-                            <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password">
+                            <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password" formControlName="profilePassword">
 
                             <div class="alert alert-danger" *ngIf="signInForm.controls.profilePassword?.invalid && signInForm.controls.profilePassword?.touched">
                                 <p *ngIf="signInForm.controls.profilePassword?.errors.required">Email or password incorrect</p>
