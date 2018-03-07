@@ -13,17 +13,19 @@ import {SignUpService} from "./shared/services/sign.up.service";
 import {ArtComponent} from "./art/art.component";
 import {SignInModalComponent} from "./shared/components/sign-in-modal.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
+import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
 	// The following is the default path - needs to come last in your array.
 	// Sort your routes by most specific to least specific. Empty string "" matches everything.
     {path: "sign-up", component: SignUpComponent},
+    {path: "update-profile", component: UpdateProfileComponent},
     {path: "", component: HomeComponent}
 
 ];

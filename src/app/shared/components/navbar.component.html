@@ -2,7 +2,7 @@
 <header>
     <div class="container-fluid p-0 black ">
         <nav class="navbar navbar-expand-lg">
-            <img src="logo1.svg" alt="logo" class="logo">
+            <a routerLink=""><img src="logo1.svg" alt="logo" class="logo"></a>
             <button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle Navigation">
@@ -20,10 +20,10 @@
                         <sign-in></sign-in>
                     </li>
                     <li class="nav-item">
-                        <a href="update-profile.php" class="nav-link">Settings</a>
+                        <a routerLink="update-profile" class="nav-link">Settings</a>
                     </li>
                     <li class="nav-item">
-                        <a href="home-view.php" class="nav-link">Sign out</a>
+                        <a href="" class="nav-link" (click)="logOut()">Sign out</a>
                     </li>
                 </ul>
             </div>
