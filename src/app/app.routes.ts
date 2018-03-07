@@ -12,11 +12,12 @@ import {SignInService} from "./shared/services/sign.in.service";
 import {SignUpService} from "./shared/services/sign.up.service";
 import {ArtComponent} from "./art/art.component";
 import {SignInModalComponent} from "./shared/components/sign-in-modal.component";
+import {SignUpComponent} from "./sign-up/sign-up.component";
 
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
