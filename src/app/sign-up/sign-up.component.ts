@@ -17,9 +17,9 @@ declare let $: any;
 
 // set the template url and the selector for the ng powered html tag
 @Component({
-    template: require
-    ("./sign-up.component.html")
+    template: require("./sign-up.component.html")
 })
+
 export class SignUpComponent implements OnInit{
 
     signUpForm : FormGroup;
@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit{
 
     createSignUp(): void {
 
-        let signUp =  new SignUp(this.signUpForm.value.profileUserName, this.signUpForm.value.profileEmail, this.signUpForm.value.profilePassword, this.signUpForm.value.profilePasswordConfirm);
+        let signUp =  new SignUp(this.signUpForm.value.profileEmail, this.signUpForm.value.profileUserName, this.signUpForm.value.profilePassword, this.signUpForm.value.profilePasswordConfirm);
 
         this.signUpService.createProfile(signUp)
             .subscribe(status => {
@@ -54,7 +54,7 @@ export class SignUpComponent implements OnInit{
                     setTimeout(function() {
                         $("#signUpForm").modal('hide');
                     }, 500);
-                    this.router.navigate(["home"]);
+                    this.router.navigate(["/home"]);
                 }
             });
     }

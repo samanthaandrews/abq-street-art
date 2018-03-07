@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body gray">
-                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (submit)="createSignIn();">
+                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" method="post" (submit)="createSignIn();" novalidate>
                         <div class="info">
 
                             <!--profileEmail-->
@@ -21,7 +21,7 @@
                             </div>
 
                             <!--profilePassword-->
-                            <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password" formControlName="profilePassword">
+                            <input class="form-control" id="profilePassword" type="password" name="profilePassword" placeholder=" Password" formControlName="profilePassword">
 
                             <div class="alert alert-danger" *ngIf="signInForm.controls.profilePassword?.invalid && signInForm.controls.profilePassword?.touched">
                                 <p *ngIf="signInForm.controls.profilePassword?.errors.required">Email or password incorrect</p>
