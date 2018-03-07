@@ -10,21 +10,21 @@
                     </button>
                 </div>
                 <div class="modal-body gray">
-                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (submit)="signIn();">
+                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (submit)="createSignIn();">
                         <div class="info">
 
                             <!--profileEmail-->
-                            <input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
+                            <input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email"/>
 
-                            <div class="alert alert-danger" *ngIf="signInForm.controls.email?.invalid && signInForm.controls.email?.touched">
-                                <p *ngIf="signInForm.controls.email?.errors.required">Email or password is incorrect</p>
+                            <div class="alert alert-danger" *ngIf="signInForm.controls.profileEmail?.invalid && signInForm.controls.profileEmail?.touched">
+                                <p *ngIf="signInForm.controls.profileEmail?.errors.required">Email or password is incorrect</p>
                             </div>
 
                             <!--profilePassword-->
-                            <input class="form-control" id="password" type="text" name="password" placeholder=" Password">
+                            <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password">
 
-                            <div class="alert alert-danger" *ngIf="signInForm.controls.password?.invalid && signInForm.controls.password?.touched">
-                                <p *ngIf="signInForm.controls.password?.errors.required">Email or password incorrect</p>
+                            <div class="alert alert-danger" *ngIf="signInForm.controls.profilePassword?.invalid && signInForm.controls.profilePassword?.touched">
+                                <p *ngIf="signInForm.controls.profilePassword?.errors.required">Email or password incorrect</p>
                             </div>
                         </div>
                     </form>

@@ -38,7 +38,7 @@ export class SignInModalComponent implements OnInit {
 
     }
 
-    signIn(): void {
+    createSignIn(): void {
 
         let signIn = new SignIn(this.signInForm.value.profileEmail, this.signInForm.value.profilePassword);
 
@@ -47,6 +47,11 @@ export class SignInModalComponent implements OnInit {
                 this.status = status;
 
                 if (this.status.status === 200) {
+
+                    setTimeout(function() {
+                        $("#signInForm").modal('hide');
+                    }, 500);
+
                     this.router.navigate(["signed-in-homeview"]);
                 }
             });
