@@ -23,8 +23,11 @@ export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
 	// The following is the default path - needs to come last in your array.
 	// Sort your routes by most specific to least specific. Empty string "" matches everything.
+    {path: "sign-up", component: SignUpComponent},
     {path: "", component: HomeComponent}
+
 ];
+
 
 const providers: any[] = [
    {provide:APP_BASE_HREF, useValue: window["_base_href"]}
