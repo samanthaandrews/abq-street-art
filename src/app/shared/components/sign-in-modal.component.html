@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body gray">
-                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (ngSubmit)="postSignIn();">
+                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (submit)="signIn();">
                         <div class="info">
 
                             <!--profileEmail-->
