@@ -1,6 +1,5 @@
 import {Component, ViewChild, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
 import {setTimeout} from "timers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -31,7 +30,8 @@ export class SignInModalComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private signInService: SignInService,
-        private cookieService: CookieService
+        private cookieService: CookieService,
+        private sessionService: SessionService
     ){}
 
     ngOnInit(): void {
