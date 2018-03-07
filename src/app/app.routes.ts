@@ -14,11 +14,12 @@ import {ArtComponent} from "./art/art.component";
 import {SignInModalComponent} from "./shared/components/sign-in-modal.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
+import {SignedInHomeviewComponent} from "./signed-in-homeview/signed-in-homeview.component";
 
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
@@ -26,6 +27,7 @@ export const routes: Routes = [
 	// Sort your routes by most specific to least specific. Empty string "" matches everything.
     {path: "sign-up", component: SignUpComponent},
     {path: "update-profile", component: UpdateProfileComponent},
+    {path: "signed-in-homeview", component: SignedInHomeviewComponent},
     {path: "", component: HomeComponent}
 
 ];

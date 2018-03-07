@@ -10,10 +10,22 @@
                     </button>
                 </div>
                 <div class="modal-body gray">
-                    <form class="form-control-lg" id="form" action="" method="post">
+                    <form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" novalidate (ngSubmit)="postSignIn();">
                         <div class="info">
+
+                            <!--profileEmail-->
                             <input class="form-control" id="email" type="email" name="email" placeholder=" Email"/>
+
+                            <div class="alert alert-danger" *ngIf="signInForm.controls.email?.invalid && signInForm.controls.email?.touched">
+                                <p *ngIf="signInForm.controls.email?.errors.required">Email or password is incorrect</p>
+                            </div>
+
+                            <!--profilePassword-->
                             <input class="form-control" id="password" type="text" name="password" placeholder=" Password">
+
+                            <div class="alert alert-danger" *ngIf="signInForm.controls.password?.invalid && signInForm.controls.password?.touched">
+                                <p *ngIf="signInForm.controls.password?.errors.required">Email or password incorrect</p>
+                            </div>
                         </div>
                     </form>
                     <div class="modal-footer">
