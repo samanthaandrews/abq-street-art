@@ -21,7 +21,7 @@ export class ArtComponent implements OnInit {
     }
 
     listArts() : any {
-        this.artService.artObserver()
+        this.artService.artObserver
            .subscribe(arts => this.arts = arts);
     }
-}
+}
