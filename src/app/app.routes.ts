@@ -19,7 +19,6 @@ import {SessionService} from "./shared/services/session.service";
 import {CookieService} from "ngx-cookie-service";
 
 
-
 // Every route you wish to express is a component
 export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent];
 
@@ -38,7 +37,6 @@ export const routes: Routes = [
 const providers: any[] = [
    {provide:APP_BASE_HREF, useValue: window["_base_href"]}
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
-   // UserService
 ];
 
 const services: any[] = [ArtService, AuthService, BookmarkService, CookieService,CommentService, ProfileService, SignInService, SignUpService, SessionService];
