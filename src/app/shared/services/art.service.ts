@@ -2,11 +2,15 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Art} from "../classes/art";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class ArtService {
+	protected artSubject : BehaviorSubject<Art[]> = new BehaviorSubject<Art[]>([]);
+	public artObserver : Observable<Art[]> = this.artSubject.asObservable();
 
 	constructor(protected http: HttpClient) {
+		this.getAllArts().subscribe(arts => this.artSubject.next(arts));
 	}
 
 	//define the API endpoint
@@ -30,7 +34,7 @@ export class ArtService {
 
 // call to the Art API and get an Art object by its type
 	getAllArts(): Observable<Art[]> {
-		return (this.http.get<Art[]>(this.artUrl).take(4));
+		return (this.http.get<Art[]>(this.artUrl));
 	}
 
 }
