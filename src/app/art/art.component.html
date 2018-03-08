@@ -1,7 +1,8 @@
 <main>
-    <div class="container-fluid p-2">
-        <div class="card">
-            <img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Card image cap">
+    <div  class="container-fluid p-2">
+        <!--Semi colon, yes or no? Rochelle has none, george yes. -->
+        <div class="card" *ngFor="let art of arts;" >
+            <img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption">
             <ul class="p-1 list-group list-group-flush">
                 <li class="list-group-item">Title: {{ art.artTitle }}</li>
                 <li class="list-group-item">Artist: {{ art.artArtist }}</li>

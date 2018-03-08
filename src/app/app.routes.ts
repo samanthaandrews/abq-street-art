@@ -17,6 +17,8 @@ import {UpdateProfileComponent} from "./update-profile/update-profile.component"
 import {SignedInHomeviewComponent} from "./signed-in-homeview/signed-in-homeview.component";
 import {SessionService} from "./shared/services/session.service";
 import {CookieService} from "ngx-cookie-service";
+import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 
 // Every route you wish to express is a component
@@ -36,7 +38,8 @@ export const routes: Routes = [
 
 
 const providers: any[] = [
-   {provide:APP_BASE_HREF, useValue: window["_base_href"]}
+   {provide:APP_BASE_HREF, useValue: window["_base_href"]},
+	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
 
