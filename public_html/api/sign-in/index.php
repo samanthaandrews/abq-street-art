@@ -1,15 +1,3 @@
-<!--Notes from Scrum:-->
-<!--They sign in by username. If they have an activation token, kick them out. They have to activate account first.-->
-<!--Hash and salt the password and save it upon sign in. Compare this sign in password vs. sign up.-->
-<!--Hashes are just verifiers - want verifier to be the same upon sign up and sign in-->
-<!--We don’t need/want to store the actual value of the password-->
-
-<!--Only accepts POST. Cannot GET, PUT, or DELETE-->
-<!--only takes username and password-->
-<!--grab by username, recalculate hash and if they match, they typed the password correctly and successfully sign in-->
-<!--unhelpful in error messages when throwing exceptions - "username not found" means we are open to attackers - "invalid username or password" is good. don’t have attacker any info.-->
-<!--IMPORTANT: when they are successful, we put the profile into the session-->
-
 <?php
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
