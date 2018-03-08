@@ -151,7 +151,7 @@ EOF;
         }
 
         // update reply
-        $reply->message = "Thank you for creating a profile with ABQ Street Art!";
+        $reply->message = "Thank you for creating a profile with ABQ Street Art! Please check your email to confirm your account.";
     } else {
         throw (new InvalidArgumentException("invalid http request"));
     }
