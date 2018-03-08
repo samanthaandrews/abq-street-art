@@ -22,9 +22,7 @@ export class HomeComponent implements OnInit{
 
 	getFeaturedArt() : void {
 		let array : any[];
-
-		this.artService.getAllArts().subscribe( arts=>{
-            this.featuredArt = arts;});
+		this.artService.artObserver.subscribe( arts=>{this.featuredArt = arts;});
 
 	}
 

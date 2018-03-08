@@ -29,6 +29,7 @@ export const routes: Routes = [
     {path: "sign-up", component: SignUpComponent},
     {path: "update-profile", component: UpdateProfileComponent},
     {path: "signed-in-homeview", component: SignedInHomeviewComponent},
+    {path: "art", component: ArtComponent},
     {path: "", component: HomeComponent}
 
 ];

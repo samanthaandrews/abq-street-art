@@ -1,13 +1,13 @@
 <main>
     <div class="container-fluid p-2">
         <div class="card">
-            <img class="card-img-top p-1" src="unicorn.jpg" alt="Card image cap">
+            <img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Card image cap">
             <ul class="p-1 list-group list-group-flush">
-                <li class="list-group-item">Title: ({ art.artTitle })</li>
-                <li class="list-group-item">Artist: ({ art.artArtist })</li>
-                <li class="list-group-item">Art Type: ({art.artType}) </li>
-                <li class="list-group-item">Location: ({art.artLocation})</li>
-                <li class="list-group-item">Address: ({art.artAddress})</li>
+                <li class="list-group-item">Title: {{ art.artTitle }}</li>
+                <li class="list-group-item">Artist: {{ art.artArtist }}</li>
+                <li class="list-group-item">Art Type: {{art.artType}} </li>
+                <li class="list-group-item">Location: {{art.artLocation}}</li>
+                <li class="list-group-item">Address: {{art.artAddress}}</li>
             </ul>
         </div>
     </div>
