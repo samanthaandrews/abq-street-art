@@ -19,14 +19,14 @@
                 </div>
 
                 <!--profilePassword-->
-                <input class="form-control" id="profilePassword" type="text" name="password" placeholder=" Password" formControlName="profilePassword">
+                <input class="form-control" id="profilePassword" type="password" name="password" placeholder=" Password" formControlName="profilePassword">
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.profilePassword?.invalid && signUpForm.controls.profilePassword?.touched">
                     <p *ngIf="signUpForm.controls.profilepassword?.errors.maxlength">Password is too long</p>
                     <p *ngIf="signUpForm.controls.profilePassword?.errors.required">Valid password required</p>
                 </div>
 
                 <!--profilePasswordConfirm-->
-                <input class="form-control" id="profilePasswordConfirm" type="text" name="password-confirm" placeholder=" Re-enter Password" formControlName="profilePasswordConfirm">
+                <input class="form-control" id="profilePasswordConfirm" type="password" name="password-confirm" placeholder=" Re-enter Password" formControlName="profilePasswordConfirm">
                 <div class="alert alert-danger" *ngIf="signUpForm.controls.profilePasswordConfirm?.invalid && signUpForm.controls.profilePasswordConfirm?.touched">
                     <p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.maxlength">Password is too long</p>
                     <p *ngIf="signUpForm.controls.email?.errors.required">Valid password required</p>
