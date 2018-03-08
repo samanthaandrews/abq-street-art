@@ -1,5 +1,7 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {Art} from "../shared/classes/art";
 import {ArtService} from "../shared/services/art.service";
+import {Status} from "../shared/classes/status";
 
 @Component({
     template: require("./art.component.html"),
