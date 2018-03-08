@@ -3,7 +3,6 @@ import {ArtService} from "../shared/services/art.service";
 
 @Component({
     template: require("./art.component.html"),
-    selector: "artCard"
 })
 
 export class ArtComponent implements OnInit {
@@ -17,6 +16,10 @@ export class ArtComponent implements OnInit {
 
     ngOnInit() : void {
         this.listArts();
-        this.createArtCard = this.
+    }
+
+    listArts() : any {
+        this.artService.artObserver()
+           .subscribe(arts => this.arts = arts);
     }
 }
