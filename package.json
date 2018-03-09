@@ -28,7 +28,8 @@
     "jquery": "^3.3.1",
     "ngx-cookie-service": "^1.0.10",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.20"
+    "zone.js": "^0.8.20",
+    "@ngui/map": "^0.20.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
