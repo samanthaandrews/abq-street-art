@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {Art} from "../classes/art";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Point} from "../classes/point";
 
 @Injectable()
 export class ArtService {
@@ -22,7 +23,6 @@ export class ArtService {
 	}
 
 // call to the Art API and get an Art object by its distance
-	//TODO Why is it making me put string for data type assertion?
 	getArtByDistance(distance: string): Observable<Art[]> {
 		return (this.http.get<Art[]>(this.artUrl, {params: new HttpParams().set("distance", distance)}));
 	}
@@ -36,5 +36,14 @@ export class ArtService {
 	getAllArts(): Observable<Art[]> {
 		return (this.http.get<Art[]>(this.artUrl));
 	}
+
+    //call to the API and get an array of all the arts in the database
+	//TODO wtf is happening? i copied this and changed some things and it's wrong and whatever.
+    getArtPoints() : Observable<Point[]> {
+
+		//TODO what should we be returning??????
+        return(this.http.get<Point[]>(this.artUrl, {params: new HttpParams().set("artPoint", "yes")}));
+
+    }
 
 }
