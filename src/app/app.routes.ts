@@ -19,7 +19,7 @@ import {SessionService} from "./shared/services/session.service";
 import {CookieService} from "ngx-cookie-service";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {MapComponent} from "./shared/components/map";
+import {MapComponent} from "./shared/components/map.component";
 
 
 // Every route you wish to express is a component
