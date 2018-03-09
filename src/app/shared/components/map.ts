@@ -10,7 +10,6 @@ import {Art} from "../classes/art";
 
 
 
-//we had art.component.html why?
 @Component({
     template: require("./map.component.html"),
     selector: "map"
