@@ -19,10 +19,11 @@ import {SessionService} from "./shared/services/session.service";
 import {CookieService} from "ngx-cookie-service";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {MapComponent} from "./shared/components/map";
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.

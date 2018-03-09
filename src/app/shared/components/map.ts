@@ -22,7 +22,8 @@ export class MapComponent implements OnInit {
 
 
     //Rochelle just has an empty constructor...??
-    constructor(protected artService : ArtService) {}
+    constructor(
+        protected artService : ArtService) {}
 
     ngOnInit() : void {
 
@@ -41,15 +42,6 @@ export class MapComponent implements OnInit {
         artLat = art.artLat;
         artLong = art.artLong;
         positions.push(artLat, artLong);
-
-
-        // for (let i = 0 ; i < 9; i++) {
-        //     randomLat = Math.random() * (43.7399 - 43.7300) + 43.7300;
-        //     randomLng = Math.random() * (-79.7600 - -79.7699) + -79.7699;
-        //     positions.push([randomLat, randomLng]);
-        // }
-
-
 
 
         return positions;
