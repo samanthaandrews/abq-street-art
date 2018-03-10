@@ -10,7 +10,6 @@ import {Art} from "../classes/art";
 import {Point} from "../classes/point";
 
 
-
 @Component({
     template: require("./map.component.html"),
     selector: "map"
@@ -19,29 +18,27 @@ import {Point} from "../classes/point";
 export class MapComponent implements OnInit {
 
     // empty array of lat/long points
-    public positions: any = [];
 
     art: Art = new Art(null, null, null, null, null, null, null, null, null, null);
     arts: Art[] = [];
     data: Observable<Array<Art[]>>;
-    artData: Point[] = [];
-
+    point: Point;
 
     constructor(
         protected artService : ArtService) {}
 
     ngOnInit() : void {
-
-        // OnInit, make call to populate positions array thru the Observable
-        this.getAllArtPoints();
+        this.listArts();
     }
 
-    getAllArtPoints(): void {
-        this.artService.getArtPoints()
-            .subscribe( artData => this.artData = artData);
-    }
+	listArts() : any {
+		this.artService.artObserver
+			.subscribe(arts => this.arts = arts);
+	}
 
-
-
+	extractPoints(art : Art) : any {
+    	let point : Point = new Point(art.artLat, art.artLong);
+      return(point);
+   }
 
 }
