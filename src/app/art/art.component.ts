@@ -21,19 +21,14 @@ export class ArtComponent implements OnInit {
     ) {}
 
     ngOnInit() : void {
-         let artId : string  = this.route.snapshot.params["artId"];
-
-
-            this.artService.getArtByArtId(artId)
-                .subscribe(art => {
-                    this.art = art;
-        });
-
-        this.listArts();
     }
 
-    listArts() : any {
-        this.artService.artObserver
-           .subscribe(arts => this.arts = arts);
+    getArt() : void {
+		 let artId : string  = this.route.snapshot.params["artId"];
+
+		 this.artService.getArtByArtId(artId)
+			 .subscribe(art => {
+				 this.art = art;
+			 });
     }
 }

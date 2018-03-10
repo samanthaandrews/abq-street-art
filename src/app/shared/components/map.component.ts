@@ -28,7 +28,7 @@ export class MapComponent implements OnInit {
         protected artService : ArtService) {}
 
     ngOnInit() : void {
-        this.listArts();
+        // this.listArts();
     }
 
 	listArts() : any {

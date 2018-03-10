@@ -37,13 +37,5 @@ export class ArtService {
 		return (this.http.get<Art[]>(this.artUrl));
 	}
 
-    //call to the API and get an array of all the arts in the database
-	//TODO wtf is happening? i copied this and changed some things and it's wrong and whatever.
-    getArtPoints() : Observable<Point[]> {
-
-		//TODO what should we be returning??????
-        return(this.http.get<Point[]>(this.artUrl, {params: new HttpParams().set("artPoint", "yes")}));
-
-    }
 
 }
