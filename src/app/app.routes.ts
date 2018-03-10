@@ -33,6 +33,7 @@ export const routes: Routes = [
     {path: "update-profile", component: UpdateProfileComponent},
     {path: "signed-in-homeview", component: SignedInHomeviewComponent},
     {path: "art/:artId", component: ArtComponent},
+    {path: "map", component: MapComponent},
     {path: "", component: HomeComponent}
 
 ];
