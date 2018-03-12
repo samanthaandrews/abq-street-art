@@ -36,15 +36,15 @@ export class MapComponent implements OnInit {
 			.subscribe(arts => this.arts = arts);
 	}
 
-	extractPoints(art : Art) : any {
-    	let point : Point = new Point(art.artLat, art.artLong);
-      return(point);
-   }
-
-   clicked({target: marker}) {
+	clicked({target: marker}, art : Art) {
+    	this.art = marker;
     	marker.nguiMapComponent.openInfoWindow('art-details', marker);
 	}
 	hideMarkerInfo() {
-		this.marker.display = !this.marker.display;
+		this.point.display = !this.point.display;
+	}
+
+	displayArt(art: Art) {
+    	this.art = art;
 	}
 }
