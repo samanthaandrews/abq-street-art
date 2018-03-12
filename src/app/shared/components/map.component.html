@@ -1,9 +1,9 @@
 <div>
-    <!--<div class="row">-->
-        <!--<div class="col-12">-->
+    <div class="row">
+        <div class="col-12">
 
             <!-- this is the google map :P~ -->
-            <ngui-map zoom="13" center="Albuquerque, New Mexico">
+            <ngui-map zoom="13" style="height: 75vh;" center="Albuquerque, New Mexico">
                 <marker *ngFor="let art of arts" [position]="[art.artLat, art.artLong]" (click)="clicked($event)" (click)="displayArt(art)"></marker>
                <info-window id="art-details">
                   <div><img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption">, {{art.artTitle}}
@@ -11,6 +11,6 @@
                </info-window>
             </ngui-map>
 
-        <!--</div>-->
-    <!--</div>-->
+        </div>
+    </div>
 </div>
