@@ -32,12 +32,14 @@ a {
 
 ngui-map {
 	height: 75vh !important;
+	background-color: black;
 }
 
 .map-image {
 	height: 25vh;
 	width: auto;
 }
+
 
 .map-text {
 	background-color: black;
