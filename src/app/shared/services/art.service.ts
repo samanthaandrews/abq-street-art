@@ -32,7 +32,7 @@ export class ArtService {
 		return (this.http.get<Art[]>(this.artUrl, {params: new HttpParams().set("artType", artType)}));
 	}
 
-// call to the Art API and get an Art object by its type
+// call to the Art API and get all Art
 	getAllArts(): Observable<Art[]> {
 		return (this.http.get<Art[]>(this.artUrl));
 	}

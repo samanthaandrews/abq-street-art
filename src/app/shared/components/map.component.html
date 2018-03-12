@@ -4,7 +4,7 @@
 
             <!-- this is the google map :P~ -->
             <ngui-map zoom="13" center="Albuquerque, New Mexico">
-                <marker *ngFor="let art of arts" [position]="extractPoints(art)"></marker>
+                <marker *ngFor="let art of arts" [position]="[art.artLat, art.artLong]"></marker>
             </ngui-map>
 
         <!--</div>-->
