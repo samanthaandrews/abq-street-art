@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
     art: Art = new Art(null, null, null, null, null, null, null, null, null, null);
     arts: Art[] = [];
     data: Observable<Array<Art[]>>;
-    point: Point;
+    point: any;
 
     constructor(
         protected artService : ArtService) {}
@@ -36,7 +36,7 @@ export class MapComponent implements OnInit {
 			.subscribe(arts => this.arts = arts);
 	}
 
-	clicked({target: marker}, art : Art) {
+	clicked({target: marker} : any, art : Art) {
     	this.art = marker;
     	marker.nguiMapComponent.openInfoWindow('art-details', marker);
 	}
