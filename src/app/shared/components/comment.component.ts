@@ -29,12 +29,11 @@ export class CommentComponent implements OnInit {
 	}
 
 	getComment() : void{
-		let artId : string  = this.route.snapshot.params["artId"];
-
-		this.commentService.getCommentByCommentArtId(artId)
+		let commentArtId : string  = this.route.snapshot.params["artId"];
+		//All of this code is not really working, as you can tell. We have questions about if we are subscribing to comment. WHat is the code below doing?
+		this.commentService.getCommentByCommentArtId(commentArtId)
 			.subscribe(comment => {
 				this.comment = comment;
 			});
 	}
-
 }
