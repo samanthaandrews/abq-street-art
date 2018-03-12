@@ -18,7 +18,7 @@ export class ArtService {
 	private artUrl = "api/art/";
 
 // call to the Art API and get an Art object by its id
-	getArtByArtId(id: string): Observable<Art> {
+	getArtByArtId(id : string): Observable<Art> {
 		return (this.http.get<Art>(this.artUrl + id));
 	}
 
