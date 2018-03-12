@@ -21,10 +21,11 @@ import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {MapComponent} from "./shared/components/map.component";
 import {CommentComponent} from "./shared/components/comment.component";
+import {AboutUsComponent} from "./about-us/about-us.component";
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent, CommentComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent, CommentComponent, AboutUsComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
@@ -35,6 +36,7 @@ export const routes: Routes = [
     {path: "signed-in-homeview", component: SignedInHomeviewComponent},
     {path: "art/:artId", component: ArtComponent},
     {path: "map", component: MapComponent},
+    {path: "about-us", component: AboutUsComponent},
     {path: "", component: HomeComponent}
 
 ];
