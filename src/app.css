@@ -30,6 +30,19 @@ a {
 	font-size: larger;
 }
 
+ngui-map {
+	height: 75vh !important;
+}
+
+.map-image {
+	height: 25vh;
+	width: auto;
+}
+
+.map-text {
+	background-color: black;
+}
+
 .modal-footer, .modal-header {
 	border: none;
 }
