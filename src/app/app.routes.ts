@@ -20,10 +20,11 @@ import {CookieService} from "ngx-cookie-service";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {MapComponent} from "./shared/components/map.component";
+import {CommentComponent} from "./shared/components/comment.component";
 
 
 // Every route you wish to express is a component
-export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent];
+export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent, CommentComponent];
 
 export const routes: Routes = [
 	// Use our fake URLs - the browser will automatically swap in data.
@@ -45,7 +46,7 @@ const providers: any[] = [
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
 
-const services: any[] = [ArtService, AuthService, BookmarkService, CookieService,CommentService, ProfileService, SignInService, SignUpService, SessionService];
+const services: any[] = [ArtService, AuthService, BookmarkService, CookieService, CommentService, ProfileService, SignInService, SignUpService, SessionService];
 
 export const appRoutingProviders : any[] = [providers,  services];
 

@@ -10,7 +10,10 @@ export class AuthService {
 
 	private token : string = localStorage.getItem("jwt-token");
 
-	constructor(private jwtHelperService: JwtHelperService, private http: HttpClient) {}
+	constructor(
+		private jwtHelperService: JwtHelperService,
+		private http: HttpClient
+	) {}
 
     loggedIn() {
         if (!this.token) {
