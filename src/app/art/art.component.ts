@@ -3,6 +3,7 @@ import {Art} from "../shared/classes/art";
 import {ArtService} from "../shared/services/art.service";
 import {Status} from "../shared/classes/status";
 import {ActivatedRoute, Params} from "@angular/router";
+import {Comment} from "../shared/classes/comment";
 
 @Component({
     template: require("./art.component.html"),
