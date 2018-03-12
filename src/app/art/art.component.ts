@@ -21,6 +21,7 @@ export class ArtComponent implements OnInit {
     ) {}
 
     ngOnInit() : void {
+    	this.getArt()
     }
 
     getArt() : void {

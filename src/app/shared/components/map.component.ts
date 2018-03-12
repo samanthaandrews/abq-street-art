@@ -41,4 +41,10 @@ export class MapComponent implements OnInit {
       return(point);
    }
 
+   clicked({target: marker}) {
+    	marker.nguiMapComponent.openInfoWindow('art-details', marker);
+	}
+	hideMarkerInfo() {
+		this.marker.display = !this.marker.display;
+	}
 }
