@@ -6,7 +6,7 @@
             <ngui-map zoom="13" style="height: 75vh;" center="Albuquerque, New Mexico">
                 <marker *ngFor="let art of arts" [position]="[art.artLat, art.artLong]" (click)="clicked($event)" (click)="displayArt(art)"></marker>
                <info-window id="art-details">
-                  <div><img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption">, {{art.artTitle}}
+                  <div style="color: black;"><img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption" style="height: 25vh; width: auto"> {{art.artTitle}}
                   </div>
                </info-window>
             </ngui-map>
