@@ -12,6 +12,15 @@ export class AuthService {
 
 	constructor(private jwtHelperService: JwtHelperService, private http: HttpClient) {}
 
+    loggedIn() {
+        if (!this.token) {
+            return false;
+        }
+
+        const tokenExpired: boolean = this.jwtHelperService.isTokenExpired(this.token);
+        return !tokenExpired
+    }
+
 	//token : string = this.jwtHelperService.tokenGetter();
 	public isAuthenticated(): boolean {
 		const token = localStorage.getItem('jwt-token');
@@ -22,4 +31,14 @@ export class AuthService {
 		// // true or false
 		return !this.jwtHelperService.isTokenExpired(token);
 	}
+
+    decodeJwt() : any {
+        let isLoggedIn : boolean = this.loggedIn();
+
+        if (!isLoggedIn) {
+            return false;
+        }
+
+        return this.jwtHelperService.decodeToken(this.token);
+    }
 }

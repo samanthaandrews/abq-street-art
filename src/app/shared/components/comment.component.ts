@@ -39,14 +39,48 @@ export class CommentComponent implements OnInit {
 	ngOnInit() : void {
 		this.listComments();
 
+		this.createCommentForm = this.formBuilder.group({
+			commentContent: ["", [Validators.maxLength(2000), Validators.required]]
+		});
+
 	}
 
-	getComment() : void{
-		let commentArtId : string  = this.route.snapshot.params["artId"];
-		//All of this code is not really working, as you can tell. We have questions about if we are subscribing to comment. WHat is the code below doing?
+	//TODO what is happening here?!?!?! (nothing was working so I updated it to be similar to our call for the art card. I think that's wrong but I don't know where to go with it.
+	listComments() : any {
+
+        let commentArtId : string  = this.route.snapshot.params["commentArtId"];
+
 		this.commentService.getCommentByCommentArtId(commentArtId)
-			.subscribe(comment => {
-				this.comments = comment;
-			});
+			.subscribe(comments => this.comments = comments);
 	}
+
+	getJwtProfileId() : any {
+		if(this.authService.decodeJwt()) {
+			return this.authService.decodeJwt().auth.profileId;
+		} else {
+			return false
+		}
+	}
+
+	createComment() : any {
+		if(!this.getJwtProfileId()) {
+			return false
+		}
+
+		let newCommentProfileId = this.getJwtProfileId();
+
+		let comment = new Comment(null, null, null, this.createCommentForm.value.commentContent, null);
+
+		this.commentService.createComment(comment)
+			.subscribe(status => {
+				this.status = status;
+				if(status.status === 200) {
+					this.listComments();
+					this.createCommentForm.reset();
+				} else {
+					return false
+				}
+			})
+	}
+
 }
