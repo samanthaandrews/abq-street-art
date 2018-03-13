@@ -11,7 +11,7 @@ export class SignInService {
 	}
 
 	private signInUrl = "api/sign-in/";
-	private signOutUrl = "api/sign-out";
+	private signOutUrl = "api/sign-out/";
 
 
 

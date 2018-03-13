@@ -17,9 +17,9 @@ export class NavbarComponent {
         private signInService: SignInService,
         private cookieService: CookieService,
         private router: Router
-    ) {
-    }
+    ) {}
 
+    //TODO change to logOut??
     signOut() : void {
         this.signInService.getSignOut()
 
@@ -33,9 +33,8 @@ export class NavbarComponent {
 
                     //send user back home, refresh page
                     this.router.navigate([""]);
-                    console.log("goodbye");
                     location.reload();
-
+                    console.log("goodbye");
                 }
             });
     }
