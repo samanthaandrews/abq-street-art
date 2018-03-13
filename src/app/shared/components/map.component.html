@@ -6,7 +6,7 @@
             <ngui-map zoom="13" center="Albuquerque, New Mexico">
                 <marker *ngFor="let art of arts" [position]="[art.artLat, art.artLong]" (click)="clicked($event)" (click)="displayArt(art)"></marker>
                <info-window id="art-details">
-                  <div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 map-image" src="{{ art.artImageUrl }}" alt="Art image caption">
+                  <div class="map-text p-3 ml-3 text-center"><img class="card-img-top p-1 art-image" src="{{ art.artImageUrl }}" alt="Art image caption">
                       <br>
                       <br>
                      <strong>Title:</strong> {{art.artTitle}}
