@@ -33,8 +33,9 @@ export class NavbarComponent {
 
                     //send user back home, refresh page
                     this.router.navigate([""]);
-                    location.reload();
                     console.log("goodbye");
+                    location.reload();
+
                 }
             });
     }

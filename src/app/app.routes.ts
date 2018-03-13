@@ -23,6 +23,7 @@ import {MapComponent} from "./shared/components/map.component";
 import {CommentComponent} from "./shared/components/comment.component";
 import {AboutUsComponent} from "./about-us/about-us.component";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {AuthGuardService as AuthGuard} from "./shared/guards/auth.guard";
 
 
 
@@ -34,8 +35,8 @@ export const routes: Routes = [
 	// The following is the default path - needs to come last in your array.
 	// Sort your routes by most specific to least specific. Empty string "" matches everything.
     {path: "sign-up", component: SignUpComponent},
-    {path: "update-profile", component: UpdateProfileComponent},
-    {path: "signed-in-homeview", component: SignedInHomeviewComponent},
+    {path: "update-profile", component: UpdateProfileComponent, canActivate: [AuthGuard]},
+    {path: "signed-in-homeview", component: SignedInHomeviewComponent, canActivate: [AuthGuard]},
     {path: "art/:artId", component: ArtComponent},
     {path: "map", component: MapComponent},
     {path: "about-us", component: AboutUsComponent},
@@ -51,7 +52,7 @@ const providers: any[] = [
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
 
-const services: any[] = [ArtService, AuthService, BookmarkService, CookieService, CommentService, ProfileService, SignInService, SignUpService, SessionService, JwtHelperService];
+const services: any[] = [ArtService, AuthService, BookmarkService, CookieService, CommentService, ProfileService, SignInService, SignUpService, SessionService, JwtHelperService, AuthGuard];
 
 export const appRoutingProviders : any[] = [providers,  services];
 
