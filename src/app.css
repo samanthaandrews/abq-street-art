@@ -1,18 +1,29 @@
+a {
+	color: rgb(252, 216, 33);
+}
+
 .black {
 	background-color: black;
 }
 
-.logo {
-	height: 10vh;
+body {
+	background-color: rgb(32, 32, 32);
 }
 
-.navbar{
+.btn {
+	border-color: rgb(252, 216, 33);
 	color: rgb(252, 216, 33);
-	font-family: 'Oswald', sans-serif;
+	background-color: transparent;
 }
 
-a {
-	color: rgb(252, 216, 33);
+.btn:hover {
+	background-color: rgb(252, 216, 33);
+	color: white;
+}
+
+.card {
+	background-color: black;
+	padding: 1.5em;
 }
 
 .close {
@@ -25,14 +36,29 @@ a {
 	color: rgb(176, 145, 31);
 }
 
-.name {
-	font-weight: bolder;
-	font-size: larger;
+.form-control {
+	margin-bottom: 1rem;
 }
 
-ngui-map {
-	height: 75vh !important;
-	background-color: black;
+.gray {
+	background-color: rgb(32, 32, 32);
+}
+
+li>a:hover {
+	color: rgb(176, 145, 31);
+}
+
+.list-group-item {
+	background-color: rgb(32, 32, 32);
+}
+
+.logo {
+	height: 10vh;
+}
+
+main {
+	font-family: 'Oswald', sans-serif;
+	color: rgb(252, 216, 33);
 }
 
 .map-image {
@@ -49,47 +75,24 @@ ngui-map {
 	border: none;
 }
 
-main {
+.name {
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.navbar{
+	color: rgb(252, 216, 33);
 	font-family: 'Oswald', sans-serif;
-	color: rgb(252, 216, 33);
 }
 
-
-.gray {
-	background-color: rgb(32, 32, 32);
-}
-
-.list-group-item {
-	background-color: rgb(32, 32, 32);
-}
-
-.card {
+ngui-map {
+	height: 75vh !important;
 	background-color: black;
-	padding: 1.5em;
 }
 
-body {
-	background-color: rgb(32, 32, 32);
-}
 
-.form-control {
-	margin-bottom: 1rem;
-}
 
-.btn {
-	border-color: rgb(252, 216, 33);
-	color: rgb(252, 216, 33);
-	background-color: transparent;
-}
 
-.btn:hover {
-	background-color: rgb(252, 216, 33);
-	color: white;
-}
-
-li>a:hover {
-	color: rgb(176, 145, 31);
-}
 
 
 /*keep this stuff after the btn stuff for the green submit button*/
