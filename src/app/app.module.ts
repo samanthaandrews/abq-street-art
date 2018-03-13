@@ -7,6 +7,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NguiMapModule} from "@ngui/map";
 import {JwtModule} from "@auth0/angular-jwt";
 
+
 const moduleDeclarations = [AppComponent];
 
 const JwtHelper = JwtModule.forRoot({
@@ -22,7 +23,7 @@ const JwtHelper = JwtModule.forRoot({
 });
 
 @NgModule({
-    imports:      [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule, routing, NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBMQE2mPIzXsRIbSUWzBUwiJrdrp80Xkqc'})],
+    imports:      [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule, routing, NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBMQE2mPIzXsRIbSUWzBUwiJrdrp80Xkqc'}), JwtHelper],
     declarations: [...moduleDeclarations, ...allAppComponents],
     bootstrap:    [AppComponent],
     providers:    [...appRoutingProviders]
