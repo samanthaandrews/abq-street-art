@@ -5,3 +5,18 @@
     <textarea class="form-control" type="text" name="commentContent" id="commentContent" placeholder="Write your comment here!" formControlName="commentContent" rows="3"></textarea>
     <button class="btn" type="submit">Submit Comment</button>
 </form>
+<div class="col-12 col-lg-9">
+    <div class="card-columns">
+
+        <!-- begin comment item -->
+        <div *ngFor="let comment of comments" class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ profile.profileUserName }}</h4>
+                <p class="card-text">{{ comment.commentContent }}</p>
+                <div class="small text-muted">{{ comment.commentDateTime | date:'M/d/yy h:mm a' }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

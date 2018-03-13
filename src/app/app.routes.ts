@@ -22,6 +22,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {MapComponent} from "./shared/components/map.component";
 import {CommentComponent} from "./shared/components/comment.component";
 import {AboutUsComponent} from "./about-us/about-us.component";
+import {JwtHelperService} from "@auth0/angular-jwt";
 
 
 // Every route you wish to express is a component
@@ -37,6 +38,7 @@ export const routes: Routes = [
     {path: "art/:artId", component: ArtComponent},
     {path: "map", component: MapComponent},
     {path: "about-us", component: AboutUsComponent},
+    {path: "comment", component: CommentComponent},
     {path: "", component: HomeComponent}
 
 ];
@@ -48,7 +50,7 @@ const providers: any[] = [
 	// Services is a way to connect to data: your own or external service (others' data). We only have one for this project. Typically one service per API. AJAX services.
 ];
 
-const services: any[] = [ArtService, AuthService, BookmarkService, CookieService, CommentService, ProfileService, SignInService, SignUpService, SessionService];
+const services: any[] = [ArtService, AuthService, BookmarkService, CookieService, CommentService, ProfileService, SignInService, SignUpService, SessionService, JwtHelperService];
 
 export const appRoutingProviders : any[] = [providers,  services];
 
