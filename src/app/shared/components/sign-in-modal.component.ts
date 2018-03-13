@@ -71,6 +71,11 @@ export class SignInModalComponent implements OnInit {
                     this.router.navigate(["/signed-in-homeview"]);
                 }
             });
+
+
+    }
+    signOut() :void {
+        this.signInService.getSignOut();
     }
 }
 

@@ -45,7 +45,7 @@ export class CommentComponent implements OnInit {
 
 	}
 
-	//TODO what is happening here?!?!?! (nothing was working so I updated it to be similar to our call for the art card. I think that's wrong but I don't know where to go with it.
+
 	listComments() : any {
 
         let commentArtId : string  = this.route.snapshot.params["commentArtId"];
