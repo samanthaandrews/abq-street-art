@@ -8,6 +8,7 @@ import {NguiMapModule} from "@ngui/map";
 import {JwtModule} from "@auth0/angular-jwt";
 
 
+
 const moduleDeclarations = [AppComponent];
 
 const JwtHelper = JwtModule.forRoot({

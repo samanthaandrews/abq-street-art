@@ -25,6 +25,7 @@ import {AboutUsComponent} from "./about-us/about-us.component";
 import {JwtHelperService} from "@auth0/angular-jwt";
 
 
+
 // Every route you wish to express is a component
 export const allAppComponents = [HomeComponent, NavbarComponent, ArtComponent, SignInModalComponent, SignUpComponent, UpdateProfileComponent, SignedInHomeviewComponent, MapComponent, CommentComponent, AboutUsComponent];
 
