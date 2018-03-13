@@ -1,15 +1,19 @@
 <main>
     <div  class="container-fluid p-2">
-        <div class="card" >
-            <img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption">
-            <ul class="p-1 list-group list-group-flush">
-                <li class="list-group-item">Title: {{ art.artTitle }}</li>
-                <li class="list-group-item">Artist: {{ art.artArtist }}</li>
-                <li class="list-group-item">Art Type: {{art.artType}} </li>
-                <li class="list-group-item">Location: {{art.artLocation}}</li>
-                <li class="list-group-item">Address: {{art.artAddress}}</li>
-            </ul>
+        <div class="row">
+            <div class="col-sm-2 col-md-3"></div>
+            <div class="card col-12 col-sm-8 col-md-6" >
+                <img class="card-img-top p-1" src="{{ art.artImageUrl }}" alt="Art image caption">
+                <ul class="p-1 list-group list-group-flush">
+                    <li class="list-group-item">Title: {{ art.artTitle }}</li>
+                    <li class="list-group-item">Artist: {{ art.artArtist }}</li>
+                    <li class="list-group-item">Art Type: {{art.artType}} </li>
+                    <li class="list-group-item">Location: {{art.artLocation}}</li>
+                    <li class="list-group-item">Address: {{art.artAddress}}</li>
+                </ul>
+            </div>
+            <div class="col-sm-2 col-md-3"></div>
         </div>
-        <comment></comment>
+        <!--<comment></comment>-->
     </div>
 </main>
