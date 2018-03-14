@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Young Tourist</title>
+		<title>Casual User</title>
 	</head>
 	<body>
-			<h1>Young Tourist Persona</h1>
+			<h1>Casual User Persona</h1>
 				<img src="https://previews.123rf.com/images/maridav/maridav1404/maridav140400425/27940374-man-on-smartphone-young-business-man-talking-on-smart-phone-casual-urban-professional-businessman-us.jpg" alt="Young Tourist" width="300px"/>
 				<p>Name: Greg McClusky</p>
 				<p>Gender: Male</p>

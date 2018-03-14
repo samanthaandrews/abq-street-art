@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Local Artist</title>
+		<title>Power User</title>
 	</head>
 	<body>
-		<h1>Local Artist Persona</h1>
+		<h1>Power User Persona</h1>
 		<img src="http://www.graphicdesigndegreehub.com/wp-content/uploads/2016/02/Wangechi-Mutu-influential-women-artists-alive.jpg" alt="Local Artist" width="300px"/>
 			<p>Name: Maggie Green</p>
 			<p>Gender: Female</p>
