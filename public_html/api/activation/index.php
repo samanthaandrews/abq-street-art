@@ -120,6 +120,7 @@ if($reply->data === null){
     <link type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
           rel="stylesheet"/>
 
+
     <!-- JSON encode the $reply object and console.log it -->
     <script>
         console.log(<?php echo json_encode($reply);?>);
@@ -136,7 +137,7 @@ if($reply->data === null){
 
             <!-- echo the $reply message in a creative way to the front end :D -->
             <?php
-            echo $reply->message . "&nbsp;";
+//            echo $reply->message . "&nbsp;";
             if($reply->status === 200) {
                 echo "<span class=\"align-self-center badge badge-success\">Congratulations! Sign in to bookmark art!</span>";
             } else {
