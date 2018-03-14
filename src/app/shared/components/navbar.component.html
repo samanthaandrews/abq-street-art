@@ -15,14 +15,17 @@
                     </li>
                     <li class="nav-item">
                         <a routerLink="sign-up" class="nav-link">Sign Up</a>
-
                     </li>
                     <li class="nav-item">
                         <!-- link trigger modal -->
                         <a href="#" class="nav-link" data-toggle="modal" data-target="#signInModal">Sign In</a>
                     </li>
-                    <li class="nav-item">
-                        <a routerLink="update-profile" class="nav-link">Settings</a>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                            <div class="dropdown-menu black " aria-labelledby="navbarDropdown">
+                                <a routerLink="signed-in-homeview" class="dropdown-item yellow">My Bookmarks</a>
+                                <a routerLink="update-profile" class="dropdown-item yellow">Update Profile</a>
+                            </div>
                     </li>
                     <li class="nav-item ">
                         <a routerLink="" class="nav-link" (click)="signOut();">Sign Out</a>

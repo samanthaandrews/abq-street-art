@@ -46,7 +46,7 @@ body {
 	background-color: rgb(32, 32, 32);
 }
 
-li>a:hover {
+a:hover {
 	color: rgb(176, 145, 31);
 }
 
@@ -90,6 +90,11 @@ main {
 ngui-map {
 	height: 75vh !important;
 	background-color: black;
+}
+
+.yellow {
+	color: rgb(252, 216, 33);
+	font-family: 'Oswald', sans-serif;
 }
 
 
