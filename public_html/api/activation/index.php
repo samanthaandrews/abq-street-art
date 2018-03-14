@@ -99,7 +99,7 @@ try {
 }
 
 //prepare and send the reply
-header("Content-type: application/json");
+//header("Content-type: application/json");
 if($reply->data === null){
 	unset($reply->data);
 }
